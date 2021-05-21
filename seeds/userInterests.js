@@ -36,4 +36,4 @@ const seedUserInterests = () => UserInterests.bulkCreate(userInterestsData);
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
-module.exports = seedUserIntersts;
+module.exports = seedUserInterests;
