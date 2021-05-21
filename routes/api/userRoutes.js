@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const { User, UserInterests } = require('../../models');
+// const { User, UserInterests } = require('../../models');
+const { User, UserInterests } = require('../../config/models');
+
 
 // The `/api/user` endpoint
 
