@@ -33,12 +33,12 @@ router.get('/', async(req, res) => {
 // -----------------------------------------------------------------------------
 // Get A User's Interests By its user_id
 // -----------------------------------------------------------------------------
-router.get('/:user_id', async(req, res) => {
+router.get('/byuser/:userId', async(req, res) => {
   try {
     const userInterestsData = await UserInterests.findOne({
-      where: {user_id: req.params.user_id}
+      where: {user_id: req.params.userId}
     });
-    if (!userInterestsData) res.status(404).json({ message: `There are not any interests for this user:  ${req.params.user_id}.` });
+    if (!userInterestsData) res.status(404).json({ message: `There are not any interests for this user:  ${req.params.userId}.` });
     res.status(200).json(userInterestsData);
   } catch (err) {
     res.status(500).json(err);
@@ -49,12 +49,12 @@ router.get('/:user_id', async(req, res) => {
 // -----------------------------------------------------------------------------
 // Get A User's Interests By its category_id
 // -----------------------------------------------------------------------------
-router.get('/:category_id', async(req, res) => {
+router.get('/bycategory/:categoryId', async(req, res) => {
   try {
     const userInterestsData = await UserInterests.findOne({
-      where: {category_id: req.params.category_id}
+      where: {category_id: req.params.categoryId}
     });
-    if (!userInterestsData) res.status(404).json({ message: `There are not any interests for this category: ${req.params.category_id}.` });
+    if (!userInterestsData) res.status(404).json({ message: `There are not any interests for this category: ${req.params.categoryId}.` });
     res.status(200).json(userInterestsData);
   } catch (err) {
     res.status(500).json(err);
@@ -79,14 +79,14 @@ router.post('/', async(req, res) => {
 // Update A User's Interest By its user_id
 // -----------------------------------------------------------------------------
 
-router.put('/:user_id', async(req, res) => {
+router.put('/byuser/:userId', async(req, res) => {
   try {
     const userInterestsData = await UserInterests.update(req.body,{
-      where: {user_id: req.params.user_id}
+      where: {user_id: req.params.userId}
     });
 
     if (!userInterestsData) {
-      res.status(404).json({ message: `There are not any interests for this user: ${req.params.user_id}.` });
+      res.status(404).json({ message: `There are not any interests for this user: ${req.params.userId}.` });
       return;
     }
 
@@ -99,14 +99,14 @@ router.put('/:user_id', async(req, res) => {
 // -----------------------------------------------------------------------------
 // Delete a User's Interest By its its user_id
 // -----------------------------------------------------------------------------
-router.delete('/:user_id', async(req, res) => {
+router.delete('/byuser/:userId', async(req, res) => {
   try {
     const userInterestsData = await UserInterests.destroy({
-      where: {user_id: req.params.user_id}
+      where: {user_id: req.params.userId}
     });
 
     if (!userInterestsData) {
-      res.status(404).json({ message: `There are not any interests for this user: ${req.params.user_id}.` });
+      res.status(404).json({ message: `There are not any interests for this user: ${req.params.userId}.` });
       return;
     }
 
