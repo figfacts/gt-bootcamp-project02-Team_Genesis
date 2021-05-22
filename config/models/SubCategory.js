@@ -18,7 +18,7 @@ const sequelize = require('../connection.js');
 // -----------------------------------------------------------------------------
 // Class: SubCategory - Initialize table by extending Sequelize's Model Class
 // -----------------------------------------------------------------------------
-class SubCategory extends Model {}
+class SubCategory extends Model { }
 
 // Set up fields and rules for SubCategory model
 SubCategory.init(
@@ -27,12 +27,20 @@ SubCategory.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
     },
-    initials: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'category',
+        key: 'id'
+      }
+    }
   },
   {
     sequelize,

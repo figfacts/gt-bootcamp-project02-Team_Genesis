@@ -23,16 +23,22 @@ class UserInterests extends Model {}
 // Set up fields and rules for UserInterests model
 UserInterests.init(
   {
-    id: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
+      references: {
+        model: 'user',
+        key: 'id'
+      }
     },
-    initials: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'category',
+        key: 'id'
+      }
+    }
   },
   {
     sequelize,
