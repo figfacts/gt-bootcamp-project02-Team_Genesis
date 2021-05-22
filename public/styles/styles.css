@@ -1,5 +1,15 @@
+/* BACKGROUND IMG CSS */
+body{
+  background-image: {
+
+  };
+  background-size: cover;
+  min-height: 100%;
+}
+
+/* NAVBAR CSS */
 #nav {
-  border-style: solid;
+  border-style: solid; 
   border-width: 1px;
   border-color: black;
   height: 70px;
@@ -9,12 +19,32 @@
   margin-left:450px
 }
 
+.nav-item{
+  margin-left: 5px;
+}
+#sellBtn,
+#signUpBtn,
+#myProfileBtn,
+#loginBtn:hover{
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 
 #divTwo{
   border-style: solid;
   border-width: 1px;
   border-color: black;
   height: 325px;
+}
+
+#recommended{
+  text-align: center;
+  font-family: monospace;
+  font-weight: bolder;
+  border-style: none;
+  border-width: 1px;
 }
 
 .input-group {
@@ -30,7 +60,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  flex-basis: auto;
 }
 
 h1{
@@ -149,34 +178,40 @@ h1{
 .show {display:block;}
 
 
-/* CSS FOR "RECOMMENDED" IMAGES DIVS  */
+/* CSS FOR "RECOMMENDED FOR YOU" IMAGES DIVS  */
+
+#photo10,
+#photo9,
+#photo8,
+#photo7,
+#photo6,
+#photo5,
+#photo4,
+#photo3,
+#photo2,
 #photo1{
-  border-style: solid;
+  border-style: none;
   border-width: 1px;
   width: 250px;
   height: 250px;
-  display: inline-block;
+  margin-top: 20px;
 }
 
-#photo2{
-  border-style: solid;
-  border-width: 1px;
-  width: 250px;
-  height: 250px;
-  display: inline-block;
+#item10,
+#item9,
+#item8,
+#item7,
+#item6,
+#item5,
+#item4,
+#item3,
+#item2,
+#item1{
+  max-width: 250px;
+  max-height: 250px;
 }
 
-#photo3{
-  border-style: solid;
-  border-width: 1px;
-  width: 250px;
-  height: 250px;
-  display: inline-block;
-}
-
-#photo4{
-  border-style: solid;
-  border-width: 1px;
-  width: 250px;
-  height: 250px;
+.itemprice{
+  text-align: center;
+  font-style: italic;
 }

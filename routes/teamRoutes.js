@@ -2,8 +2,9 @@
 
 const router = require('express').Router();
 const { Team } = require('gt-bootcamp-project02-Team_Genesis/config/models/Team.js');
-
+//-------------------------------------------------------------------------------------------------------
 // GET all TEAMS
+//-------------------------------------------------------------------------------------------------------
 router.get('/', async (req, res) => {
     try {
       const itemData = await Team.findAll({
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
   });
      
 
-// GET a single TEAM
+// GET a single TEAM by LEAUGE
 router.get('/:id', async (req, res) => {
     try {
       const teamData = await Team.findByPk(req.params.id, {
