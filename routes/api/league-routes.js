@@ -23,7 +23,7 @@ router.get('/', async(req, res) => {
     const leagueData = await User.findAll({
     });
     if (!leagueData) res.status(404).json({ message: 'No leagues exist.' });
-    res.status(200).json(leaugeData);
+    res.status(200).json(leagueData);
   } catch (err) {
     res.status(500).json(err);
   }
