@@ -18,6 +18,19 @@ router.get('/', async (req, res) => {
     
 });
 
+router.get('byintials/:initials', async (req, res) => {
+
+  try {
+      const subCategoryData = await SubCategory.findByPk(req.params.id);
+      return res.json(subCategoryData);
+      
+      } catch (err) {
+          console.log(err);
+          return res.status(500).json(err)
+      } 
+  
+});
+
 //Get one subcategory by its id------------------------------------------------------------
 
 router.get('/:id', async (req, res) => {
