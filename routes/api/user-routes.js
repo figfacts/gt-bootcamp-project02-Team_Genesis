@@ -1,9 +1,9 @@
 // -----------------------------------------------------------------------------
-// Route:    league-routes.js
-// Purpose:  Routes for League Table.
+// Route:    user-routes.js
+// Purpose:  Routes for user Table.
 // Input:    <none>   
 // -----------------------------------------------------------------------------
-// Author:   Mark Harrison
+// Author:   David Figueroa
 // Date:     May 22, 2021
 // -----------------------------------------------------------------------------
 
@@ -12,18 +12,18 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
-const { League } = require('../../config/models/League');
-
+// const bcrypt = require('bcrypt'); Justin B. See line 69 & 70
+const { User } = require('../../config/models');
 
 // -----------------------------------------------------------------------------
-// Get All Leagues
+// Get All Users
 // -----------------------------------------------------------------------------
-router.get('/', async(req, res) => {
+router.get('/users', async(req, res) => {
   try {
-    const leagueData = await User.findAll({
+    const userData = await User.findAll({
     });
-    if (!leagueData) res.status(404).json({ message: 'No leagues exist.' });
-    res.status(200).json(leaugeData);
+    if (!userData) res.status(404).json({ message: 'No users exist.' });
+    res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -31,29 +31,30 @@ router.get('/', async(req, res) => {
 
 
 // -----------------------------------------------------------------------------
-// Get A League By its id (primary key)
+// Get A User By its id (primary key)
 // -----------------------------------------------------------------------------
-router.get('/:id', async(req, res) => {
+router.get('/byid/:id', async(req, res) => {
   try {
-    const leagueData = await League.findByPk(req.params.id, {
+    const userData = await User.findByPk(req.params.id, {
     });
-    if (!leagueData) res.status(404).json({ message: `The requested league ${req.params.id} does not exist.` });
-    res.status(200).json(leagueData);
+    if (!userData) res.status(404).json({ message: `The requested user ${req.params.id} does not exist.` });
+    res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+
 // -----------------------------------------------------------------------------
-// Get A League By its initials
+// Get A User By their email
 // -----------------------------------------------------------------------------
-router.get('/:initials', async(req, res) => {
+router.get('/byemail/:email', async(req, res) => {
   try {
-    const leagueData = await League.findOne({
-      where: {initials: req.params.initials}
+    const userData = await User.findOne({
+      where: {email: req.params.email}
     });
-    if (!leagueData) res.status(404).json({ message: `The requested league ${req.params.id} does not exist.` });
-    res.status(200).json(leagueData);
+    if (!userData) res.status(404).json({ message: `The requested email: ${req.params.email} does not exist.` });
+    res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -61,12 +62,14 @@ router.get('/:initials', async(req, res) => {
 
 
 // -----------------------------------------------------------------------------
-// Add A League
+// Create (Add) A User
 // -----------------------------------------------------------------------------
-router.post('/', async(req, res) => {
+router.post('/users', async(req, res) => {
   try {
-	const leagueData = await League.create(req.body);
-	res.status(200).json(leagueData);
+  //hashing password should be a hook on your model | Justin B. to Update 
+	// req.body.password = await bcrypt.hash(req.body.password, 10);
+	const userData = await User.create(req.body);
+	res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -74,22 +77,22 @@ router.post('/', async(req, res) => {
 
 
 // -----------------------------------------------------------------------------
-// Update A League By its id (primary key)
+// Update A User By its id (primary key)
 // -----------------------------------------------------------------------------
-router.put('/:id', async(req, res) => {
+router.put('/byid/:id', async(req, res) => {
   try {
-    const leagueData = await League.update(req.body,{
+    const userData = await User.update(req.body,{
       where: {
         id: req.params.id,
       }
     });
 
-    if (!leagueData) {
-      res.status(404).json({ message: `League ${req.params.id} does not exist.` });
+    if (!userData) {
+      res.status(404).json({ message: `User ${req.params.id} does not exist.` });
       return;
     }
 
-    res.status(200).json(leagueData);
+    res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -97,22 +100,22 @@ router.put('/:id', async(req, res) => {
 
 
 // -----------------------------------------------------------------------------
-// Delete A League By its id (primary key)
+// Delete A User By its id (primary key)
 // -----------------------------------------------------------------------------
-router.delete('/:id', async(req, res) => {
+router.delete('/byid/:id', async(req, res) => {
   try {
-    const leagueData = await League.destroy({
+    const userData = await User.destroy({
       where: {
         id: req.params.id,
       },
     });
 
-    if (!leagueData) {
-      res.status(404).json({ message: `League: ${req.params.id} does not exist.` });
+    if (!userData) {
+      res.status(404).json({ message: `User: ${req.params.id} does not exist.` });
       return;
     }
 
-    res.status(200).json(leagueData);
+    res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
   }
