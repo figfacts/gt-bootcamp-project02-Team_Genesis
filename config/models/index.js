@@ -41,12 +41,12 @@ Category.hasMany(SubCategory, {
 });
 
 // UserInterests belongsTo Users
-UserInterest.belongsTo(User, {
+UserInterests.belongsTo(User, {
   foreignKey: 'user_id',
 });
 
 // Users have many UserInterests
-User.hasMany(UserInterest, {
+User.hasMany(UserInterests, {
   foreignKey: 'user_id',
   onDelete: 'RESTRICT',
 });
@@ -68,5 +68,5 @@ module.exports = {
   SubCategory,
   Team,
   User,
-  UserInterest
+  UserInterests
 };

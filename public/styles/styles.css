@@ -15,7 +15,6 @@
   border-width: 1px;
   border-color: black;
   height: 325px;
-  position:flex;
 }
 
 .input-group {
@@ -28,6 +27,10 @@
   border-width: 1px;
   border-color: black;
   height: 625px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: auto;
 }
 
 h1{
@@ -144,3 +147,36 @@ h1{
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
+
+
+/* CSS FOR "RECOMMENDED" IMAGES DIVS  */
+#photo1{
+  border-style: solid;
+  border-width: 1px;
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+}
+
+#photo2{
+  border-style: solid;
+  border-width: 1px;
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+}
+
+#photo3{
+  border-style: solid;
+  border-width: 1px;
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+}
+
+#photo4{
+  border-style: solid;
+  border-width: 1px;
+  width: 250px;
+  height: 250px;
+}
