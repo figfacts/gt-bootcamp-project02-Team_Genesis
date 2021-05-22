@@ -1,3 +1,146 @@
-.list-group-item {
-  line-height: 2.5;
+#nav {
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  height: 70px;
 }
+
+#navbarDarkDropdownMenuLink{
+  margin-left:450px
+}
+
+
+#divTwo{
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  height: 325px;
+  position:flex;
+}
+
+.input-group {
+  margin-top: 150px;
+  width: 50px;
+}
+
+#picturesDiv{
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  height: 625px;
+}
+
+h1{
+  margin-left: 350px;
+  padding-top: 10px;
+}
+
+/* CSS FOR MODALS */
+.signUpModal,
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.signUpModal-content,
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+#signUpTitle{
+  margin-left: 65px;
+  margin-bottom: 30px;
+}
+
+#loginTitle{
+  margin-left: 65px;
+  margin-bottom: 30px;
+}
+/* The Close Button */
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#signUpCloseBtn:hover{
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#routeSignUpBtn:hover,
+#routeSignUpBtn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.intrest-buttons:hover,
+.intrest-buttons:focus {
+  color: greenyellow;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+
+
+/*  CSS FOR Dropdown Button */
+
+#dropdownMenuLink:hover,
+#dropdownMenuLink:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 16px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a  {
+  color: black;
+  padding: 16px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
