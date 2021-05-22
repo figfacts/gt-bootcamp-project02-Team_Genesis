@@ -21,7 +21,9 @@ router.get('/', async (req, res) => {
 router.get('byintials/:initials', async (req, res) => {
 
   try {
-      const subCategoryData = await SubCategory.findByPk(req.params.id);
+      const subCategoryData = await SubCategory.findOne({
+        where: {intials: req.params.initials}
+      });
       return res.json(subCategoryData);
       
       } catch (err) {
