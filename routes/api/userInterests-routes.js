@@ -18,7 +18,7 @@ const { UserInterests } = require('../../config/models');
 // -----------------------------------------------------------------------------
 // Get All User's Interests
 // -----------------------------------------------------------------------------
-router.get('/', async(req, res) => {
+router.get('/userInterests', async(req, res) => {
   try {
     const userInterestsData = await UserInterests.findAll({
     });
@@ -64,7 +64,7 @@ router.get('/bycategory/:categoryId', async(req, res) => {
 // -----------------------------------------------------------------------------
 // Create (Add) A User's Interest
 // -----------------------------------------------------------------------------
-router.post('/', async(req, res) => {
+router.post('/userInterests', async(req, res) => {
   try {
     
     const userInterestsData = await UserInterests.create(req.body);

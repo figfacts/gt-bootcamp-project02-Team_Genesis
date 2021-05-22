@@ -18,7 +18,7 @@ const { User } = require('../../config/models');
 // -----------------------------------------------------------------------------
 // Get All Users
 // -----------------------------------------------------------------------------
-router.get('/', async(req, res) => {
+router.get('/users', async(req, res) => {
   try {
     const userData = await User.findAll({
     });
@@ -64,7 +64,7 @@ router.get('/byemail/:email', async(req, res) => {
 // -----------------------------------------------------------------------------
 // Create (Add) A User
 // -----------------------------------------------------------------------------
-router.post('/', async(req, res) => {
+router.post('/users', async(req, res) => {
   try {
   //hashing password should be a hook on your model | Justin B. to Update 
 	// req.body.password = await bcrypt.hash(req.body.password, 10);
