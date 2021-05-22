@@ -18,7 +18,7 @@ const sequelize = require('../connection.js');
 // -----------------------------------------------------------------------------
 // Class: Team - Initialize table by extending Sequelize's Model Class
 // -----------------------------------------------------------------------------
-class Team extends Model {}
+class Team extends Model { }
 
 // Set up fields and rules for Team model
 Team.init(
@@ -29,10 +29,26 @@ Team.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    initials: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    teamLogo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    league_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'league',
+        key: 'id'
+      }
+    }
   },
   {
     sequelize,
