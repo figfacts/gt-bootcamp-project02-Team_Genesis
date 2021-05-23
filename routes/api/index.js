@@ -13,6 +13,7 @@
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
 
+
 const categoryRoutes = require('./category-routes');
 const leagueRoutes = require('./league-routes');
 const subCategoryRoutes = require('./subCategory-routes');
@@ -30,6 +31,8 @@ router.use('/subCategory', subCategoryRoutes);
 router.use('/team', teamRoutes);
 router.use('/user', userRoutes);
 router.use('/userInterests', userInterestsRoutes);
+router.use('/category', categoryRoutes);
+router.use('/subcategory', subcategoryRoutes);
 
 
 // -----------------------------------------------------------------------------
