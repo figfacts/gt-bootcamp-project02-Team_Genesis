@@ -66,15 +66,15 @@ User.init(
       type: DataTypes.DECIMAL.UNSIGNED(9, 2),
       allowNull: true
     },
+  },
+  {
     hooks: {
       // Use the beforeCreate hook to work with data before a new instance is created
       beforeCreate: async (newUserData) => {
         newUserData.password = await bcrypt.hash(req.body.password, 10);
         return newUserData;
       }
-    }
-  },
-  {
+    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
