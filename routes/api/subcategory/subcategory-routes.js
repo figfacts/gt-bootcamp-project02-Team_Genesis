@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const Category  = require('../../config/models/Category');
-const SubCategory = require('../../config/models/SubCategory');
+const Category  = require('../../../config/models/Category');
+const SubCategory = require('../../../config/models/SubCategory');
 
 
 //Get all subcategories---------------------------------------------------
