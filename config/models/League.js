@@ -32,10 +32,12 @@ League.init(
     initials: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
       },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     leagueLogo: {
         type: DataTypes.STRING,

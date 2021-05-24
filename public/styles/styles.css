@@ -50,7 +50,7 @@
   border-style: solid;
   border-width: 1px;
   border-color: black;
-  height: 625px;
+  height: 670px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -208,4 +208,11 @@ h1{
 .itemprice{
   text-align: center;
   font-style: italic;
+}
+
+.itemname{
+  text-align: center;
+  font-style: italic; 
+  font-size: 15px;
+  margin-top: 5px;
 }
