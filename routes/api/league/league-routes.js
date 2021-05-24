@@ -23,7 +23,7 @@ router.get('/', async(req, res) => {
     const leagueData = await User.findAll({
     });
     if (!leagueData) res.status(404).json({ message: 'No leagues exist.' });
-    res.status(200).json(leaugeData);
+    res.status(200).json(leagueData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -33,7 +33,7 @@ router.get('/', async(req, res) => {
 // -----------------------------------------------------------------------------
 // Get A League By its id (primary key)
 // -----------------------------------------------------------------------------
-router.get('/:id', async(req, res) => {
+router.get('/byId/:id', async(req, res) => {
   try {
     const leagueData = await League.findByPk(req.params.id, {
     });
@@ -47,7 +47,7 @@ router.get('/:id', async(req, res) => {
 // -----------------------------------------------------------------------------
 // Get A League By its initials
 // -----------------------------------------------------------------------------
-router.get('/:initials', async(req, res) => {
+router.get('/byInitials/:initials', async(req, res) => {
   try {
     const leagueData = await League.findOne({
       where: {initials: req.params.initials}
