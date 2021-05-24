@@ -4,7 +4,7 @@ const { render } = require('../../server');
 const router = require('express').Router();
 
 
-// find all categories----------------------------------------------------
+// get all categories----------------------------------------------------
   
 router.get('/', async (req, res) => {
  try {
@@ -30,7 +30,23 @@ router.get('byid/:id', async (req, res) => {
       return res.status(500).json(err)
   }
 
+});
+
+//get one category by it's name-----------------------------------------------
+
+router.get('byname/:name', async (req, res) => {
+  // find one category by its `id` value
+// be sure to include its associated Products
+try {
+    const categoryData = await Category.findOne(req.params.name);
+    return res.json(categoryData);
+} catch (err) {
+    console.log(err);
+    return res.status(500).json(err)
+}
+
 })
+
 
 //create and add a new category--------------------------------------------------------------------------------------
 
