@@ -13,7 +13,7 @@
 // -----------------------------------------------------------------------------
 const seedCategories = require('./category-seeds');
 const seedItems = require('./item-seeds');
-const seedLeagues = require('./league-seeds');
+const seedLeagues = require('./league-sees');
 const seedSubCategories = require('./subCategory-seeds');
 const seedTeams = require('./team-seeds');
 const seedUsers = require('./user-seeds');
