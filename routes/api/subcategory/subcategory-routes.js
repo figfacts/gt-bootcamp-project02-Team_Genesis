@@ -18,6 +18,9 @@ router.get('/', async (req, res) => {
     
 });
 
+//get subcategory by intials---------------------------------------------
+//may no longer be needed?------------------------------------------
+
 router.get('byintials/:initials', async (req, res) => {
 
   try {
@@ -33,9 +36,25 @@ router.get('byintials/:initials', async (req, res) => {
   
 });
 
+//get a subcategory by description--------------------------------------------------
+router.get('bydescription/:description', async (req, res) => {
+
+  try {
+      const subCategoryData = await SubCategory.findOne({
+        where: {description: req.params.description}
+      });
+      return res.json(subCategoryData);
+      
+      } catch (err) {
+          console.log(err);
+          return res.status(500).json(err)
+      } 
+  
+});
+
 //Get one subcategory by its id------------------------------------------------------------
 
-router.get('/:id', async (req, res) => {
+router.get('byid/:id', async (req, res) => {
     // find one category by its `id` value
   try {
       const subCategoryData = await SubCategory.findByPk(req.params.id);
@@ -62,7 +81,7 @@ router.post('/', async (req, res) => {
 
   //delete a subcategory by it's id---------------------------------------------------------------------
 
-  router.delete('/:id', async (req, res) => {
+  router.delete('byid/:id', async (req, res) => {
     try {
       const subCategoryData = await SubCategory.destroy({
         where: {
@@ -83,7 +102,7 @@ router.post('/', async (req, res) => {
   
   //update a subcategory by its id -------------------------------------------
 
-  router.put('/:id', async (req, res) => {
+  router.put('byid/:id', async (req, res) => {
     try {
       const subCategoryData = await SubCategory.update(req.body, {
         where: {
@@ -100,6 +119,25 @@ router.post('/', async (req, res) => {
     }
   });
 
-    //export out category routes---------------------------------
+  //update a subcategory description------------------------------------
+
+  router.put('bydescription/:description', async (req, res) => {
+    try {
+      const subCategoryData = await SubCategory.update(req.body, {
+        where: {
+          id: req.params.description,
+        },
+      });
+      if (!subCategoryData[0]) {
+        res.status(404).json({ message: 'No subcategory found' });
+        return;
+      }
+      res.status(200).json(subCategoryData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+    //export out subcategory routes---------------------------------
 
 module.exports = router;
