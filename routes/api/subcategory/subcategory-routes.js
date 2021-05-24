@@ -37,7 +37,6 @@ router.get('byintials/:initials', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     // find one category by its `id` value
-  // be sure to include its associated Products
   try {
       const subCategoryData = await SubCategory.findByPk(req.params.id);
       return res.json(subCategoryData);
