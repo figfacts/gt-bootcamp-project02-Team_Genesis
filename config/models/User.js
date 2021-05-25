@@ -55,7 +55,7 @@ User.init(
       allowNull: true
     },
     itemsPriceSold: {
-      type: DataTypes.DECIMAL.UNSIGNED(9, 2),
+      type: DataTypes.DECIMAL(9, 2),
       allowNull: true
     },
     itemsCountBought: {
@@ -63,13 +63,13 @@ User.init(
       allowNull: true
     },
     itemsPriceBought: {
-      type: DataTypes.DECIMAL.UNSIGNED(9, 2),
+      type: DataTypes.DECIMAL(9, 2),
       allowNull: true
     },
   },
   {
     hooks: {
-      // Use the beforeCreate hook to work with data before a new instance is created
+      // has password
       beforeCreate: async (newUserData) => {
         newUserData.password = await bcrypt.hash(req.body.password, 10);
         return newUserData;

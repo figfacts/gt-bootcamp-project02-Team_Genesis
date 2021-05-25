@@ -17,7 +17,7 @@ const seedLeagues = require('./league-sees');
 const seedSubCategories = require('./subCategory-seeds');
 const seedTeams = require('./team-seeds');
 const seedUsers = require('./user-seeds');
-const seedUserInterests = require('./userInterest-seeds');
+const seedUserInterests = require('./userInterests-seeds');
 
 const sequelize = require('../config/connection');
 
