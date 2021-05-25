@@ -92,7 +92,7 @@ const teamData = [
     city:       'WBA',
     name:       'WBA',
     league_id:  5
-  },
+  }
 ];
 
 
@@ -105,4 +105,4 @@ const seedTeams = () => Team.bulkCreate(teamData);
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
-module.exports = teamLeagues;
+module.exports = seedTeams;
