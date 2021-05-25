@@ -27,9 +27,9 @@ router.get("/", async (req, res) => {
 });
 
 //-------------------------------------------------------------------------------------------------------
-// GET Teams by (LEAUGE)
+// GET Teams by (LEAGUE)
 //-------------------------------------------------------------------------------------------------------
-router.get("/byleauge/:leauge", async (req, res) => {
+router.get("/byleague/:league", async (req, res) => {
   try {
     const teamData = await Team.findOne(req.params.initials, {
       include: [{ model: League }],
@@ -98,3 +98,8 @@ router.put('/byid/:id', async(req, res) => {
     })
     .catch((err) => res.json(err));
 });
+
+// -----------------------------------------------------------------------------
+// Module Exports
+// -----------------------------------------------------------------------------
+module.exports = router;

@@ -14,7 +14,7 @@
 const router = require('express').Router();
 
 
-const categoryRoutes = require('./category-routes');
+const categoryRoutes = require('./category/category-routes');
 const leagueRoutes = require('./league-routes');
 const subCategoryRoutes = require('./subCategory-routes');
 const teamRoutes = require('./team-routes');

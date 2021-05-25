@@ -12,7 +12,7 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
-const { League } = require('../../config/models/League');
+const { League } = require('../../../config/models');
 
 
 // -----------------------------------------------------------------------------

@@ -105,4 +105,4 @@ const seedTeams = () => Team.bulkCreate(teamData);
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
-module.exports = teamLeagues;
+module.exports = seedTeams;

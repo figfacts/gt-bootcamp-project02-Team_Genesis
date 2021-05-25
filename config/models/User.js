@@ -19,7 +19,7 @@ const bcrypt = require('bcrypt');
 // -----------------------------------------------------------------------------
 // Class: User - Initialize table by extending Sequelize's Model Class
 // -----------------------------------------------------------------------------
-class User extends Model { }
+class User extends Model {}
 
 // Set up fields and rules for User model
 User.init(
@@ -28,16 +28,16 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
+    initials: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false
-    },
+  },
     email: {
       type: DataTypes.STRING,
       allowNull: false
@@ -55,7 +55,7 @@ User.init(
       allowNull: true
     },
     itemsPriceSold: {
-      type: DataTypes.DECIMAL.UNSIGNED(9, 2),
+      type: DataTypes.DECIMAL(9, 2),
       allowNull: true
     },
     itemsCountBought: {
@@ -63,18 +63,18 @@ User.init(
       allowNull: true
     },
     itemsPriceBought: {
-      type: DataTypes.DECIMAL.UNSIGNED(9, 2),
+      type: DataTypes.DECIMAL(9, 2),
       allowNull: true
     },
+  },
+  {
     hooks: {
       // Use the beforeCreate hook to work with data before a new instance is created
       beforeCreate: async (newUserData) => {
         newUserData.password = await bcrypt.hash(req.body.password, 10);
         return newUserData;
       }
-    }
-  },
-  {
+    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
