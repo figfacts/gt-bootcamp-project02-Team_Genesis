@@ -13,7 +13,7 @@
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
 // const bcrypt = require('bcrypt'); Justin B. See line 69 & 70
-const { User } = require('../../../config/models');
+const { User } = require('../../../config/models/User');
 
 // -----------------------------------------------------------------------------
 // Get All Users

@@ -11,7 +11,7 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
-const { Item } = require("../../../config/models");
+const { Item } = require("../../../config/models/Item");
 
 //-------------------------------------------------------------------------------------------------------
 // GET all ITEMS
