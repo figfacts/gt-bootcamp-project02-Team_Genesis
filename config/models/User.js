@@ -55,7 +55,7 @@ User.init(
       allowNull: true
     },
     itemsPriceSold: {
-      type: DataTypes.DECIMAL.UNSIGNED(9, 2),
+      type: DataTypes.DECIMAL(9, 2),
       allowNull: true
     },
     itemsCountBought: {
@@ -63,7 +63,7 @@ User.init(
       allowNull: true
     },
     itemsPriceBought: {
-      type: DataTypes.DECIMAL.UNSIGNED(9, 2),
+      type: DataTypes.DECIMAL(9, 2),
       allowNull: true
     },
   },

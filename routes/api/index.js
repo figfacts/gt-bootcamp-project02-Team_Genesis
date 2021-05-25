@@ -14,12 +14,12 @@
 const router = require('express').Router();
 
 
-const categoryRoutes = require('./category-routes');
-const leagueRoutes = require('./league-routes');
-const subCategoryRoutes = require('./subCategory-routes');
-const teamRoutes = require('./team-routes');
-const userRoutes = require('./user-routes');
-const userInterestsRoutes = require('./userInterests-routes');
+const categoryRoutes = require('./category/category-routes');
+const leagueRoutes = require('./league/league-routes');
+const subCategoryRoutes = require('./subcategory/subcategory-routes');
+const teamRoutes = require('./team-routes/team');
+const userRoutes = require('./user/user-routes');
+const userInterestsRoutes = require('./userInterests/userInterests-routes');
 
 
 // -----------------------------------------------------------------------------
