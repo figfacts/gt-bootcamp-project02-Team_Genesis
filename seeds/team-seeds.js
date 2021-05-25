@@ -92,7 +92,7 @@ const teamData = [
     city:       'WBA',
     name:       'WBA',
     league_id:  5
-  },
+  }
 ];
 
 

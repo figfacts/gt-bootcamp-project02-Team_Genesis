@@ -11,7 +11,7 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
-const { Team, League } = require("../../../config/models");
+const { Team } = require("../../../config/models/Team");
 
 //-------------------------------------------------------------------------------------------------------
 // GET all teams
@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
 router.get("/byleague/:league", async (req, res) => {
   try {
     const teamData = await Team.findOne(req.params.initials, {
-      include: [{ model: League }],
+      // include: [{ model: League }],
     });
     if (!teamData) {
       res.status(404).json({ message: "No team found!" });
@@ -98,6 +98,7 @@ router.put('/byid/:id', async(req, res) => {
     })
     .catch((err) => res.json(err));
 });
+
 
 // -----------------------------------------------------------------------------
 // Module Exports
