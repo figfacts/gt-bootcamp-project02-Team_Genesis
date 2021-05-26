@@ -21,33 +21,33 @@ const leagueData = [
   {
     initials:   'NFL',
     name:       'National Football League',
-    leagueLogo: 'NFL.jpg'
+    leagueLogo: 'NFL.png'
   },
   {
     initials:   'NBA',
     name:       'National Basketball Association',
-    leagueLogo: 'NBA.jpg'
+    leagueLogo: 'NBA.svg'
   },
   {
     initials:   'WNBA',
     name:       "Women's National Basektball Association",
-    leagueLogo: 'WNBA.jpg'
+    leagueLogo: 'WNBA.png'
   },
   {
     initials:   'MLB',
     name:       'Major League Baseball',
-    leagueLogo: 'MLB.jpg'
+    leagueLogo: 'MLB.png'
   },
   {
     initials:   'WBA',
     name:       'World Boxing Association',
-    leagueLogo: 'WBA.jpg'
+    leagueLogo: 'WBA.png'
   }
 ];
 
 
 // -----------------------------------------------------------------------------
-// Use Sequalize to do multi-insert into table.
+// Use Sequelize to do multi-insert into table.
 // -----------------------------------------------------------------------------
 const seedLeagues = () => League.bulkCreate(leagueData);
 
