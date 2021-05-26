@@ -12,8 +12,9 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
-const { UserInterests } = require('../../../config/models/');
-
+const { QueryTypes } = require("sequelize");
+const { UserInterests, User, Category } = require('../../../config/models');
+const { sequelize } = require('../../../config/models/UserInterests');
 
 // -----------------------------------------------------------------------------
 // Get All User's Interests
@@ -21,11 +22,15 @@ const { UserInterests } = require('../../../config/models/');
 router.get('/', async(req, res) => {
   try {
     const userInterestsData = await UserInterests.findAll({
-      attributes: { exclude: [id] }
+      include: [{ model: User }, { model: Category }],
+      order: [sequelize.col('user.lastName'), 
+              sequelize.col('user.lastName'),
+              sequelize.col('category.name')],
     });
     if (!userInterestsData) res.status(404).json({ message: 'There are not any interests for any users.' });
     res.status(200).json(userInterestsData);
   } catch (err) {
+    console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
 });
@@ -34,34 +39,67 @@ router.get('/', async(req, res) => {
 // -----------------------------------------------------------------------------
 // Get A User's Interests By its user_id
 // -----------------------------------------------------------------------------
-router.get('/byuser/:userId', async(req, res) => {
+router.get('/byuserid/:userId', async(req, res) => {
   try {
-    const userInterestsData = await UserInterests.findOne({
-      attributes: { exclude: [id] },
-      where: {user_id: req.params.userId}
+    const userInterestsData = await UserInterests.findAll({
+      where: { user_id: req.params.userId },
+      order: [sequelize.col('category.name')],
+      include: [{ model: User }, { model: Category }],
     });
-    if (!userInterestsData) res.status(404).json({ message: `There are not any interests for this user:  ${req.params.userId}.` });
+    if (!userInterestsData || userInterestsData.length === 0) { res.status(404).json({ message: `There are not any interests for this user:  ${req.params.userId}.` })};
     res.status(200).json(userInterestsData);
   } catch (err) {
+    console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
 });
+
+// User requested by user id, but didn't provide a user id - prompt for user id
+router.get('/byuserid/', async (req, res) => {
+  res.status(400).json({
+    message: "Please provide user id."
+  })
+}
+);
 
 
 // -----------------------------------------------------------------------------
 // Get A User's Interests By its category_id
 // -----------------------------------------------------------------------------
-router.get('/bycategory/:categoryId', async(req, res) => {
+router.get('/bycategoryid/:categoryId', async(req, res) => {
   try {
-    const userInterestsData = await UserInterests.findOne({
-      where: {category_id: req.params.categoryId}
+    const userInterestsData = await UserInterests.findAll({
+      where: { category_id: req.params.categoryId },
+      order: [sequelize.col('user.lastName'), 
+      sequelize.col('user.lastName')],
+      include: [{ model: User }, { model: Category }],
     });
-    if (!userInterestsData) res.status(404).json({ message: `There are not any interests for this category: ${req.params.categoryId}.` });
+    if (!userInterestsData || userInterestsData.length === 0) { res.status(404).json({ message: `There are not any interests for this user:  ${req.params.userId}.` })};
     res.status(200).json(userInterestsData);
   } catch (err) {
+    console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
 });
+
+// User requested by category id, but didn't provide a category id - prompt for category id
+router.get('/byuserid/', async (req, res) => {
+  res.status(400).json({
+    message: "Please provide category id."
+  })
+}
+);
+
+
+// -----------------------------------------------------------------------------
+// Render 404 page for any unmatched routes
+// -----------------------------------------------------------------------------
+router.get("*", function (req, res) {
+  res.status(404).json({
+    message: "An Invalid Route was Requested."
+  })
+});
+
 
 // -----------------------------------------------------------------------------
 // Create (Add) A User's Interest

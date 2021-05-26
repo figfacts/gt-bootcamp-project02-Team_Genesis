@@ -51,6 +51,17 @@ User.hasMany(UserInterests, {
   onDelete: 'RESTRICT',
 });
 
+// UserInterests belongsTo Category
+UserInterests.belongsTo(Category, {
+  foreignKey: 'category_id',
+});
+
+// Users have many UserInterests
+Category.hasMany(UserInterests, {
+  foreignKey: 'category_id',
+  onDelete: 'RESTRICT',
+});
+
 // Products belongToMany Tags (through ProductTag)
 // Product.belongsToMany(Tag, {
 //   through: ProductTag,
