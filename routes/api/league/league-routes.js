@@ -15,7 +15,6 @@ const router = require('express').Router();
 const { League } = require('../../../config/models');
 const { sequelize } = require('../../../config/models/League');
 
-
 // -----------------------------------------------------------------------------
 // Get All Leagues
 // -----------------------------------------------------------------------------

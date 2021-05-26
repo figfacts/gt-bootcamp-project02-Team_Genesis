@@ -30,6 +30,6 @@ const router = require('express').Router();
     // console.log(req);
     res.render("404");
   });
-// };
 
 module.exports = router;
+
