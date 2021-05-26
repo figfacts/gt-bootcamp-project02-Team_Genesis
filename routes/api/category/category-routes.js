@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 
 //get one category by it's id---------------------------------------------------------------
 
-router.get('byid/:id', async (req, res) => {
+router.get('/byid/:id', async (req, res) => {
     // find one category by its `id` value
   // be sure to include its associated Products
   try {
@@ -34,7 +34,7 @@ router.get('byid/:id', async (req, res) => {
 
 //get one category by it's name-----------------------------------------------
 
-router.get('byname/:name', async (req, res) => {
+router.get('/byname/:name', async (req, res) => {
   // find one category by its `id` value
 // be sure to include its associated Products
 try {
@@ -64,7 +64,7 @@ router.post('/', async (req, res) => {
 
   //delete a category by it's id---------------------------------------------------------------------
 
-  router.delete('byid/:id', async (req, res) => {
+  router.delete('/byid/:id', async (req, res) => {
     try {
       const categoryData = await Category.destroy({
         where: {
@@ -86,7 +86,7 @@ router.post('/', async (req, res) => {
 
   //update a category by its id -------------------------------------------
 
-  router.put('byid/:id', async (req, res) => {
+  router.put('/byid/:id', async (req, res) => {
     try {
       const categoryData = await Category.update(req.body, {
         where: {
