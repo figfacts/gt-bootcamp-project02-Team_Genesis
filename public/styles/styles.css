@@ -223,3 +223,9 @@ footer{
   width: 1320px;
   margin-left: 60px;
 }
+
+#emailSendBtn{
+  margin-left: 100px;
+  margin-top: 25px;
+  width: 150px;
+}

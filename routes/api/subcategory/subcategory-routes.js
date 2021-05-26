@@ -18,26 +18,8 @@ router.get('/', async (req, res) => {
     
 });
 
-//get subcategory by intials---------------------------------------------
-//may no longer be needed?------------------------------------------
-
-router.get('byintials/:initials', async (req, res) => {
-
-  try {
-      const subCategoryData = await SubCategory.findOne({
-        where: {intials: req.params.initials}
-      });
-      return res.json(subCategoryData);
-      
-      } catch (err) {
-          console.log(err);
-          return res.status(500).json(err)
-      } 
-  
-});
-
 //get a subcategory by description--------------------------------------------------
-router.get('bydescription/:description', async (req, res) => {
+router.get('/bydescription/:description', async (req, res) => {
 
   try {
       const subCategoryData = await SubCategory.findOne({
@@ -54,17 +36,43 @@ router.get('bydescription/:description', async (req, res) => {
 
 //Get one subcategory by its id------------------------------------------------------------
 
-router.get('byid/:id', async (req, res) => {
+
+
+
+router.get('/byid/:id', async (req, res) => {
     // find one category by its `id` value
+    if (!req.params.id) {
+      res.status(400).json({
+        message: "Please provide id."
+      })
+    };
+    
   try {
       const subCategoryData = await SubCategory.findByPk(req.params.id);
-      return res.json(subCategoryData);
+      if (subCategoryData) {
+        res.status(200).json(subCategoryData);
+      } else {
+        res.status(404).json({
+          message: "No records found."
+        });
+      };
+      
+
   } catch (err) {
       console.log(err);
       return res.status(500).json(err)
   }
 
 });
+
+
+router.get('/byid/', async (req, res) => {
+  // find one category by its `id` value
+      res.status(400).json({
+      message: "Please provide id."
+    })
+  }
+);
 
 //create and add a new subcategory-----------------------------------------------------
 
@@ -81,7 +89,7 @@ router.post('/', async (req, res) => {
 
   //delete a subcategory by it's id---------------------------------------------------------------------
 
-  router.delete('byid/:id', async (req, res) => {
+  router.delete('/byid/:id', async (req, res) => {
     try {
       const subCategoryData = await SubCategory.destroy({
         where: {
@@ -102,7 +110,7 @@ router.post('/', async (req, res) => {
   
   //update a subcategory by its id -------------------------------------------
 
-  router.put('byid/:id', async (req, res) => {
+  router.put('/byid/:id', async (req, res) => {
     try {
       const subCategoryData = await SubCategory.update(req.body, {
         where: {
@@ -121,7 +129,7 @@ router.post('/', async (req, res) => {
 
   //update a subcategory description------------------------------------
 
-  router.put('bydescription/:description', async (req, res) => {
+  router.put('/bydescription/:description', async (req, res) => {
     try {
       const subCategoryData = await SubCategory.update(req.body, {
         where: {

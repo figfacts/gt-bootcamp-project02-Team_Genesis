@@ -20,7 +20,7 @@ const { League } = require('../../../config/models');
 // -----------------------------------------------------------------------------
 router.get('/', async(req, res) => {
   try {
-    const leagueData = await User.findAll({
+    const leagueData = await League.findAll({
     });
     if (!leagueData) res.status(404).json({ message: 'No leagues exist.' });
     res.status(200).json(leagueData);

@@ -17,7 +17,6 @@ const closeSignUpBtn = document.getElementById('signUpCloseBtn')
 //FOOTER "ABOUT-US" MODAL & BUTTONS
 //--------------------------------------------------------------------------
 const myModalAboutUs = document.getElementById('aboutUsModal')
-// const myInputSignup = document.getElementById('myInputSignUp')
 const aboutUsBtn = document.getElementById('aboutUsBtn')
 const closeAboutUsBtn = document.getElementById('aboutUsCloseBtn')
 
@@ -25,7 +24,6 @@ const closeAboutUsBtn = document.getElementById('aboutUsCloseBtn')
 //FOOTER CONTACT-US MODAL & BUTTONS
 //--------------------------------------------------------------------------
 const myModalContactUs= document.getElementById('contactUsModal')
-// const myInputSignup = document.getElementById('myInputSignUp')
 const contactUsBtn = document.getElementById('contactUsBtn')
 const closeContactUsBtn = document.getElementById('contactUsCloseBtn')
 
@@ -73,10 +71,6 @@ closeSignUpBtn.onclick = function(event) {
   }
 }
 
-
-
-
-
 //--------------------------------------------------------------------------
 // OPEN AND CLOSE FOOTER ABOUT-US/CONTACT-US MODALS
 //--------------------------------------------------------------------------
@@ -90,12 +84,12 @@ closeAboutUsBtn.onclick = function(event) {
   }
 }
 
-signUpModalBtn.onclick = function() {
-  myModalSignUp.style.display = "block";
+contactUsBtn.onclick = function() {
+  myModalContactUs.style.display = "block";
 }
 
-closeSignUpBtn.onclick = function(event) {
-  if (event.target === closeSignUpBtn) {
-    myModalSignUp.style.display = "none";
+closeContactUsBtn.onclick = function(event) {
+  if (event.target === closeContactUsBtn) {
+    myModalContactUs.style.display = "none";
   }
 }
