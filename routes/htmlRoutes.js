@@ -1,15 +1,8 @@
 // var db = require("../..../config/models");
 const path=require("path");
-<<<<<<< HEAD
-
-const router = require('express').Router();
-
-// module.exports = function(app) {
-=======
 // const { router } = require("../server");
 const router = require('express').Router();
 // function(app) {
->>>>>>> d8bcf3c3af35dbcd0363eda3df067798d704e0b3
   // Load index page
   // app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
@@ -34,18 +27,9 @@ const router = require('express').Router();
 
   // Render 404 page for any unmatched routes
   router.get("*", function(req, res) {
-<<<<<<< HEAD
-    console.log(req);
-    res.render("404");
-  });
-// };
-
-module.exports = router;
-=======
     // console.log(req);
     res.render("404");
   });
 
 module.exports = router;
 
->>>>>>> d8bcf3c3af35dbcd0363eda3df067798d704e0b3
