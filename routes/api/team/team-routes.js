@@ -11,14 +11,16 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
-const { Team } = require("../../../config/models/Team");
+const { Team, League } = require("../../../config/models");
 
 //-------------------------------------------------------------------------------------------------------
 // GET all teams
 //-------------------------------------------------------------------------------------------------------
 router.get("/", async (req, res) => {
   try {
-    const teamData = await Team.findAll({});
+    const teamData = await Team.findAll({
+      include: [{ model: League }],
+    });
     if (!teamData) res.status(404).json({ message: "No team exist." });
     res.status(200).json(teamData);
   } catch (err) {
@@ -29,9 +31,9 @@ router.get("/", async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 // GET Teams by (LEAGUE)
 //-------------------------------------------------------------------------------------------------------
-router.get("/byleauge/:leauge", async (req, res) => {
+router.get("/byleague/:league", async (req, res) => {
   try {
-    const teamData = await Team.findOne(req.params.initials, {
+    const teamData = await Team.findOne(req.params.League, {
       include: [{ model: League }],
     });
     if (!teamData) {
@@ -84,8 +86,8 @@ router.put('/byid/:id', async(req, res) => {
   Team.update(
     {
       city: req.body.id,
-      name: req.body.initials,
-      leauge_id: req.body.leauge_id,
+      name: req.body.name,
+      league_id: req.body.league_id,
     },
     {
       where: {

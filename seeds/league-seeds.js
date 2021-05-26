@@ -51,7 +51,7 @@ const leagueData = [
 ];
 
 // -----------------------------------------------------------------------------
-// Use Sequalize to do multi-insert into table.
+// Use Sequelize to do multi-insert into table.
 // -----------------------------------------------------------------------------
 const seedLeagues = () => League.bulkCreate(leagueData);
 
