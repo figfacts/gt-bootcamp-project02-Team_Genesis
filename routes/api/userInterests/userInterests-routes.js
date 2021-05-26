@@ -21,6 +21,7 @@ const { UserInterests } = require('../../../config/models/');
 router.get('/', async(req, res) => {
   try {
     const userInterestsData = await UserInterests.findAll({
+      attributes: { exclude: [id] }
     });
     if (!userInterestsData) res.status(404).json({ message: 'There are not any interests for any users.' });
     res.status(200).json(userInterestsData);
@@ -36,6 +37,7 @@ router.get('/', async(req, res) => {
 router.get('/byuser/:userId', async(req, res) => {
   try {
     const userInterestsData = await UserInterests.findOne({
+      attributes: { exclude: [id] },
       where: {user_id: req.params.userId}
     });
     if (!userInterestsData) res.status(404).json({ message: `There are not any interests for this user:  ${req.params.userId}.` });
