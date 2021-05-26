@@ -1,8 +1,8 @@
-// var db = require("../../config/models");
+// var db = require("../..../config/models");
 const path=require("path");
-
-
-module.exports = function(app) {
+// const { router } = require("../server");
+const router = require('express').Router();
+// function(app) {
   // Load index page
   // app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
@@ -12,12 +12,12 @@ module.exports = function(app) {
   //     });
   //   });
   // });
-  app.get("/", function(req, res) {
+  router.get("/", function(req, res) {
       res.sendFile(path.join(__dirname, "../public/html/homepage.html"));
   });
 
   // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
+  router.get("/example/:id", function(req, res) {
     db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
       res.render("example", {
         example: dbExample
@@ -26,10 +26,10 @@ module.exports = function(app) {
   });
 
   // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
-    console.log(req);
+  router.get("*", function(req, res) {
+    // console.log(req);
     res.render("404");
   });
-};
+// };
 
-// module.exports = router;
+module.exports = router;
