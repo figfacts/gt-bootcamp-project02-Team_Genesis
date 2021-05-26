@@ -27,7 +27,6 @@ const handleSignUp = async function(event) {
 			firstName: firstNameEl.value,
 			lastName: lastNameEl.value,
 			email: emailAddressEl.value,
-			username: usernameEl.value,
 			password: passwordEl.value,
 			signUpDate: isoDate
 		}),
