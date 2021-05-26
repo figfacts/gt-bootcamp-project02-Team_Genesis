@@ -12,7 +12,7 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
-const { UserInterests } = require('../../../config/models/UserInterests');
+const { UserInterests } = require('../../../config/models/');
 
 
 // -----------------------------------------------------------------------------
