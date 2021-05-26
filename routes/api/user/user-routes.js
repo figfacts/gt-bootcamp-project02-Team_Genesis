@@ -75,6 +75,20 @@ router.post('/', async(req, res) => {
   }
 });
 
+// -----------------------------------------------------------------------------
+// Login A User
+// -----------------------------------------------------------------------------
+router.post('/login', async (req, res, next) => {
+	try {
+		passport.authenticate('local', {
+			successRedirect: '/dashboard',
+			failureRedirect: '/login',
+		})(req, res, next);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
 
 // -----------------------------------------------------------------------------
 // Update A User By its id (primary key)
