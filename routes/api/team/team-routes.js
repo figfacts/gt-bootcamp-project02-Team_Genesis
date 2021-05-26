@@ -18,7 +18,9 @@ const { Team, League } = require("../../../config/models");
 //-------------------------------------------------------------------------------------------------------
 router.get("/", async (req, res) => {
   try {
-    const teamData = await Team.findAll({});
+    const teamData = await Team.findAll({
+      include: [{ model: League }],
+    });
     if (!teamData) res.status(404).json({ message: "No team exist." });
     res.status(200).json(teamData);
   } catch (err) {
