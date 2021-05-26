@@ -11,14 +11,14 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
-const { Item } = require("../../../config/models/Item");
+const { Item, User } = require("../../../config/models");
 
 //-------------------------------------------------------------------------------------------------------
 // GET all ITEMS
 //-------------------------------------------------------------------------------------------------------
 router.get("/", async (req, res) => {
   try {
-    const itemData = await Team.findAll({});
+    const itemData = await Item.findAll({});
     if (!itemData) res.status(404).json({ message: "No team exist." });
     res.status(200).json(itemData);
   } catch (err) {
@@ -27,24 +27,40 @@ router.get("/", async (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
+// Get A Item By its id (primary key)
+// -----------------------------------------------------------------------------
+router.get('/byId/:id', async(req, res) => {
+  try {
+    const itemData = await Item.findByPk(req.params.id, {
+    });
+    if (!itemData) res.status(404).json({ message: `The requested item ${req.params.id} does not exist.` });
+    res.status(200).json(itemData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+
+// -----------------------------------------------------------------------------
 // Update A Item By its id (primary key)
 // -----------------------------------------------------------------------------
 router.put("/byid/:id", async (req, res) => {
   try {
-    const userData = await User.update(req.body, {
+    const itemData = await Item.update(req.body, {
       where: {
         id: req.params.id,
       },
     });
 
-    if (!userData) {
+    if (!itemData) {
       res
         .status(404)
         .json({ message: `User ${req.params.id} does not exist.` });
       return;
     }
 
-    res.status(200).json(userData);
+    res.status(200).json(itemData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -67,7 +83,7 @@ router.post("/", async (req, res) => {
 // -----------------------------------------------------------------------------
 router.delete("/byid/:id", async (req, res) => {
   try {
-    const itemData = await User.destroy({
+    const itemData = await Item.destroy({
       where: {
         id: req.params.id,
       },
@@ -76,7 +92,7 @@ router.delete("/byid/:id", async (req, res) => {
     if (!itemData) {
       res
         .status(404)
-        .json({ message: `User: ${req.params.id} does not exist.` });
+        .json({ message: `Item: ${req.params.id} does not exist.` });
       return;
     }
 
@@ -106,7 +122,7 @@ router.put("/byid/:id", async (req, res) => {
     if (!itemData) {
       res
         .status(404)
-        .json({ message: `User ${req.params.id} does not exist.` });
+        .json({ message: `Item ${req.params.id} does not exist.` });
       return;
     }
 
@@ -115,3 +131,8 @@ router.put("/byid/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// -----------------------------------------------------------------------------
+// Module Exports
+// -----------------------------------------------------------------------------
+module.exports = router;

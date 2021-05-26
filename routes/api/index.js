@@ -20,7 +20,7 @@ const subCategoryRoutes = require('./subcategory/subCategory-routes');
 const teamRoutes = require('./team/team-routes');
 const userRoutes = require('./user/user-routes');
 const userInterestsRoutes = require('./userInterests/userInterests-routes');
-
+const itemRoutes = require('./item/itemRoutes');
 
 // -----------------------------------------------------------------------------
 // Actual Routes
@@ -31,8 +31,8 @@ router.use('/subCategory', subCategoryRoutes);
 router.use('/team', teamRoutes);
 router.use('/user', userRoutes);
 router.use('/userInterests', userInterestsRoutes);
-router.use('/category', categoryRoutes);
-router.use('/subcategory', subCategoryRoutes);
+router.use('/item', itemRoutes);
+
 
 
 // -----------------------------------------------------------------------------
