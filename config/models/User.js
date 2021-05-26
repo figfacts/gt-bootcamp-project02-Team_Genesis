@@ -30,10 +30,10 @@ User.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    initials: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+  },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false
@@ -78,8 +78,8 @@ User.init(
     sequelize,
     timestamps: false,
     freezeTableName: true,
-    underscored: true,
-    modelName: 'user',
+    // underscored: true,
+    modelName: 'User',
   }
 );
 

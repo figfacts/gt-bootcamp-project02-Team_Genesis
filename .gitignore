@@ -2,4 +2,9 @@
 node_modules
 npm-debug.log
 .env
+<<<<<<< HEAD
 sql-files
+=======
+serverDF.js
+package-lock.json
+>>>>>>> 94e01819ea3847c56d259cc9eafbc7e917c3b055

@@ -12,7 +12,8 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
-const { League } = require('../../../config/models/League');
+const { League } = require('../../../config/models');
+
 
 
 // -----------------------------------------------------------------------------
@@ -20,7 +21,7 @@ const { League } = require('../../../config/models/League');
 // -----------------------------------------------------------------------------
 router.get('/', async(req, res) => {
   try {
-    const leagueData = await User.findAll({
+    const leagueData = await League.findAll({
     });
     if (!leagueData) res.status(404).json({ message: 'No leagues exist.' });
     res.status(200).json(leagueData);

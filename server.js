@@ -23,9 +23,10 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
-require("./routes/index.js");
+// require("./routes/index.js");
 // require("./routes/index.js")(app);
-require("./routes/htmlRoutes.js")(app);
+app.use(require('./routes/index.js'));
+// require("./routes/htmlRoutes.js")(app);
 
 var syncOptions = { force: false };
 // var syncOptions = { force: true };
