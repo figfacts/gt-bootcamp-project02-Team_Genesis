@@ -36,4 +36,4 @@ const handleSignUp = async function(event) {
 	});
 }
 
-document.getElementById('myModalSignUp').addEventListener('submit', handleRegister);
+document.getElementById('signUp').addEventListener('submit', handleRegister);
