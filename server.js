@@ -25,9 +25,10 @@ app.set("view engine", "handlebars");
 // Routes
 require("./routes/index.js");
 // require("./routes/index.js")(app);
-// require("./routes/htmlRoutes")(app);
+require("./routes/htmlRoutes.js")(app);
 
 var syncOptions = { force: false };
+// var syncOptions = { force: true };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
