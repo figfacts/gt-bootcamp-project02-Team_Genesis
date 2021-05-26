@@ -2,16 +2,28 @@ require("dotenv").config();
 var express = require("express");
 var exphbs = require("express-handlebars");
 const sequelize = require('./config/connection');
+const passport = require('passport');
+const session = require('express-session');
 
 var db = require("./config/models");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+app.use(
+	session({
+	  secret: 'toaster struddle',
+	  resave: true,
+	  saveUninitialized: true
+	})
+ );
+
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Handlebars
 app.engine(
