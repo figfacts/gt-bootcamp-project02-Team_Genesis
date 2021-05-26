@@ -19,38 +19,56 @@ const { League } = require('../config/models');  // Object models relate to DB
 // -----------------------------------------------------------------------------
 const leagueData = [
   {
-    initials:   'NFL',
-    name:       'National Football League',
-    leagueLogo: 'NFL.jpg'
+    initials: 'NFL',
+    name: 'National Football League',
+    leagueLogo: '_NFL_Logo.png'
   },
   {
-    initials:   'NBA',
-    name:       'National Basketball Association',
-    leagueLogo: 'NBA.jpg'
+    initials: 'NBA',
+    name: 'National Basketball Association',
+    leagueLogo: '_NBA_Logo.svg'
   },
   {
-    initials:   'WNBA',
-    name:       "Women's National Basektball Association",
-    leagueLogo: 'WNBA.jpg'
+    initials: 'WNBA',
+    name: "Women's National Basektball Association",
+    leagueLogo: '_WNBA_Logo.png'
   },
   {
-    initials:   'MLB',
-    name:       'Major League Baseball',
-    leagueLogo: 'MLB.jpg'
+    initials: 'MLB',
+    name: 'Major League Baseball',
+    leagueLogo: '_MLB_Logo.png'
   },
   {
-    initials:   'WBA',
-    name:       'World Boxing Association',
-    leagueLogo: 'WBA.jpg'
+    initials: 'WBA',
+    name: 'World Boxing Association',
+    leagueLogo: '_WBA_Logo.png'
+  },
+  {
+    initials: 'MHL',
+    name: 'National Hockey League',
+    leagueLogo: '_NHL_Logo.png'
   }
 ];
-
 
 // -----------------------------------------------------------------------------
 // Use Sequalize to do multi-insert into table.
 // -----------------------------------------------------------------------------
 const seedLeagues = () => League.bulkCreate(leagueData);
 
+const indexLeague = League.sequelize.define('League', { /* attributes */ }, {
+  indexes: [
+    // Create a unique index on initials
+    {
+      unique: true,
+      fields: ['initials']
+    },
+    // Create a unique index on name
+    {
+      unique: true,
+      fields: ['name']
+    }
+  ]
+});
 
 // -----------------------------------------------------------------------------
 // Module Exports
