@@ -51,6 +51,50 @@ User.hasMany(UserInterests, {
   onDelete: 'RESTRICT',
 });
 
+// UserInterests belongsTo Category
+UserInterests.belongsTo(Category, {
+  foreignKey: 'category_id',
+});
+
+// Categories have many UserInterests
+Category.hasMany(UserInterests, {
+  foreignKey: 'category_id',
+  onDelete: 'RESTRICT',
+});
+
+// Item belongsTo User
+Item.belongsTo(User, {
+  foreignKey: 'user_id',
+});
+
+// Users have many Items
+User.hasMany(Item, {
+  foreignKey: 'user_id',
+  onDelete: 'RESTRICT',
+});
+
+// Item belongsTo SubCategory
+Item.belongsTo(SubCategory, {
+  foreignKey: 'subCategory_id',
+});
+
+// SubCategories have many Items
+SubCategory.hasMany(Item, {
+  foreignKey: 'subCategory_id',
+  onDelete: 'RESTRICT',
+});
+
+// Item belongsTo Team
+Item.belongsTo(Team, {
+  foreignKey: 'team_id',
+});
+
+// Teamss have many Items
+Team.hasMany(Item, {
+  foreignKey: 'team_id',
+  onDelete: 'RESTRICT',
+});
+
 // Products belongToMany Tags (through ProductTag)
 // Product.belongsToMany(Tag, {
 //   through: ProductTag,
