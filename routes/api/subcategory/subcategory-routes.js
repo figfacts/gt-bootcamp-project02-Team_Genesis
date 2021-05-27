@@ -81,7 +81,7 @@ router.get('/bydescription/:description', async (req, res) => {
 
 
 //-------------------------------------------------------------------------------------------------------
-// GET Teams by category id
+// GET SubCategory by category id
 //-------------------------------------------------------------------------------------------------------
 router.get("/bycategoryid/:categoryid", async (req, res) => {
   try {
@@ -111,24 +111,31 @@ router.get('/bycategoryid/', async (req, res) => {
 
 
 //-------------------------------------------------------------------------------------------------------
-// GET Teams by category name
+// GET SubCategory by category name
 //-------------------------------------------------------------------------------------------------------
 router.get("/bycategoryname/:categoryname", async (req, res) => {
   try {
-    const teamData = await sequelize.query(
-      `SELECT * FROM subcategoryinfo WHERE category_name = "${req.params.categoryname}" 
+    const subCategoryData = await sequelize.query(
+      `SELECT * 
+      FROM subcategoryinfo 
+      WHERE category_name = "${req.params.categoryname}" 
       ORDER BY description`, 
       {
-        // model: SubCategory,
-        // mapToModel: true,
-        // include: [{ model: Category }],
+        model: SubCategory,
+        include: [{ model: Category }],
+        mapToModel: true,
         type: QueryTypes.SELECT
       });
-    if (!teamData || teamData.length == 0) {
-      res.status(404).json({ message: "No team found!" });
+    // const subCategoryData = await SubCategory.findAll({
+    //   where: { ['category.name']: req.params.categoryname },
+    //   order: [sequelize.col('subcategory.description')],
+    //   include: [{ model: Category }],
+    // });
+    if (!subCategoryData || subCategoryData.length == 0) {
+      res.status(404).json({ message: "No subCategory found!" });
       return;
     }
-    res.status(200).json(teamData);
+    res.status(200).json(subCategoryData);
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(500).json(err);
@@ -136,9 +143,9 @@ router.get("/bycategoryname/:categoryname", async (req, res) => {
 });
 
 // User requested by category name, but didn't provide a name - prompt for name
-router.get('/byleagueinitials/', async (req, res) => {
+router.get('/bycategoryname/', async (req, res) => {
   res.status(400).json({
-    message: "Please provide league initials."
+    message: "Please provide category name."
   })
 }
 );
