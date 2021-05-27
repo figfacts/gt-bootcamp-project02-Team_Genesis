@@ -24,10 +24,10 @@ router.get('/', async(req, res) => {
     const userInterestsData = await UserInterests.findAll({
       include: [{ model: User }, { model: Category }],
       order: [sequelize.col('user.lastName'), 
-              sequelize.col('user.lastName'),
+              sequelize.col('user.firstName'),
               sequelize.col('category.name')],
     });
-    if (!userInterestsData) res.status(404).json({ message: 'There are not any interests for any users.' });
+    if (!userInterestsData || userInterestsData.length === 0) res.status(404).json({ message: 'There are not any interests for any users.' });
     res.status(200).json(userInterestsData);
   } catch (err) {
     console.log(`Error: ${err}`);
@@ -71,7 +71,7 @@ router.get('/bycategoryid/:categoryId', async(req, res) => {
     const userInterestsData = await UserInterests.findAll({
       where: { category_id: req.params.categoryId },
       order: [sequelize.col('user.lastName'), 
-      sequelize.col('user.lastName')],
+              sequelize.col('user.firstName')],
       include: [{ model: User }, { model: Category }],
     });
     if (!userInterestsData || userInterestsData.length === 0) { res.status(404).json({ message: `There are not any interests for this user:  ${req.params.userId}.` })};
