@@ -21,6 +21,7 @@ module.exports = function (passport) {
 				bcrypt.compare(password, user.password, (err, isCorrect) => {
 					if (err) throw err;
 					if (isCorrect) {
+						console.log(`User authenticated.`);
 						return done(null, user);
 					} else {
 						return done(null, false);
@@ -34,8 +35,8 @@ module.exports = function (passport) {
 		done(null, user.id);
 	});
 
-	passport.deserializeUser(function (id, done) {
-		User.findByPk(id, function (err, user) {
+	passport.deserializeUser(async (id, done) => {
+		await User.findByPk(id, function (err, user) {
 			done(err, user);
 		});
 	});
