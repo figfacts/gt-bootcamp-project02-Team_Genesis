@@ -152,15 +152,15 @@
                 <div class="modal-header">
                     <h5 id="loginTitle" class="modal-title">Log Into Your Jocks Account</h5>
                 </div>    
-                <form>
+                <form id="loginForm">
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
                       <div id="emailHelp" class="form-text">Please enter your email address.</div>
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputPassword1" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1">
+                      <input type="password" class="form-control" id="password">
                     </div>
                     <div class="mb-3 form-check">
                       <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -185,7 +185,7 @@
                     <h2 id="SignUpTitle" class="modal-title">Create Your Jocks Account</h2>
                 </div> 
                 <br>   
-                <form>
+                <form id="signUpForm">
                   <label for="firstlastname" class="form-label">First Name, Last Name</label>
                   <div class="row">
                     <div class="col">
@@ -198,14 +198,14 @@
                   <br> 
                     <div class="mb-3">
                       <label for="Email" class="form-label">Email address</label>
-                      <input type="email" class="form-control" id="Email" aria-describedby="emailHelp">
+                      <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
                       <div id="emailHelp" class="form-text">Create New Account Email</div>
                     </div>
                     <div class="mb-3">
                       <label for="Password" class="form-label">New Password</label>
-                      <input type="password" class="form-control" id="Password">
+                      <input type="password" class="form-control" id="password">
                     </div>
-                  </form>
+               
                   <div id="interest-title">
                     <h4>Please Select Some Of Your Intrests</h4>
                 </div>
@@ -259,6 +259,7 @@
                   <div>
                     <button id="routesignUpBtn" type="submit" class="btn btn-primary">Create Account</button>
                   </div>
+					</form>
             </div>
           </div>
         </div>
@@ -355,7 +356,7 @@
 
 
     <script src="./js/index.js" async defer></script>
-    <script src=".js/handleSignUp.js" async defer></script>
+    <script src="./js/handleSignUp.js" async defer></script>
     <script src="./js/handleLogin.Js" async defer></script>
     <!-- <script src="/gt-bootcamp-project02-Team_Genesis/public/js/index.js" async defer></script>     -->
 </html>
