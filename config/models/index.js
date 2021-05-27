@@ -95,11 +95,11 @@ Team.hasMany(Item, {
   onDelete: 'RESTRICT',
 });
 
-// Products belongToMany Tags (through ProductTag)
-// Product.belongsToMany(Tag, {
-//   through: ProductTag,
-//   foreignKey: 'product_id',
-//});
+// Category belongsToMany SubCategory (through ProductTag)
+// Category.belongsToMany(Item, {
+//   through: SubCategory,
+//   foreignKey: 'catalog_id',
+// });
 
 
 // -----------------------------------------------------------------------------
