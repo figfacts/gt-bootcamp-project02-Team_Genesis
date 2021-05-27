@@ -15,6 +15,7 @@ const router = require('express').Router();
 // const bcrypt = require('bcrypt'); Justin B. See line 69 & 70
 const { User } = require('../../../config/models');
 const { sequelize } = require('../../../config/models/User');
+const passport = require('passport');
 
 // -----------------------------------------------------------------------------
 // Get All Users
