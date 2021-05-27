@@ -25,6 +25,8 @@ app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
 
+require('./config/passport')(passport);
+
 // Handlebars
 app.engine(
   "handlebars",

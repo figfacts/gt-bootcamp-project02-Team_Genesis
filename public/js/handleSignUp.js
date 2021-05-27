@@ -1,6 +1,6 @@
 const handleSignUp = async function(event) {
 	event.preventDefault();
-
+	
 	const firstNameEl = document.getElementById('firstName');
 	const lastNameEl = document.getElementById('lastName');
 	const emailAddressEl = document.getElementById('email');
@@ -36,4 +36,4 @@ const handleSignUp = async function(event) {
 	});
 }
 
-document.getElementById('signUp').addEventListener('submit', handleRegister);
+document.getElementById('signUpForm').addEventListener('submit', handleSignUp);
