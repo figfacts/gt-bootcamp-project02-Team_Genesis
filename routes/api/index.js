@@ -20,7 +20,7 @@ const subCategoryRoutes = require('./subcategory/subCategory-routes');
 const teamRoutes = require('./team/team-routes');
 const userRoutes = require('./user/user-routes');
 const userInterestsRoutes = require('./userInterests/userInterests-routes');
-const itemRoutes = require('./item/itemRoutes');
+const itemRoutes = require('./item/item-routes');
 
 // -----------------------------------------------------------------------------
 // Actual Routes

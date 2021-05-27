@@ -23,6 +23,12 @@ class UserInterests extends Model {}
 // Set up fields and rules for UserInterests model
 UserInterests.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

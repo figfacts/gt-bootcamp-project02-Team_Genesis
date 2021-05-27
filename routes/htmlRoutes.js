@@ -16,13 +16,8 @@ const router = require('express').Router();
       res.sendFile(path.join(__dirname, "../public/html/homepage.html"));
   });
 
-  // Load example page and pass in an example by id
-  router.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
+  router.get("/profile", function(req, res) {
+	  res.sendFile(path.join(__dirname, "../public/html/profile.html"));
   });
 
   // Render 404 page for any unmatched routes
@@ -30,6 +25,6 @@ const router = require('express').Router();
     // console.log(req);
     res.render("404");
   });
-// };
 
 module.exports = router;
+

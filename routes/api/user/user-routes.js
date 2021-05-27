@@ -14,6 +14,8 @@
 const router = require('express').Router();
 // const bcrypt = require('bcrypt'); Justin B. See line 69 & 70
 const { User } = require('../../../config/models');
+const { sequelize } = require('../../../config/models/User');
+const passport = require('passport');
 
 // -----------------------------------------------------------------------------
 // Get All Users
@@ -21,10 +23,12 @@ const { User } = require('../../../config/models');
 router.get('/', async(req, res) => {
   try {
     const userData = await User.findAll({
+      order: [sequelize.col('user.lastName'), sequelize.col('user.firstName')],
     });
-    if (!userData) res.status(404).json({ message: 'No users exist.' });
+    if (!userData || userData.length === 0) res.status(404).json({ message: 'No users exist.' });
     res.status(200).json(userData);
   } catch (err) {
+    console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
 });
@@ -37,12 +41,21 @@ router.get('/byid/:id', async(req, res) => {
   try {
     const userData = await User.findByPk(req.params.id, {
     });
-    if (!userData) res.status(404).json({ message: `The requested user ${req.params.id} does not exist.` });
+    if (!userData || userData.length === 0) res.status(404).json({ message: `The requested user ${req.params.id} does not exist.` });
     res.status(200).json(userData);
   } catch (err) {
+    console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
 });
+
+// User requested byid, but didn't provide an id - prompt for id
+router.get('/byid/', async (req, res) => {
+  res.status(400).json({
+    message: "Please provide id."
+  })
+}
+);
 
 
 // -----------------------------------------------------------------------------
@@ -51,14 +64,24 @@ router.get('/byid/:id', async(req, res) => {
 router.get('/byemail/:email', async(req, res) => {
   try {
     const userData = await User.findOne({
-      where: {email: req.params.email}
+      where: {email: req.params.email},
+      order: [sequelize.col('user.lastName'), sequelize.col('user.firstName')],
     });
-    if (!userData) res.status(404).json({ message: `The requested email: ${req.params.email} does not exist.` });
+    if (!userData || userData.length === 0) res.status(404).json({ message: `The requested email: ${req.params.email} does not exist.` });
     res.status(200).json(userData);
   } catch (err) {
+    console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
 });
+
+// User requested byemail, but didn't provide an email - prompt for email
+router.get('/byemail/', async (req, res) => {
+  res.status(400).json({
+    message: "Please provide email."
+  })
+}
+);
 
 
 // -----------------------------------------------------------------------------
@@ -71,8 +94,23 @@ router.post('/', async(req, res) => {
 	const userData = await User.create(req.body);
 	res.status(200).json(userData);
   } catch (err) {
+    console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
+});
+
+// -----------------------------------------------------------------------------
+// Login A User
+// -----------------------------------------------------------------------------
+router.post('/login', async (req, res, next) => {
+	try {
+		passport.authenticate('local', {
+			successRedirect: '/profile',
+			failureRedirect: '/',
+		})(req, res, next);
+	} catch (err) {
+		res.status(500).json(err);
+	}
 });
 
 
@@ -94,6 +132,7 @@ router.put('/byid/:id', async(req, res) => {
 
     res.status(200).json(userData);
   } catch (err) {
+    console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
 });
@@ -117,6 +156,7 @@ router.delete('/byid/:id', async(req, res) => {
 
     res.status(200).json(userData);
   } catch (err) {
+    console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
 });

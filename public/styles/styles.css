@@ -219,4 +219,18 @@ h1{
 
 .carousel {
   max-width: 80%;
+
+}
+ 
+.footer {
+  border-style: solid;
+  border-width: 1px;
+  width: 1320px;
+  margin-left: 60px;
+}
+
+#emailSendBtn{
+  margin-left: 100px;
+  margin-top: 25px;
+  width: 150px;
 }
