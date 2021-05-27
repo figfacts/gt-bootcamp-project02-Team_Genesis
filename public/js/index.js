@@ -8,7 +8,11 @@ const myInputSignup = document.getElementById('myInputSignUp')
 const signUpModalBtn = document.getElementById('signUpBtn')
 const closeSignUpBtn = document.getElementById('signUpCloseBtn')
 
-const dropDownBtn = document.getElementById('dropdownMenuLink')
+const dropDownBtn = document.getElementById('dropdownMenuLink');
+
+// database connection
+
+
 
 
 // OPEN AND CLOSE LOGIN/SIGN-UP MODALS
@@ -41,3 +45,20 @@ function dropDownMenu() {
 dropDownBtn.onclick = function () {
   dropDownMenu()
 }
+
+
+
+userInterestItems = [];
+
+latestPostedItems = [];
+
+
+function getAllItems() {
+  console.log("Choice Accepted");
+  connection.query("SELECT * FROM item", function (err, result) {
+      if (err) throw err;
+      console.table(result);
+  })
+};
+
+getAllItems();
