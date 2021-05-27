@@ -15,6 +15,7 @@ const router = require('express').Router();
 // const bcrypt = require('bcrypt'); Justin B. See line 69 & 70
 const { User } = require('../../../config/models');
 const { sequelize } = require('../../../config/models/User');
+const passport = require('passport');
 
 // -----------------------------------------------------------------------------
 // Get All Users
@@ -96,6 +97,20 @@ router.post('/', async(req, res) => {
     console.log(`Error: ${err}`);
     res.status(500).json(err);
   }
+});
+
+// -----------------------------------------------------------------------------
+// Login A User
+// -----------------------------------------------------------------------------
+router.post('/login', async (req, res, next) => {
+	try {
+		passport.authenticate('local', {
+			successRedirect: '/profile',
+			failureRedirect: '/',
+		})(req, res, next);
+	} catch (err) {
+		res.status(500).json(err);
+	}
 });
 
 
