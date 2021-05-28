@@ -28,6 +28,7 @@ const itemData = [
     team_id: 3, 
     price: 6000.00,
     dateListed:'2021-05-18',
+    image: 'https://res.cloudinary.com/dui0ghwal/image/upload/v1622169036/preset_folder/r211uuxnyqt1hl7xhemj.png'
   },
   {
     user_id: 1, 
@@ -39,6 +40,7 @@ const itemData = [
     team_id: 3, 
     price: 6500.00,
     dateListed:'2021-05-18',
+    image: 'https://res.cloudinary.com/dui0ghwal/image/upload/v1622169036/preset_folder/r211uuxnyqt1hl7xhemj.png'
   },
   {
     user_id: 1, 
@@ -50,6 +52,7 @@ const itemData = [
     team_id: 3, 
     price: 6500.00,
     dateListed:'2021-05-18',
+    image: 'https://res.cloudinary.com/dui0ghwal/image/upload/v1622169036/preset_folder/r211uuxnyqt1hl7xhemj.png'
   }, 
 ];
 

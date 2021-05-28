@@ -12,17 +12,23 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
+const { body, validationResult } = require("express-validator");
 const { League } = require('../../../config/models');
-const { sequelize } = require('../../../config/models/League');
+// const { sequelize } = require('../../../config/models/League');
+const { getAllLeagues,
+        getLeagueById, 
+        getLeagueByInitials, 
+        createLeague,
+        deleteLeague, 
+        updateLeague } = require('../../../controllers/league-controller');
 
+        
 // -----------------------------------------------------------------------------
 // Get All Leagues
 // -----------------------------------------------------------------------------
 router.get('/', async (req, res) => {
   try {
-    const leagueData = await League.findAll({
-      order: sequelize.col('league.initials'),
-    });
+    const leagueData = await getAllLeagues();
     if (!leagueData || leagueData.length === 0) res.status(404).json({ message: 'No leagues exist.' });
     res.status(200).json(leagueData);
   } catch (err) {
@@ -37,8 +43,7 @@ router.get('/', async (req, res) => {
 // -----------------------------------------------------------------------------
 router.get('/byId/:id', async (req, res) => {
   try {
-    const leagueData = await League.findByPk(req.params.id, {
-    });
+    const leagueData = await getLeagueById(req, res);
     if (!leagueData || leagueData.length === 0) res.status(404).json({ message: `The requested league ${req.params.id} does not exist.` });
     res.status(200).json(leagueData);
   } catch (err) {
@@ -61,9 +66,7 @@ router.get('/byid/', async (req, res) => {
 // -----------------------------------------------------------------------------
 router.get('/byinitials/:initials', async (req, res) => {
   try {
-    const leagueData = await League.findOne({
-      where: { initials: req.params.initials }
-    });
+    const leagueData = await getLeagueByInitials(req, res);
     if (!leagueData || leagueData.length === 0) res.status(404).json({ message: `The requested league ${req.params.id} does not exist.` });
     res.status(200).json(leagueData);
   } catch (err) {
@@ -83,7 +86,7 @@ router.get('/byinitials/', async (req, res) => {
 // -----------------------------------------------------------------------------
 // Render 404 page for any unmatched routes
 // -----------------------------------------------------------------------------
-router.get("*", function(req, res) {
+router.get("*", function (req, res) {
   res.status(404).json({
     message: "An Invalid Route was Requested."
   })
@@ -93,39 +96,67 @@ router.get("*", function(req, res) {
 // -----------------------------------------------------------------------------
 // Add A League
 // -----------------------------------------------------------------------------
-router.post('/', async (req, res) => {
-  try {
-    const leagueData = await League.create(req.body);
-    res.status(200).json(leagueData);
-  } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
-  }
-});
+router.post('/', [
+  body("initials")
+    .isLength({ min: 3 })
+    .withMessage("The initials must have minimum length of 3")
+    .trim(),
+
+  body("name")
+    .isLength({ min: 3 })
+    .withMessage("The league name must have minimum length of 3")
+    .trim(),
+
+  body("leagueLogo")
+    .isLength({ min: 5, max: 62 })
+    .withMessage("Logo should have min and max length between 5-62")
+    .trim(),
+],
+  (req, res, next) => {
+    const error = validationResult(req).formatWith(({ msg }) => msg);
+
+    const hasError = !error.isEmpty();
+
+    if (hasError) {
+      res.status(422).json({ error: error.array() });
+    } else {
+      next();
+    }
+  },
+  createLeague);
 
 
 // -----------------------------------------------------------------------------
 // Update A League By its id (primary key)
 // -----------------------------------------------------------------------------
-router.put('/:id', async (req, res) => {
-  try {
-    const leagueData = await League.update(req.body, {
-      where: {
-        id: req.params.id,
-      }
-    });
+router.put('/:id', [
+  body("initials")
+    .isLength({ min: 3 })
+    .withMessage("The initials must have minimum length of 3")
+    .trim(),
 
-    if (!leagueData) {
-      res.status(404).json({ message: `League ${req.params.id} does not exist.` });
-      return;
+  body("name")
+    .isLength({ min: 3 })
+    .withMessage("The league name must have minimum length of 3")
+    .trim(),
+
+  body("leagueLogo")
+    .isLength({ min: 5, max: 62 })
+    .withMessage("Logo should have min and max length between 5-62")
+    .trim(),
+],
+  (req, res, next) => {
+    const error = validationResult(req).formatWith(({ msg }) => msg);
+
+    const hasError = !error.isEmpty();
+
+    if (hasError) {
+      res.status(422).json({ error: error.array() });
+    } else {
+      next();
     }
-
-    res.status(200).json(leagueData);
-  } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
-  }
-});
+  },
+  updateLeague);
 
 
 // -----------------------------------------------------------------------------
@@ -133,21 +164,18 @@ router.put('/:id', async (req, res) => {
 // -----------------------------------------------------------------------------
 router.delete('/:id', async (req, res) => {
   try {
-    const leagueData = await League.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
+    await deleteLeague(req.params.id);
+    const leagueData = await getLeagueById(req, res);
 
-    if (!leagueData) {
-      res.status(404).json({ message: `League: ${req.params.id} does not exist.` });
+    if (leagueData) {
+     res.status(404).json({ message: `Leaguewas not deleted.` });
       return;
-    }
+   }
 
-    res.status(200).json(leagueData);
+    res.status(200).json({ message: `League was deleted.`});
   } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
+   console.log(`Error: ${err}`);
+   res.status(500).json(err);
   }
 });
 
