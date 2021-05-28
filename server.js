@@ -21,6 +21,7 @@ const validator = require('express-validator');    // Validate input data
 
 const passport = require('passport');              // Manage User Login
 require('./config/passport')(passport);
+const {cloudinary} = require('./utils/cloudinary'); //Utility for image uploading for items listed
 
 // Are we using this? Do we need it?
 var db = require("./config/models");
@@ -47,6 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());    // Is this needed or does express.json handle it?
+
 
 // Handlebars
 app.engine(
