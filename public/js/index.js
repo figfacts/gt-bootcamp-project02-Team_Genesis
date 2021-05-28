@@ -20,7 +20,45 @@ const myModalContactUs= document.getElementById('contactUsModal')
 const contactUsBtn = document.getElementById('contactUsBtn')
 const closeContactUsBtn = document.getElementById('contactUsCloseBtn')
 
+//cloud api url----------------------------------------------------------
 
+// const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/drhdiapys';
+// const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/drhdiapys/img/upload';
+const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/drhdiapys/upload';
+// const CLOUDINARY_UPLOAD_PRESET = 'xbstlcpl'
+// const CLOUDINARY_UPLOAD_PRESET = 'xbstlcpl/img/upload'
+const CLOUDINARY_UPLOAD_PRESET = 'xbstlcpl'
+var image = document.getElementById('image');
+var testBtn = document.getElemenyById('testbtn');
+
+
+
+//-----------------------------------------------------------------------
+testBtn.addEventListener('change', function(event) {
+  var file = event.target.file[0];
+
+  var imageData = new FormData();
+imageData.append('file', file);
+imageData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+axios({
+  url: CLOUDINARY_API,
+  method: 'POST',
+  header: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Origin',
+    'Access-Control-Allow-Credentials': true,
+  },
+  data: imageData
+}).then(function(res) {
+  console.log(res)
+  image.src = res.data.source_url;
+}).catch(function(err) {
+  console.log(err);
+});
+
+});
 
 
 
@@ -84,13 +122,18 @@ contactUsBtn.onclick = function() {
 
 const byItemUrl = 'http://localhost:3000/api/item/byid/4'
 
+// .fetch(byItemUrl)
+//     .then(function (response) {
+//       console.log(response);
+//       return response.json();
+//     }).then(function(data) {
+//       console.log(data)
+//     });
+
 .fetch(byItemUrl)
-    .then(function (response) {
-      console.log(response);
-      return response.json();
-    }).then(function(data) {
-      console.log(data)
-    });
+.then(function(response) {
+  console.log(response);
+})
     
 
 userInterestItems = [];
