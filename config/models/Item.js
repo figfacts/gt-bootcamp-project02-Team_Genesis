@@ -76,6 +76,10 @@ Item.init(
     dateListed: {
       type: DataTypes.DATE,
       allowNull: false
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   },
   {
