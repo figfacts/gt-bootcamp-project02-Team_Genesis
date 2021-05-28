@@ -1,9 +1,11 @@
 require("dotenv").config();
 var express = require("express");
 var exphbs = require("express-handlebars");
+// var fileupload = require("'express-fileupload'"); //ADDED
 const sequelize = require('./config/connection');
 const passport = require('passport');
 const session = require('express-session');
+const {cloudinary} = require('./utils/cloudinary');
 
 var db = require("./config/models");
 
@@ -24,6 +26,9 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
+// app.use(fileupload({ //ADDED
+//   useTempFiles: true
+// }));
 
 require('./config/passport')(passport);
 
