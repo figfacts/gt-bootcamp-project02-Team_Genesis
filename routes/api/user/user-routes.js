@@ -104,10 +104,10 @@ router.post('/', async(req, res) => {
 // -----------------------------------------------------------------------------
 router.post('/login', async (req, res, next) => {
 	try {
-		passport.authenticate('local', {
+		await passport.authenticate('local', {
 			successRedirect: '/profile',
 			failureRedirect: '/',
-		})(req, res, next);
+		}) (req, res, next);
 	} catch (err) {
 		res.status(500).json(err);
 	}
