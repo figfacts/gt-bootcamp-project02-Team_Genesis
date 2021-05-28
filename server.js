@@ -1,15 +1,38 @@
-require("dotenv").config();
-var express = require("express");
-var exphbs = require("express-handlebars");
-const sequelize = require('./config/connection');
-const passport = require('passport');
-const session = require('express-session');
+// -----------------------------------------------------------------------------
+// Program:  server.js
+// Purpose:  Application Startup.
+// Input:    <none>   
+// -----------------------------------------------------------------------------
+// Author:   Team Genesis
+// Date:     May 22, 2021
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
+// Dependencies
+// -----------------------------------------------------------------------------
+require("dotenv").config();
+const sequelize = require('./config/connection');  // ORM - manage database access
+const bodyParser = require('body-parser');         // Receive POST vlaues in Express
+const express = require("express");                // Routing
+const exphbs = require("express-handlebars");      // Server side html rendering
+const session = require('express-session');        // Session state
+const validator = require('express-validator');    // Validate input data
+
+const passport = require('passport');              // Manage User Login
+require('./config/passport')(passport);
+const {cloudinary} = require('./utils/cloudinary'); //Utility for image uploading for items listed
+
+// Are we using this? Do we need it?
 var db = require("./config/models");
 
-var app = express();
-var PORT = process.env.PORT || 3000;
+let app = express();
+let PORT = process.env.PORT || 3000;
 
+
+// -----------------------------------------------------------------------------
+// Middleware
+// -----------------------------------------------------------------------------
 app.use(
 	session({
 	  secret: 'toaster struddle',
@@ -18,14 +41,14 @@ app.use(
 	})
  );
 
-// Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());    // Is this needed or does express.json handle it?
 
-require('./config/passport')(passport);
 
 // Handlebars
 app.engine(
@@ -37,10 +60,10 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
-// require("./routes/index.js");
-// require("./routes/index.js")(app);
 app.use(require('./routes/index.js'));
 // require("./routes/htmlRoutes.js")(app);
+// require("./routes/index.js");
+// require("./routes/index.js")(app);
 
 var syncOptions = { force: false };
 // var syncOptions = { force: true };
@@ -63,4 +86,8 @@ sequelize.sync(syncOptions).then(function() {
   });
 });
 
+
+// -----------------------------------------------------------------------------
+// Module Exports
+// -----------------------------------------------------------------------------
 module.exports = app;

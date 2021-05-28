@@ -6,8 +6,8 @@
         <title>Trader Jocks Sell</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/gt-bootcamp-project02-Team_Genesis/public/styles/sell.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" href="/public/styles/sell.css">
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     </head>
     <body>
         <div>
@@ -51,8 +51,12 @@
                 </div>    
               <br>
               <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02">
-                <!-- <label class="input-group-text" for="inputGroupFile02">Upload Picture</label> -->
+                <!-- <input type="file" class="form-control" id="inputGroupFile02"> previous code for reference -->
+                <img src="https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg" id="img-preview" />
+                <label class="file-upload-container" for="file-upload">
+                  <input id="file-upload" type="file" style="display:none;">
+                  Upload Picture
+                </label>
               </div>
               <br>
               <br>
@@ -63,6 +67,7 @@
         </div>
 
         
-    </body>        
-    <script src="gt-bootcamp-project02-Team_Genesis/public/js/sell.js" async defer></script>
+    </body> 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>       
+    <script src="/public/js/sell.js" async defer></script>
 </html>

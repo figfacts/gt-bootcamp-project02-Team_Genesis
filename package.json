@@ -4,6 +4,7 @@
   "description": "Project 2 Starter",
   "main": "server.js",
   "scripts": {
+    "dev": "nodemon server.js",
     "start": "node server.js",
     "lint": "eslint --quiet .",
     "fix": "eslint --fix .",
@@ -13,11 +14,13 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bootstrap": "^5.0.1",
+    "cloudinary": "^1.25.1",
     "connect-session-sequelize": "^7.1.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.17.2",
+    "express-validator": "^6.11.1",
     "mysql2": "^1.6.5",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
@@ -31,6 +34,7 @@
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "mocha": "^6.1.4",
+    "nodemon": "^2.0.7",
     "prettier": "^1.17.1"
   }
 }
