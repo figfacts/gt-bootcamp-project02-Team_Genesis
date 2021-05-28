@@ -21,7 +21,7 @@ const validator = require('express-validator');    // Validate input data
 
 const passport = require('passport');              // Manage User Login
 require('./config/passport')(passport);
-const {cloudinary} = require('./utils/cloudinary');
+const {cloudinary} = require('./utils/cloudinary'); //Utility for image uploading for items listed
 
 // Are we using this? Do we need it?
 var db = require("./config/models");
