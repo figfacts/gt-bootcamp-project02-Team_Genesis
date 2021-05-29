@@ -339,7 +339,7 @@ router.post("/", async (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
-// Delete A User By its id (primary key)
+// Delete A Item By its id (primary key)
 // -----------------------------------------------------------------------------
 router.delete("/byid/:id", async (req, res) => {
   try {
@@ -363,7 +363,7 @@ router.delete("/byid/:id", async (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
-// Update A User By its id (primary key)
+// Update A Item By its id (primary key)
 // -----------------------------------------------------------------------------
 router.put("/byid/:id", async (req, res) => {
   try {
@@ -391,6 +391,20 @@ router.put("/byid/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+//-----------------------------------------------------------------------
+router.get('/carouselurls', async (req, res) => {
+  
+  try {
+    const URLs = await sequelize.query("select id, image from item order by id desc limit 5", { type: QueryTypes.SELECT });
+
+    res.status(200).json(URLs);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
+});
+
 
 // -----------------------------------------------------------------------------
 // Module Exports
