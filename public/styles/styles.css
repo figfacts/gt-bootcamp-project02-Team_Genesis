@@ -1,4 +1,21 @@
 /* BACKGROUND IMG CSS */
+.backgroundcustom {
+  /* background-color:rgb(202, 202, 202); */
+  background-image: url('https://i.pinimg.com/originals/d5/b9/d0/d5b9d0f51406f26fbfb924df41105c0f.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.customheader {
+  background-image: url('https://images.pexels.com/photos/8892/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
+  background-size:cover;
+  height: 150px;
+}
+
+.jumbohead {
+  color: white;
+  font-family: 'Big Shoulders Inline Display', sans-serif;
+  font-kerning: 20px;
+}
 
 
 /* NAVBAR CSS */
@@ -48,9 +65,10 @@
 
 #picturesDiv{
   border-style: solid;
+  background-color: rgb(0, 0, 0);
+  padding: 10px;
   border-width: 1px;
   border-color: black;
-  height: 670px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -217,7 +235,17 @@ h1{
   margin-top: 5px;
 }
 
-footer{
+.carousel {
+  max-width: 80%;
+  box-shadow: 1px 1px 20px rgb(0, 0, 0);
+
+}
+
+.carolitems {
+ margin-left: 200px;
+}
+ 
+.footer {
   border-style: solid;
   border-width: 1px;
   width: 1320px;
@@ -229,3 +257,15 @@ footer{
   margin-top: 25px;
   width: 150px;
 }
+
+.carouselcustom {
+  margin: 20px;
+
+}
+
+.footfont {
+  color: white;
+}
+#title {
+}
+
