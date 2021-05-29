@@ -329,9 +329,9 @@ router.put("/byid/:id", async (req, res) => {
 //Create a new ITEM
 router.post("/", async (req, res) => {
   try {
-    const itemData = await Item.create({
-      reader_id: req.body.reader_id,
-    });
+    const itemData = await Item.create(
+      req.body
+    );
     res.status(200).json(itemData);
   } catch (err) {
     res.status(400).json(err);
@@ -339,7 +339,7 @@ router.post("/", async (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
-// Delete A User By its id (primary key)
+// Delete A Item By its id (primary key)
 // -----------------------------------------------------------------------------
 router.delete("/byid/:id", async (req, res) => {
   try {
