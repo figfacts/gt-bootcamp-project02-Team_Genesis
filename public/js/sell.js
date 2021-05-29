@@ -23,6 +23,7 @@ fileUpload.addEventListener('change', function(event) {
     }).then(function(res){
         console.log(res);
         imgPreview.src=res.data.secure_url; //This shows a display preview of the image
+        
     }).catch(function(err){
         console.log(err);
     });
@@ -30,3 +31,57 @@ fileUpload.addEventListener('change', function(event) {
 
 }); 
 
+// ----------------------------------------------------------------------------------------------------------------------------------------------------
+// POST (CREATE) Items when a user wants to add something (i.e. Michael Jordan RookieCard) to their collection upon clicking the submit button
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+const itemSubmitted = async function(event) {
+	event.preventDefault();
+	
+	const userIdEl = document.getElementById('userId');
+	const subCategoryIdEl = document.getElementById('subCategoryId');
+	const autographedEl = document.getElementById("itemAutographed");
+    const descriptionEl = document.getElementById("itemDescription");
+    const playerNameEl = document.getElementById("itemName");
+    const playerSoundexEl = document.getElementById("playerSoundex");
+    const teamIdEl= document.getElementById("teamId");
+    const priceEl= document.getElementById("itemPrice");
+    const imgPreview = document.getElementById('img-preview');
+	
+
+	date = new Date();
+	year = date.getFullYear();
+	month = date.getMonth()+1;
+	dt = date.getDate();
+
+	if (dt < 10) {
+	dt = '0' + dt;
+	}
+
+	if (month < 10) {
+	month = '0' + month;
+	}
+
+	const isoDate = year + '-' + month + '-' + dt;
+
+	const res = await fetch('/api/item', {
+		method: 'POST',
+		body: JSON.stringify({
+			user_id: 4,
+			subCategory_id: 114,
+            autographed: autographedEl.checked,
+			description: descriptionEl.value,
+			playerName: playerNameEl.value,
+            playerSoundex: "HARDCODED Test",
+            team_id: 714,
+            price: priceEl.value,
+			dateListed: isoDate,
+            image: imgPreview.src
+		}),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+}
+
+document.getElementById('sellSubmitBtn').addEventListener('click', itemSubmitted);
