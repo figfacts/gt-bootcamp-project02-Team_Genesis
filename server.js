@@ -41,13 +41,12 @@ app.use(
 	})
  );
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());    // Is this needed or does express.json handle it?
+
 
 
 // Handlebars
@@ -77,7 +76,7 @@ var syncOptions = { force: false };
 sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
     console.log(
-      "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
+      `==> 🌎  Listening on port ${PORT}. Visit http://localhost:${PORT} in your browser.`,
       PORT,
       PORT
     );

@@ -20,6 +20,10 @@ const router = require('express').Router();
 	  res.sendFile(path.join(__dirname, "../public/html/profile.html"));
   });
 
+  router.get("/sell", function(req, res) {
+	  res.sendFile(path.join(__dirname, "../public/html/sell.html"));
+  });
+
   // Render 404 page for any unmatched routes
   router.get("*", function(req, res) {
     // console.log(req);
