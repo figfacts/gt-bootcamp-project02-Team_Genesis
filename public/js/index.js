@@ -146,7 +146,6 @@ fetch(carouselUrl)
     latestPostedItems.push(data);
 
 }).then(function() {
- console.log(latestPostedItems);
  getLatestItems();
 
 });
@@ -161,11 +160,76 @@ carousel3.setAttribute('src', latestPostedItems[0][2].image);
 }
     
 //-----------------------------------------------------------------------------------------------------
+var image1 = document.getElementById("item1");
+var image2 = document.getElementById("item2");
+var image3 = document.getElementById("item3");
+var image4 = document.getElementById("item4");
+var image5 = document.getElementById("item5");
+var image6 = document.getElementById("item6");
+var image7 = document.getElementById("item7");
+var image8 = document.getElementById("item8");
+var image9 = document.getElementById("item9");
+var image10 = document.getElementById("item10");
+var image11 = document.getElementById("item11");
+var image12 = document.getElementById("item12");
+var image13 = document.getElementById("item13");
+var image14 = document.getElementById("item14");
+var image15 = document.getElementById("item15");
+var image16 = document.getElementById("item16");
+var image175 = document.getElementById("item17");
+var image18 = document.getElementById("item18");
+var image19 = document.getElementById("item19");
+var image20 = document.getElementById("item20");
 
 
+homePageItems = [];
+
+//Get last five items posted from our api url-------------------------------------------------
+
+const homePageItemsUrl = 'http://localhost:3000/api/item/homepageitems'
 
 
+fetch(homePageItemsUrl)
+.then(function (response) {
+    return response.json();
+})
 
+.then(function (data) {
+    console.log(data);
+    homePageItems.push(data);
+
+}).then(function() {
+ getHomePageItems();
+
+});
+
+//set the homepage images to the last 20 items posted---------------------------------------------------
+
+function getHomePageItems() {
+
+image1.setAttribute('src', homePageItems[0][0].image);
+image2.setAttribute('src', homePageItems[0][1].image);
+image3.setAttribute('src', homePageItems[0][2].image);
+image4.setAttribute('src', homePageItems[0][3].image);
+image5.setAttribute('src', homePageItems[0][4].image);
+image6.setAttribute('src', homePageItems[0][5].image);
+image7.setAttribute('src', homePageItems[0][6].image);
+image8.setAttribute('src', homePageItems[0][7].image);
+image9.setAttribute('src', homePageItems[0][8].image);
+image10.setAttribute('src', homePageItems[0][9].image);
+image11.setAttribute('src', homePageItems[0][10].image);
+image12.setAttribute('src', homePageItems[0][11].image);
+image13.setAttribute('src', homePageItems[0][12].image);
+image14.setAttribute('src', homePageItems[0][13].image);
+image15.setAttribute('src', homePageItems[0][14].image);
+image16.setAttribute('src', homePageItems[0][15].image);
+image17.setAttribute('src', homePageItems[0][16].image);
+image18.setAttribute('src', homePageItems[0][17].image);
+image19.setAttribute('src', homePageItems[0][18].image);
+image20.setAttribute('src', homePageItems[0][19].image);
+}
+    
+//-----------------------------------------------------------------------------------------------------
 
 
 

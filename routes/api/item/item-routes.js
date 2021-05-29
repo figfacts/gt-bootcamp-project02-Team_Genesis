@@ -329,9 +329,9 @@ router.put("/byid/:id", async (req, res) => {
 //Create a new ITEM
 router.post("/", async (req, res) => {
   try {
-    const itemData = await Item.create({
-      reader_id: req.body.reader_id,
-    });
+    const itemData = await Item.create(
+      req.body
+    );
     res.status(200).json(itemData);
   } catch (err) {
     res.status(400).json(err);
@@ -363,7 +363,7 @@ router.delete("/byid/:id", async (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
-// Update A Item By its id (primary key)
+// Update A User By its id (primary key)
 // -----------------------------------------------------------------------------
 router.put("/byid/:id", async (req, res) => {
   try {
@@ -405,6 +405,18 @@ router.get('/carouselurls', async (req, res) => {
 
 });
 
+
+router.get('/homepageitems', async (req, res) => {
+  
+  try {
+    const URLs = await sequelize.query("select id, image, playerName, description from item order by id desc limit 20", { type: QueryTypes.SELECT });
+
+    res.status(200).json(URLs);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
+});
 
 // -----------------------------------------------------------------------------
 // Module Exports
