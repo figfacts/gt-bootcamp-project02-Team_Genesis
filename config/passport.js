@@ -7,7 +7,7 @@ const User = require('./models/User');
 module.exports = function (passport) {
 	passport.use('local',
 		new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-			// Match user record by username
+			// Match user record by email
 			User.findOne({
 				where: {
 					email: email
@@ -21,6 +21,7 @@ module.exports = function (passport) {
 				bcrypt.compare(password, user.password, (err, isCorrect) => {
 					if (err) throw err;
 					if (isCorrect) {
+						console.log(`User authenticated.`);
 						return done(null, user);
 					} else {
 						return done(null, false);
@@ -34,9 +35,20 @@ module.exports = function (passport) {
 		done(null, user.id);
 	});
 
-	passport.deserializeUser(function (id, done) {
-		User.findByPk(id, function (err, user) {
-			done(err, user);
+	passport.deserializeUser( (err, id, done) => {
+		// User.findByPk(id, function (err, user) {
+		// 	console.log(err);
+		// 	done(err, user);
+		// });
+		// try {
+		// 	const userData = await User.findByPk(id);
+		// 	done(err, userData);
+		// } catch (err) {
+		// 	console.log(err);
+		// 	return;
+		// }
+		User.findByPk(id).then(user => {
+			done(null, user);
 		});
 	});
 };

@@ -3,10 +3,10 @@ const handleSignUp = async function(event) {
 	
 	const firstNameEl = document.getElementById('firstName');
 	const lastNameEl = document.getElementById('lastName');
-	const emailAddressEl = document.getElementById('email');
-	const passwordEl = document.getElementById('password');
+	const emailAddressEl = document.getElementById('signUpEmail');
+	const passwordEl = document.getElementById('signUpPassword');
 
-	date = new Date('2013-08-03T02:00:00Z');
+	date = new Date();
 	year = date.getFullYear();
 	month = date.getMonth()+1;
 	dt = date.getDate();

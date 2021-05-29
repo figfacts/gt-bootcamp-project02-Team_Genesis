@@ -6,6 +6,8 @@ const handleLogin = async function(event) {
 
 	const res = await fetch('/api/user/login', {
 		method: 'POST',
+		// redirect: 'follow',
+		
 		body: JSON.stringify({
 			email: emailEl.value,
 			password: passwordEl.value
@@ -14,6 +16,7 @@ const handleLogin = async function(event) {
 			'Content-Type': 'application/json'
 		}
 	});
+	if (res.redirected) window.location.href = res.url;
 }
 
 document.getElementById('loginForm').addEventListener('submit', handleLogin);
