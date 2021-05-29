@@ -392,6 +392,32 @@ router.put("/byid/:id", async (req, res) => {
   }
 });
 
+//-----------------------------------------------------------------------
+router.get('/carouselurls', async (req, res) => {
+  
+  try {
+    const URLs = await sequelize.query("select id, image from item order by id desc limit 5", { type: QueryTypes.SELECT });
+
+    res.status(200).json(URLs);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
+});
+
+
+router.get('/homepageitems', async (req, res) => {
+  
+  try {
+    const URLs = await sequelize.query("select id, image, playerName, description from item order by id desc limit 20", { type: QueryTypes.SELECT });
+
+    res.status(200).json(URLs);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
+});
+
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
