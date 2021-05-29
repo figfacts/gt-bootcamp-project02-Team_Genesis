@@ -61,6 +61,7 @@ app.set("view engine", "handlebars");
 
 // Routes
 app.use(require('./routes/index.js'));
+app.use(require('./controllers/'));
 // require("./routes/htmlRoutes.js")(app);
 // require("./routes/index.js");
 // require("./routes/index.js")(app);
