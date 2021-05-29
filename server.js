@@ -51,17 +51,14 @@ app.use(bodyParser.json());    // Is this needed or does express.json handle it?
 
 
 // Handlebars
-app.engine(
-  "handlebars",
-  exphbs({
-    defaultLayout: "main"
-  })
-);
+const hbs = exphbs.create({});
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
 // Routes
+app.use(require('./controllers/index.js'));
 app.use(require('./routes/index.js'));
-app.use(require('./controllers/'));
+
 // require("./routes/htmlRoutes.js")(app);
 // require("./routes/index.js");
 // require("./routes/index.js")(app);
