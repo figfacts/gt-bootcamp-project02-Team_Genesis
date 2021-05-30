@@ -1,5 +1,21 @@
 <div id="main" class="container flex">
-	<div id=item1>
+
+	{{#userItems}}
+	<div>
+		<div id="itempic">
+			<img src="{{this.image}}" alt="">
+		</div>
+		<div>
+			<p> Item: {{this.description}}</p>
+		</div>
+		<div>
+			<p>Price: ${{this.price}}</p>
+		</div>
+	</div>
+	{{/userItems}}
+
+
+	{{!-- <div id=item1>
 		<div id="itempic">
 			<img src="../images/M.Ali Singed Posted.webp" alt="">
 		</div>
@@ -75,5 +91,5 @@
 				$300,205
 			</p>
 		</div>
-	</div>
+	</div> --}}
 </div>

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../config/models');
+const { User, Item } = require('../config/models');
 
 // -----------------------------------------------------------------------------
 // Get Homepage
@@ -14,7 +14,13 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/profile', async (req, res) => {
-	res.render('profile', { layout: 'profile' });
+	try {
+		const userItems = await Item.findAll({ where: { user_id: req.user.dataValues.id }, raw: true });
+		console.log(userItems);
+		res.render('profile', { layout: 'profile', userItems });
+	} catch(err) {
+		console.log(err);
+	}
 });
 
 // -----------------------------------------------------------------------------
