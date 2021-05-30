@@ -12,6 +12,7 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
+const { body } = require("express-validator");
 const { QueryTypes } = require("sequelize");
 // const { Item, User, SubCategory, Team, Category } = require("../../../config/models");
 const { Item, User, SubCategory, Team } = require("../../../config/models");
@@ -305,10 +306,16 @@ router.get('/bycity/', async (req, res) => {
 // -----------------------------------------------------------------------------
 // Update A Item By its id (primary key)
 // -----------------------------------------------------------------------------
-router.put("/byid/:id", async (req, res) => {
+router.put("/byid/:id", async (req, res, next) => {
   try {
-    const itemData = await Item.update(req.body, {
-      where: {
+    const itemData = await Item.update( 
+      {user_id: req.body.user_id,
+      subCategory_id: req.body.subCategory_id,
+      description: req.body.description,
+      autographed: true,
+      playerName: req.body.playerName,
+      },
+      {where: {
         id: req.params.id,
       },
     });
