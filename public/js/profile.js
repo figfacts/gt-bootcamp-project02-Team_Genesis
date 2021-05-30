@@ -1,7 +1,7 @@
 var userImage1= document.getElementById("userimage1")
 
 
-var itemByUserIdUrl = "http://localhost:3000/api/item/byuserid/24"
+var itemByUserIdUrl = "/api/item/byuserid/24"
 
 fetch(itemByUserIdUrl)
 .then(function (response) {

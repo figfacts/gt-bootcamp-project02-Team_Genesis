@@ -132,8 +132,8 @@ var carousel3 = document.getElementById('carousel3');
 latestPostedItems = [];
 
 //Get last five items posted from our api url-------------------------------------------------
-
-const carouselUrl = 'http://localhost:3000/api/item/carouselurls'
+// const carouselUrl = '/api/item/carouselurls';
+const carouselUrl = '/api/item/latestitems/3';
 
 
 fetch(carouselUrl)
@@ -151,7 +151,6 @@ fetch(carouselUrl)
 });
 
 //set the carousel images to the last 3 items posted---------------------------------------------------
-
 function getLatestItems() {
 
 carousel1.setAttribute('src', latestPostedItems[0][0].image);
@@ -170,13 +169,24 @@ var image7 = document.getElementById("item7");
 var image8 = document.getElementById("item8");
 var image9 = document.getElementById("item9");
 var image10 = document.getElementById("item10");
+var image11 = document.getElementById("item11");
+// var image12 = document.getElementById("item12");
+// var image13 = document.getElementById("item13");
+// var image14 = document.getElementById("item14");
+// var image15 = document.getElementById("item15");
+// var image16 = document.getElementById("item16");
+// var image17 = document.getElementById("item17");
+// var image18 = document.getElementById("item18");
+// var image19 = document.getElementById("item19");
+// var image20 = document.getElementById("item20");
 
 
 homePageItems = [];
 
 //Get last five items posted from our api url-------------------------------------------------
 
-const homePageItemsUrl = 'http://localhost:3000/api/item/homepageitems'
+// const homePageItemsUrl = '/api/item/homepageitems'
+const homePageItemsUrl = '/api/item/latestitems/20'
 
 
 fetch(homePageItemsUrl)
