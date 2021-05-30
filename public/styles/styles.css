@@ -69,6 +69,7 @@
   padding: 10px;
   border-width: 1px;
   border-color: black;
+  border-radius: 25px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -244,6 +245,10 @@ h1{
 .carolitems {
  margin-left: 450px;
 }
+
+.itemblock {
+  margin: 10px;
+}
  
 .footer {
   border-style: solid;
@@ -266,3 +271,10 @@ h1{
 .footfont {
   color: white;
 }
+
+.item:hover {
+  box-shadow: 1px 1px 40px 10px rgb(255, 255, 255);
+}
+
+
+

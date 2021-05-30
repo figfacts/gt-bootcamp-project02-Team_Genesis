@@ -12,9 +12,18 @@ require('dotenv').config();
 //   }
 // );
 //Note: to use CLEARDB_DATABASE_URL you will need to enter the credentials in your .env file
-const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL)
+// const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL)
 
 //Note: to use MYSQL_URL you will need to enter your credentials in your .env file
 // const sequelize = new Sequelize(process.env.MYSQL_URL)
+let sequelize;
+if (process.env.CLEARDB_DATABASE_URL) {
+    console.log(`Connected to ClearDB Database`);
+    sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
+}
+else {
+    console.log(`Connected to Local Database`); 
+    sequelize = new Sequelize(process.env.MYSQL_URL);
+}
 
 module.exports = sequelize;
