@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // Route:    Category-controller.js
-// Purpose:  Routes for Category Table.
+// Purpose:  DB Access for Category Table.
 // Input:    <none>   
 // -----------------------------------------------------------------------------
 // Author:   Mark Harrison
@@ -14,10 +14,11 @@
 const { Category } = require('../config/models');
 const { sequelize } = require('../config/models/Category');
 
+
 // -----------------------------------------------------------------------------
-// Get All Categorys
+// Get All Categories
 // -----------------------------------------------------------------------------
-const getAllCategorys = async () => {
+const getAllCategories = async () => {
     try {
         const categoryData = await Category.findAll({
             order: sequelize.col('category.name'),
@@ -46,12 +47,12 @@ const getCategoryById = async (req, res) => {
 
 
 // -----------------------------------------------------------------------------
-// Get A Category By its initials
+// Get A Category By its name
 // -----------------------------------------------------------------------------
 const getCategoryByName = async (req, res) => {
     try {
         const categoryData = await Category.findOne({
-          where: { initials: req.params.name }
+          where: { name: req.params.name }
         });
         return categoryData;
     } catch (err) {
@@ -115,7 +116,7 @@ const deleteCategory = async (id) => {
 // Module Exports
 // -----------------------------------------------------------------------------
 module.exports = { getAllCategories,
-                   getCategoryeById, 
+                   getCategoryById, 
                    getCategoryByName, 
                    createCategory, 
                    deleteCategory, 

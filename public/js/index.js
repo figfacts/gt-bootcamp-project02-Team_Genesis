@@ -1,13 +1,20 @@
+// -----------------------------------------------------------------------------
+// Program:  index.js
+// Purpose:  
+// Input:    <none>   
+// -----------------------------------------------------------------------------
+// Author:   Team Genesis
+// Date:     May 22, 2021
+// -----------------------------------------------------------------------------
+
 //--------------------------------------------------------------------------
 //LOGIN BUTTONS
-
-// const { get } = require("../../routes/api/item/item-routes")
-
 //--------------------------------------------------------------------------
 const myModal = document.getElementById('myModal')
 const myInput = document.getElementById('myInput')
 const loginModalBtn = document.getElementById('loginBtn')
 const closeLoginBtn = document.getElementById('loginCloseBtn')
+const logOutBtn = document.getElementById('logoutBtn')
 //--------------------------------------------------------------------------
 //SIGN-UP BUTTONS
 //--------------------------------------------------------------------------
@@ -23,8 +30,9 @@ const myModalContactUs= document.getElementById('contactUsModal')
 const contactUsBtn = document.getElementById('contactUsBtn')
 const closeContactUsBtn = document.getElementById('contactUsCloseBtn')
 
-//cloud api url----------------------------------------------------------
-
+//--------------------------------------------------------------------------
+//cloud api url
+//--------------------------------------------------------------------------
 // const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/drhdiapys';
 // const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/drhdiapys/img/upload';
 const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/drhdiapys/upload';
@@ -32,7 +40,6 @@ const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/drhdiapys/upload';
 // const CLOUDINARY_UPLOAD_PRESET = 'xbstlcpl/img/upload'
 const CLOUDINARY_UPLOAD_PRESET = 'xbstlcpl'
 var image = document.getElementById('image');
-
 
 
 //-----------------------------------------------------------------------
@@ -62,13 +69,19 @@ var image = document.getElementById('image');
 
 // });
 
-
-
+//--------------------------------------------------------------------------
+//HANDLE LOGOUT BUTTON
+//--------------------------------------------------------------------------
+logOutBtn.onclick = async function() {
+	const res = await fetch('hbs/user/logout');
+	if (res.redirected) window.location.href = res.url;
+}
 
 //--------------------------------------------------------------------------
 //DROPDOWN BUTTON
 //--------------------------------------------------------------------------
 const dropDownBtn = document.getElementById('dropdownMenuLink')
+
 
 //--------------------------------------------------------------------------
 // DROPDOWN BUTTON FUNCTIONALITY
@@ -79,6 +92,7 @@ function dropDownMenu() {
 dropDownBtn.onclick = function () {
   dropDownMenu()
 }
+
 
 //--------------------------------------------------------------------------
 // OPEN AND CLOSE LOGIN/SIGN-UP MODALS
@@ -103,6 +117,7 @@ closeSignUpBtn.onclick = function(event) {
   }
 }
 
+
 //--------------------------------------------------------------------------
 // OPEN AND CLOSE FOOTER ABOUT-US/CONTACT-US MODALS
 //--------------------------------------------------------------------------
@@ -120,10 +135,10 @@ contactUsBtn.onclick = function() {
   myModalContactUs.style.display = "block";
 }
 
-///Carousel------------------------------------------
-// display latest 3 items posted in the carousel ---------------------------------------------
-///------------------------------------------------------------------------------------------
 
+//--------------------------------------------------------------------------
+//Carousel display latest 3 items posted in the carousel
+//--------------------------------------------------------------------------
 var carousel1 = document.getElementById('carousel1');
 var carousel2 = document.getElementById('carousel2');
 var carousel3 = document.getElementById('carousel3');
@@ -131,10 +146,11 @@ var carousel3 = document.getElementById('carousel3');
 
 latestPostedItems = [];
 
-//Get last five items posted from our api url-------------------------------------------------
+//--------------------------------------------------------------------------
+//Get last five items posted from our api url
+//--------------------------------------------------------------------------
 // const carouselUrl = '/api/item/carouselurls';
 const carouselUrl = '/api/item/latestitems/3';
-
 
 fetch(carouselUrl)
 .then(function (response) {
@@ -150,7 +166,9 @@ fetch(carouselUrl)
 
 });
 
-//set the carousel images to the last 3 items posted---------------------------------------------------
+//--------------------------------------------------------------------------
+//set the carousel images to the last 3 items posted
+//--------------------------------------------------------------------------
 function getLatestItems() {
 
 carousel1.setAttribute('src', latestPostedItems[0][0].image);
@@ -158,7 +176,6 @@ carousel2.setAttribute('src', latestPostedItems[0][1].image);
 carousel3.setAttribute('src', latestPostedItems[0][2].image);
 }
     
-//-----------------------------------------------------------------------------------------------------
 var image1 = document.getElementById("item1");
 var image2 = document.getElementById("item2");
 var image3 = document.getElementById("item3");
@@ -183,11 +200,11 @@ var image11 = document.getElementById("item11");
 
 homePageItems = [];
 
-//Get last five items posted from our api url-------------------------------------------------
-
+//--------------------------------------------------------------------------
+//Get last five items posted from our api url
+//--------------------------------------------------------------------------
 // const homePageItemsUrl = '/api/item/homepageitems'
 const homePageItemsUrl = '/api/item/latestitems/20'
-
 
 fetch(homePageItemsUrl)
 .then(function (response) {
@@ -203,8 +220,9 @@ fetch(homePageItemsUrl)
 
 });
 
-//set the homepage images to the last 20 items posted---------------------------------------------------
-
+//--------------------------------------------------------------------------
+//set the homepage images to the last 20 items posted
+//--------------------------------------------------------------------------
 function getHomePageItems() {
 
 image1.setAttribute('src', homePageItems[0][0].image);
@@ -219,9 +237,3 @@ image9.setAttribute('src', homePageItems[0][8].image);
 image10.setAttribute('src', homePageItems[0][9].image);
 
 }
-    
-//-----------------------------------------------------------------------------------------------------
-
-
-
-
