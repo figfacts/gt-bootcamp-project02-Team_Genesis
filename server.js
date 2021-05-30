@@ -33,9 +33,16 @@ let PORT = process.env.PORT || 3000;
 // -----------------------------------------------------------------------------
 // Middleware
 // -----------------------------------------------------------------------------
-app.use(
+// app.use(
+// 	session({
+// 	  secret: 'toaster struddle',
+// 	  resave: true,
+// 	  saveUninitialized: true
+// 	})
+//  );
+ app.use(
 	session({
-	  secret: 'toaster struddle',
+	  secret: process.env.SESSION_SECRET,
 	  resave: true,
 	  saveUninitialized: true
 	})
@@ -79,8 +86,6 @@ sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
     console.log(
       `==> 🌎  Listening on port ${PORT}. Visit http://localhost:${PORT} in your browser.`,
-      PORT,
-      PORT
     );
   });
 });
