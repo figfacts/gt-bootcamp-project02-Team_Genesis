@@ -15,7 +15,7 @@ const Item = require('./Item');
 const League = require('./League');
 const SubCategory = require('./SubCategory');
 const Team = require('./Team');
-const User = require('./user');
+const User = require('./User');
 const UserInterests = require('./UserInterests');
 
 // Teams belongsTo Leagues
