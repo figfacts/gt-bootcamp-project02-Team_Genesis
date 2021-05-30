@@ -12,8 +12,15 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
+const { body, validationResult } = require("express-validator");
 const { Category } = require('../../../config/models');
-const { sequelize } = require('../../../config/models/Category');
+// const { sequelize } = require('../../../config/models/Category');
+const { getAllCategories,
+  getCategoryById, 
+  getCategoryByName, 
+  createCategory,
+  deleteCategory, 
+  updateCategory } = require('../../../controllers/category-controller');
 
 
 // -----------------------------------------------------------------------------
@@ -21,9 +28,7 @@ const { sequelize } = require('../../../config/models/Category');
 // ----------------------------------------------------------------------------- 
 router.get('/', async (req, res) => {
   try {
-    const categoryData = await Category.findAll({
-      order: sequelize.col('category.name'),
-    })
+    const categoryData = await getAllCategories();
     if (!categoryData || categoryData.length === 0) res.status(404).json({ message: 'No categories exist.' });
     res.status(200).json(categoryData);
   } catch (err) {
@@ -38,7 +43,7 @@ router.get('/', async (req, res) => {
 // ----------------------------------------------------------------------------- 
 router.get('/byid/:id', async (req, res) => {
   try {
-    const categoryData = await Category.findByPk(req.params.id);
+    const categoryData = await getCategoryById(req, res);
     if (!categoryData || categoryData.length === 0) res.status(404).json({ message: `The requested category ${req.params.id} does not exist.` });
     res.status(200).json(categoryData);
   } catch (err) {
@@ -61,9 +66,7 @@ router.get('/byid/', async (req, res) => {
 // ----------------------------------------------------------------------------- 
 router.get('/byname/:name', async (req, res) => {
   try {
-    const categoryData = await Category.findOne({
-      where: { name: req.params.name }
-    });
+    const categoryData = await getCategoryByName(req, res);
     if (!categoryData || categoryData.length === 0) res.status(404).json({ message: `The requested category ${req.params.id} does not exist.` });
     res.status(200).json(categoryData);
   } catch (err) {
@@ -94,63 +97,66 @@ router.get("*", function(req, res) {
 // -----------------------------------------------------------------------------
 // Add A Category
 // -----------------------------------------------------------------------------
-router.post('/', async (req, res) => {
-  try {
-    const categoryData = await Category.create({
-      name: req.body.name,
-    });
-    res.status(200).json(categoryData);
-  } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(400).json(err);
-  }
-});
+router.post('/', [
+  body("name")
+    .isLength({ min: 3 })
+    .withMessage("The name must have minimum length of 3")
+    .trim(),
+  ],
+  (req, res, next) => {
+    const error = validationResult(req).formatWith(({ msg }) => msg);
+
+    const hasError = !error.isEmpty();
+
+    if (hasError) {
+      res.status(422).json({ error: error.array() });
+    } else {
+      next();
+    }
+  },
+  createCategory);
 
 
 // -----------------------------------------------------------------------------
 // Update A Category By its id (primary key)
 // -----------------------------------------------------------------------------
-router.put('/:id', async (req, res) => {
-  try {
-    const categoryData = await Category.update(req.body, {
-      where: {
-        id: req.params.id,
-      }
-    });
+router.put('/:id', [
+  body("name")
+    .isLength({ min: 3 })
+    .withMessage("The name must have minimum length of 3")
+    .trim(),
+  ],
+  (req, res, next) => {
+    const error = validationResult(req).formatWith(({ msg }) => msg);
 
-    if (!categoryData) {
-      res.status(404).json({ message: `Category ${req.params.id} does not exist.` });
-      return;
+    const hasError = !error.isEmpty();
+
+    if (hasError) {
+      res.status(422).json({ error: error.array() });
+    } else {
+      next();
     }
-
-    res.status(200).json(categoryData);
-  } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
-  }
-});
+  },
+  updateCategory);
 
 
 // -----------------------------------------------------------------------------
 // Delete A Category By its id (primary key)
 // -----------------------------------------------------------------------------
-router.delete('/byid/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const categoryData = await Category.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
+    await deleteCategory(req.params.id);
+    const leagueData = await getCategoryById(req, res);
 
-    if (!categoryData) {
-      res.status(404).json({ message: 'No category found with this id' });
+    if (leagueData) {
+     res.status(404).json({ message: `Category was not deleted.` });
       return;
-    }
+   }
 
-    res.status(200).json(categoryData);
+    res.status(200).json({ message: `Category was deleted.`});
   } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
+   console.log(`Error: ${err}`);
+   res.status(500).json(err);
   }
 });
 
