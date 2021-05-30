@@ -14,6 +14,7 @@ const myModal = document.getElementById('myModal')
 const myInput = document.getElementById('myInput')
 const loginModalBtn = document.getElementById('loginBtn')
 const closeLoginBtn = document.getElementById('loginCloseBtn')
+const logOutBtn = document.getElementById('logoutBtn')
 //--------------------------------------------------------------------------
 //SIGN-UP BUTTONS
 //--------------------------------------------------------------------------
@@ -68,6 +69,13 @@ var image = document.getElementById('image');
 
 // });
 
+//--------------------------------------------------------------------------
+//HANDLE LOGOUT BUTTON
+//--------------------------------------------------------------------------
+logOutBtn.onclick = async function() {
+	const res = await fetch('hbs/user/logout');
+	if (res.redirected) window.location.href = res.url;
+}
 
 //--------------------------------------------------------------------------
 //DROPDOWN BUTTON

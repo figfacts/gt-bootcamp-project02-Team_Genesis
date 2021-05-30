@@ -49,15 +49,12 @@ app.use(passport.session());
 
 
 // Handlebars
-app.engine(
-  "handlebars",
-  exphbs({
-    defaultLayout: "main"
-  })
-);
+const hbs = exphbs.create({});
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
 // Routes
+app.use(require('./controllers/index.js'));
 app.use(require('./routes/index.js'));
 
 var syncOptions = { force: false };
