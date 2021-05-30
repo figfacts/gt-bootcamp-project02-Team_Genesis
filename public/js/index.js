@@ -1,5 +1,8 @@
 //--------------------------------------------------------------------------
 //LOGIN BUTTONS
+
+// const { get } = require("../../routes/api/item/item-routes")
+
 //--------------------------------------------------------------------------
 const myModal = document.getElementById('myModal')
 const myInput = document.getElementById('myInput')
@@ -29,36 +32,35 @@ const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/drhdiapys/upload';
 // const CLOUDINARY_UPLOAD_PRESET = 'xbstlcpl/img/upload'
 const CLOUDINARY_UPLOAD_PRESET = 'xbstlcpl'
 var image = document.getElementById('image');
-var testBtn = document.getElemenyById('testbtn');
 
 
 
 //-----------------------------------------------------------------------
-testBtn.addEventListener('change', function(event) {
-  var file = event.target.file[0];
+// testBtn.addEventListener('change', function(event) {
+//   var file = event.target.file[0];
 
-  var imageData = new FormData();
-imageData.append('file', file);
-imageData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+//   var imageData = new FormData();
+// imageData.append('file', file);
+// imageData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-axios({
-  url: CLOUDINARY_API,
-  method: 'POST',
-  header: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Origin',
-    'Access-Control-Allow-Credentials': true,
-  },
-  data: imageData
-}).then(function(res) {
-  console.log(res)
-  image.src = res.data.source_url;
-}).catch(function(err) {
-  console.log(err);
-});
+// axios({
+//   url: CLOUDINARY_API,
+//   method: 'POST',
+//   header: {
+//     'Content-Type': 'application/x-www-form-urlencoded',
+//     'Access-Control-Allow-Origin': '*',
+//     'Access-Control-Allow-Headers': 'Origin',
+//     'Access-Control-Allow-Credentials': true,
+//   },
+//   data: imageData
+// }).then(function(res) {
+//   console.log(res)
+//   image.src = res.data.source_url;
+// }).catch(function(err) {
+//   console.log(err);
+// });
 
-});
+// });
 
 
 
@@ -118,40 +120,117 @@ contactUsBtn.onclick = function() {
   myModalContactUs.style.display = "block";
 }
 
-//get items from my api url
+///Carousel------------------------------------------
+// display latest 3 items posted in the carousel ---------------------------------------------
+///------------------------------------------------------------------------------------------
 
-const byItemUrl = 'http://localhost:3000/api/item/byid/4'
+var carousel1 = document.getElementById('carousel1');
+var carousel2 = document.getElementById('carousel2');
+var carousel3 = document.getElementById('carousel3');
 
-// .fetch(byItemUrl)
-//     .then(function (response) {
-//       console.log(response);
-//       return response.json();
-//     }).then(function(data) {
-//       console.log(data)
-//     });
-
-.fetch(byItemUrl)
-.then(function(response) {
-  console.log(response);
-})
-    
-
-userInterestItems = [];
 
 latestPostedItems = [];
 
+//Get last five items posted from our api url-------------------------------------------------
 
-function getAllItems() {
-  console.log("Choice Accepted");
-  connection.query("SELECT * FROM item", function (err, result) {
-      if (err) throw err;
-      console.table(result);
-  })
-};
+const carouselUrl = 'http://localhost:3000/api/item/carouselurls'
 
-getAllItems();
-closeContactUsBtn.onclick = function(event) {
-  if (event.target === closeContactUsBtn) {
-    myModalContactUs.style.display = "none";
-  }
+
+fetch(carouselUrl)
+.then(function (response) {
+    return response.json();
+})
+
+.then(function (data) {
+    console.log(data);
+    latestPostedItems.push(data);
+
+}).then(function() {
+ getLatestItems();
+
+});
+
+//set the carousel images to the last 3 items posted---------------------------------------------------
+
+function getLatestItems() {
+
+carousel1.setAttribute('src', latestPostedItems[0][0].image);
+carousel2.setAttribute('src', latestPostedItems[0][1].image);
+carousel3.setAttribute('src', latestPostedItems[0][2].image);
 }
+    
+//-----------------------------------------------------------------------------------------------------
+var image1 = document.getElementById("item1");
+var image2 = document.getElementById("item2");
+var image3 = document.getElementById("item3");
+var image4 = document.getElementById("item4");
+var image5 = document.getElementById("item5");
+var image6 = document.getElementById("item6");
+var image7 = document.getElementById("item7");
+var image8 = document.getElementById("item8");
+var image9 = document.getElementById("item9");
+var image10 = document.getElementById("item10");
+var image11 = document.getElementById("item11");
+var image12 = document.getElementById("item12");
+var image13 = document.getElementById("item13");
+var image14 = document.getElementById("item14");
+var image15 = document.getElementById("item15");
+var image16 = document.getElementById("item16");
+var image175 = document.getElementById("item17");
+var image18 = document.getElementById("item18");
+var image19 = document.getElementById("item19");
+var image20 = document.getElementById("item20");
+
+
+homePageItems = [];
+
+//Get last five items posted from our api url-------------------------------------------------
+
+const homePageItemsUrl = 'http://localhost:3000/api/item/homepageitems'
+
+
+fetch(homePageItemsUrl)
+.then(function (response) {
+    return response.json();
+})
+
+.then(function (data) {
+    console.log(data);
+    homePageItems.push(data);
+
+}).then(function() {
+ getHomePageItems();
+
+});
+
+//set the homepage images to the last 20 items posted---------------------------------------------------
+
+function getHomePageItems() {
+
+image1.setAttribute('src', homePageItems[0][0].image);
+image2.setAttribute('src', homePageItems[0][1].image);
+image3.setAttribute('src', homePageItems[0][2].image);
+image4.setAttribute('src', homePageItems[0][3].image);
+image5.setAttribute('src', homePageItems[0][4].image);
+image6.setAttribute('src', homePageItems[0][5].image);
+image7.setAttribute('src', homePageItems[0][6].image);
+image8.setAttribute('src', homePageItems[0][7].image);
+image9.setAttribute('src', homePageItems[0][8].image);
+image10.setAttribute('src', homePageItems[0][9].image);
+image11.setAttribute('src', homePageItems[0][10].image);
+image12.setAttribute('src', homePageItems[0][11].image);
+image13.setAttribute('src', homePageItems[0][12].image);
+image14.setAttribute('src', homePageItems[0][13].image);
+image15.setAttribute('src', homePageItems[0][14].image);
+image16.setAttribute('src', homePageItems[0][15].image);
+image17.setAttribute('src', homePageItems[0][16].image);
+image18.setAttribute('src', homePageItems[0][17].image);
+image19.setAttribute('src', homePageItems[0][18].image);
+image20.setAttribute('src', homePageItems[0][19].image);
+}
+    
+//-----------------------------------------------------------------------------------------------------
+
+
+
+
