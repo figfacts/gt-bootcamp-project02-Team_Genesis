@@ -168,7 +168,7 @@ router.delete('/:id', async (req, res) => {
     const leagueData = await getLeagueById(req, res);
 
     if (leagueData) {
-     res.status(404).json({ message: `Leaguewas not deleted.` });
+     res.status(404).json({ message: `League was not deleted.` });
       return;
    }
 

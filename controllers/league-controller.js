@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // Route:    league-controller.js
-// Purpose:  Routes for League Table.
+// Purpose:  DB Access for League Table.
 // Input:    <none>   
 // -----------------------------------------------------------------------------
 // Author:   Mark Harrison

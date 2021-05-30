@@ -11,20 +11,25 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
-const { QueryTypes } = require("sequelize");
+const { body, validationResult } = require("express-validator");
 const { Team, League } = require("../../../config/models");
-const { sequelize } = require('../../../config/models/Team');
-
+// const { sequelize } = require('../../../config/models/Team');
+const { getAllTeams,
+  getTeamById, 
+  getTeamsByCity,
+  getTeamsByName,
+  getTeamsByLeagueId,
+  getTeamsByLeagueInitials,
+  createTeam,
+  deleteTeam, 
+  updateTeam } = require('../../../controllers/team-controller');
 
 //-------------------------------------------------------------------------------------------------------
 // GET all teams
 //-------------------------------------------------------------------------------------------------------
 router.get("/", async (req, res) => {
   try {
-    const teamData = await Team.findAll({
-      order: [sequelize.col('team.city'), sequelize.col('team.name')],
-      include: [{ model: League }],
-    });
+    const teamData = await getAllTeams(req, res);
     if (!teamData || teamData.length === 0) res.status(404).json({ message: "No teams exist." });
     res.status(200).json(teamData);
   } catch (err) {
@@ -39,9 +44,7 @@ router.get("/", async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 router.get("/byid/:id", async (req, res) => {
   try {
-    const teamData = await Team.findByPk(req.params.id, {
-      include: [{ model: League }],
-    });
+    const teamData = await getTeamById(req, res);
     if (!teamData || teamData.length === 0) res.status(404).json({ message: `The requested team ${req.params.id} does not exist.` });
     res.status(200).json(leagueData);
   } catch (err) {
@@ -60,45 +63,11 @@ router.get('/byid/', async (req, res) => {
 
 
 //-------------------------------------------------------------------------------------------------------
-// GET Teams by league id
-//-------------------------------------------------------------------------------------------------------
-router.get("/byleagueid/:leagueid", async (req, res) => {
-  try {
-    const teamData = await Team.findAll({
-      where: { league_id: req.params.leagueid },
-      order: [sequelize.col('team.city'), sequelize.col('team.name')],
-      include: [{ model: League }],
-    });
-    if (!teamData || teamData.length === 0) {
-      res.status(404).json({ message: "No teams found!" });
-      return;
-    }
-    res.status(200).json(teamData);
-  } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
-  }
-});
-
-// User requested by league id, but didn't provide a league id - prompt for league id
-router.get('/byleagueid/', async (req, res) => {
-  res.status(400).json({
-    message: "Please provide league id."
-  })
-}
-);
-
-
-//-------------------------------------------------------------------------------------------------------
-// GET Teams by city
+// GET Teams by City
 //-------------------------------------------------------------------------------------------------------
 router.get("/bycity/:city", async (req, res) => {
   try {
-    const teamData = await Team.findAll({
-      where: { city: req.params.city },
-      order: [sequelize.col('team.city'), sequelize.col('team.name')],
-      include: [{ model: League }],
-    });
+    const teamData = await getTeamsByCity(req, res);
     if (!teamData || teamData.length === 0) {
       res.status(404).json({ message: "No teams found!" });
       return;
@@ -120,40 +89,65 @@ router.get('/bycity/', async (req, res) => {
 
 
 //-------------------------------------------------------------------------------------------------------
+// GET Teams by Name
+//-------------------------------------------------------------------------------------------------------
+router.get("/byname/:name", async (req, res) => {
+  try {
+    const teamData = await getTeamsByName(req, res);
+    if (!teamData || teamData.length === 0) {
+      res.status(404).json({ message: "No teams found!" });
+      return;
+    }
+    res.status(200).json(teamData);
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    res.status(500).json(err);
+  }
+});
+
+// User requested by city, but didn't provide a city - prompt for city
+router.get('/bycity/', async (req, res) => {
+  res.status(400).json({
+    message: "Please provide city."
+  })
+}
+);
+
+
+//-------------------------------------------------------------------------------------------------------
+// GET Teams by league id
+//-------------------------------------------------------------------------------------------------------
+router.get("/byleagueid/:leagueid", async (req, res) => {
+  try {
+    const teamData = await getTeamsByLeagueId(req, res);
+    if (!teamData || teamData.length === 0) {
+      res.status(404).json({ message: "No teams found!" });
+      return;
+    }
+    res.status(200).json(teamData);
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    res.status(500).json(err);
+  }
+});
+
+// User requested by league id, but didn't provide a league id - prompt for league id
+router.get('/byleagueid/', async (req, res) => {
+  res.status(400).json({
+    message: "Please provide league id."
+  })
+}
+);
+
+
+//-------------------------------------------------------------------------------------------------------
 // GET Teams by league initials
 //-------------------------------------------------------------------------------------------------------
-// router.get("/byleagueinitials/:leagueinitials", async (req, res) => {
-//   try {
-//     const teamData = await Team.findAll({
-//       where: {'league.initials': req.params.leagueinitials},
-//       order: [sequelize.col('team.city'), sequelize.col('team.name')],
-//       include: [{ model: League }],
-//     });
-//     console.log(`Number of teams: ${teamData.length}`);
-//     if (!teamData || teamData.length == 0) {
-//       res.status(404).json({ message: "No team found!" });
-//       return;
-//     }
-//     res.status(200).json(teamData);
-//   } catch (err) {
-//     console.log(`Error: ${err}`);
-//     res.status(500).json(err);
-//   }
-// });
-
 router.get("/byleagueinitials/:leagueinitials", async (req, res) => {
   try {
-    const teamData = await sequelize.query(
-      `SELECT * FROM teaminfo WHERE league_initials = "${req.params.leagueinitials}" 
-      ORDER BY city, name`,
-      {
-        // model: Team,
-        // mapToModel: true,
-        // include: [{ model: League }],
-        type: QueryTypes.SELECT
-      });
+    const teamData = await getTeamsByLeagueInitials(req, res);
     if (!teamData || teamData.length == 0) {
-      res.status(404).json({ message: "No team found!" });
+      res.status(404).json({ message: "No teams found!" });
       return;
     }
     res.status(200).json(teamData);
@@ -185,37 +179,53 @@ router.get("*", function (req, res) {
 // -----------------------------------------------------------------------------
 // Create (Add) A Team
 // -----------------------------------------------------------------------------
-router.post("/", async (req, res) => {
-  try {
-    const teamData = await Team.create({
-      reader_id: req.body.reader_id,
-    });
-    res.status(200).json(teamData);
-  } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(400).json(err);
-  }
-});
+router.post('/', [
+  body("city")
+    .isLength({ min: 2 })
+    .withMessage("The city name must have minimum length of 3")
+    .trim(),
+
+  body("name")
+    .isLength({ min: 3 })
+    .withMessage("The team name must have minimum length of 3")
+    .trim(),
+
+  body("teamLogo")
+    .isLength({ min: 5, max: 62 })
+    .withMessage("Logo should have min and max length between 5-62")
+    .trim(),
+],
+  (req, res, next) => {
+    const error = validationResult(req).formatWith(({ msg }) => msg);
+
+    const hasError = !error.isEmpty();
+
+    if (hasError) {
+      res.status(422).json({ error: error.array() });
+    } else {
+      next();
+    }
+  },
+  createTeam);
 
 
 //-----------------------------------------------------------------------------
 // Delete A Team by id
 // -----------------------------------------------------------------------------
-router.delete("/byid/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const teamData = await Team.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!teamData) {
-      res.status(404).json({ message: "No Team found with that id!" });
+    await deleteTeam(req.params.id);
+    const teamData = await getTeamById(req, res);
+
+    if (teamData) {
+     res.status(404).json({ message: `Team was not deleted.` });
       return;
-    }
-    res.status(200).json(teamData);
+   }
+
+    res.status(200).json({ message: `Team was deleted.`});
   } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
+   console.log(`Error: ${err}`);
+   res.status(500).json(err);
   }
 });
 
@@ -223,23 +233,34 @@ router.delete("/byid/:id", async (req, res) => {
 //-----------------------------------------------------------------------------
 // Update A Team
 // -----------------------------------------------------------------------------
-router.put('/byid/:id', async (req, res) => {
-  try {
-    const teamData = await Team.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!teamData[0]) {
-      res.status(404).json({ message: 'No team found' });
-      return;
+router.put('/byid/:id', [
+  body("city")
+    .isLength({ min: 2 })
+    .withMessage("The city name must have minimum length of 3")
+    .trim(),
+
+  body("name")
+    .isLength({ min: 3 })
+    .withMessage("The team name must have minimum length of 3")
+    .trim(),
+
+  body("teamLogo")
+    .isLength({ min: 5, max: 62 })
+    .withMessage("Logo should have min and max length between 5-62")
+    .trim(),
+],
+  (req, res, next) => {
+    const error = validationResult(req).formatWith(({ msg }) => msg);
+
+    const hasError = !error.isEmpty();
+
+    if (hasError) {
+      res.status(422).json({ error: error.array() });
+    } else {
+      next();
     }
-    res.status(200).json(teamData);
-  } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
-  }
-});
+  },
+  updateTeam);
 
 
 // -----------------------------------------------------------------------------

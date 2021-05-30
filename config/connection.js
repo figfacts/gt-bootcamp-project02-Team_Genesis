@@ -1,21 +1,19 @@
+// -----------------------------------------------------------------------------
+// Program:  connection.js
+// Purpose:  Create connection to the database.
+// Input:    <none>   
+// -----------------------------------------------------------------------------
+// Author:   Team Genesis
+// Date:     May 22, 2021
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+// Dependencies
+// -----------------------------------------------------------------------------
 const Sequelize = require('sequelize');
 require('dotenv').config();
 
-// const sequelize = new Sequelize(
-//   process.env.DB_NAME,
-//   process.env.DB_USER,
-//   process.env.DB_PASSWORD,
-//   {
-//     host: '@localhost',
-//     dialect: 'mysql',
-//     port: 3306,
-//   }
-// );
-//Note: to use CLEARDB_DATABASE_URL you will need to enter the credentials in your .env file
-// const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL)
-
-//Note: to use MYSQL_URL you will need to enter your credentials in your .env file
-// const sequelize = new Sequelize(process.env.MYSQL_URL)
 let sequelize;
 if (process.env.CLEARDB_DATABASE_URL) {
     console.log(`Connected to ClearDB Database`);
@@ -26,4 +24,8 @@ else {
     sequelize = new Sequelize(process.env.MYSQL_URL);
 }
 
+
+// -----------------------------------------------------------------------------
+// Module Exports
+// -----------------------------------------------------------------------------
 module.exports = sequelize;
