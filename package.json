@@ -1,14 +1,17 @@
 {
-  "name": "node-handlebars-boilerplate",
+  "name": "TraderJocks",
   "version": "1.0.0",
-  "description": "Project 2 Starter",
+  "description": "Project 2 Trader Jocks Starter",
   "main": "server.js",
+  "engines": {
+    "node": "14.17.0"
+    }
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "lint": "eslint --quiet .",
-    "fix": "eslint --fix .",
-    "test": "npm run lint && cross-env NODE_ENV=test mocha -u tdd --reporter spec --exit"
+    // "lint": "eslint --quiet .",
+    // "fix": "eslint --fix .",
+    // "test": "npm run lint && cross-env NODE_ENV=test mocha -u tdd --reporter spec --exit"
   },
   "license": "ISC",
   "dependencies": {
