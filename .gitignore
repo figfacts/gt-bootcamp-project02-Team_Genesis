@@ -3,7 +3,6 @@ node_modules
 npm-debug.log
 .env
 sql-files
-serverDF.js
 package-lock.json
 extra
 handlepractice.html

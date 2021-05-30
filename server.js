@@ -23,7 +23,6 @@ const passport = require('passport');              // Manage User Login
 require('./config/passport')(passport);
 const {cloudinary} = require('./utils/cloudinary'); //Utility for image uploading for items listed
 
-// Are we using this? Do we need it?
 var db = require("./config/models");
 
 let app = express();
@@ -33,13 +32,6 @@ let PORT = process.env.PORT || 3000;
 // -----------------------------------------------------------------------------
 // Middleware
 // -----------------------------------------------------------------------------
-// app.use(
-// 	session({
-// 	  secret: 'toaster struddle',
-// 	  resave: true,
-// 	  saveUninitialized: true
-// 	})
-//  );
  app.use(
 	session({
 	  secret: process.env.SESSION_SECRET,
@@ -65,10 +57,6 @@ app.set("view engine", "handlebars");
 app.use(require('./controllers/index.js'));
 app.use(require('./routes/index.js'));
 
-// require("./routes/htmlRoutes.js")(app);
-// require("./routes/index.js");
-// require("./routes/index.js")(app);
-
 var syncOptions = { force: false };
 // var syncOptions = { force: true };
 
@@ -79,7 +67,6 @@ var syncOptions = { force: false };
 // }
 
 // Starting the server, syncing our models ------------------------------------/
-// db.sequelize.sync(syncOptions).then(function() {
 sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
     console.log(
