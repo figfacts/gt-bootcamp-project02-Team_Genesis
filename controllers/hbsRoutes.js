@@ -7,7 +7,7 @@ const { User, Item } = require('../config/models');
 router.get('/', async (req, res) => {
 	try {
 		const isAuthenticated = req.isAuthenticated();
-		res.render('homePage', { 'isAuthenticated': isAuthenticated });
+		res.render('homePage', { style: 'styles.css', 'isAuthenticated': isAuthenticated });
 	} catch(err) {
 		console.log(err);
 	}
@@ -16,8 +16,15 @@ router.get('/', async (req, res) => {
 router.get('/profile', async (req, res) => {
 	try {
 		const userItems = await Item.findAll({ where: { user_id: req.user.dataValues.id }, raw: true });
-		console.log(userItems);
-		res.render('profile', { layout: 'profile', userItems });
+		res.render('profile', { style: 'profile.css', userItems });
+	} catch(err) {
+		console.log(err);
+	}
+});
+
+router.get('/addItem', async (req, res) => {
+	try {
+		res.render('addItem', { style: 'sell.css' });
 	} catch(err) {
 		console.log(err);
 	}

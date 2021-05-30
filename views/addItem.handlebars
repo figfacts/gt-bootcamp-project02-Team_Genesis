@@ -1,0 +1,53 @@
+<div id="main">
+	{{!-- <div id="picture-box" class="container">
+		<img
+			src="../images/michael-jordan-autographed-original-fleer-rookie-card-art-upper-deck_ss2_p-11049441+u-uqavmuumbop9g4tels6+v-863ede9db3db407cbb48e248a7d17894.webp"
+			alt="">
+	</div> --}}
+	<div id="item-info" class="container">
+		<div id="sellTitle">
+			<h2>
+				ITEM INFO
+			</h2>
+		</div>
+		<br>
+
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" id="itemName" placeholder="name@example.com">
+			<label for="floatingInput">Item Name</label>
+		</div>
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" id="itemDescription" placeholder="name@example.com">
+			<label for="floatingInput">Description</label>
+		</div>
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" id="itemPrice" placeholder="name@example.com">
+			<label for="floatingInput">Price</label>
+		</div>
+		<div class="form-check">
+			<input class="form-check-input" type="checkbox" value="" id="itemAutographed">
+			<label class="form-check-label" for="itemAutographed">
+				Autographed?
+			</label>
+		</div>
+		<br>
+		<div class="input-group mb-3">
+			<!-- <input type="file" class="form-control" id="inputGroupFile02"> previous code for reference -->
+			<img
+				src="https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
+				id="img-preview" />
+			<label class="file-upload-container" for="file-upload">
+				<input id="file-upload" type="file" style="display:none;">
+				Upload Picture
+			</label>
+		</div>
+		<br>
+		<br>
+		<div>
+			<input id="sellSubmitBtn" class="btn btn-primary" type="submit" value="Submit">
+		</div>
+	</div>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="../js/sell.js" async defer></script>
