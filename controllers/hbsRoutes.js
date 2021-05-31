@@ -36,7 +36,7 @@ router.get('/profile', async (req, res) => {
 
 router.get('/addItem', async (req, res) => {
 	try {
-		res.render('addItem', { style: 'sell.css', 'isAuthenticated': req.isAuthenticated() });
+		res.render('addItem', { style: 'sell.css', 'isAuthenticated': req.isAuthenticated(), userId: req.user.dataValues.id });
 	} catch (err) {
 		console.log(err);
 	}
