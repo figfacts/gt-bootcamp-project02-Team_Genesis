@@ -1,14 +1,31 @@
 const router = require('express').Router();
-const { User } = require('../config/models');
+const { User, Item } = require('../config/models');
+const passport = require('passport');
 
 // -----------------------------------------------------------------------------
 // Get Homepage
 // -----------------------------------------------------------------------------
 router.get('/', async (req, res) => {
 	try {
-		const isAuthenticated = req.isAuthenticated();
-		res.render('homePage', { 'isAuthenticated': isAuthenticated });
-	} catch(err) {
+		res.render('homePage', { style: 'styles.css', 'isAuthenticated': req.isAuthenticated() });
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+router.get('/profile', async (req, res) => {
+	try {
+		const userItems = await Item.findAll({ where: { user_id: req.user.dataValues.id }, raw: true });
+		res.render('profile', { style: 'profile.css', userItems, 'isAuthenticated': req.isAuthenticated() });
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+router.get('/addItem', async (req, res) => {
+	try {
+		res.render('addItem', { style: 'sell.css', 'isAuthenticated': req.isAuthenticated() });
+	} catch (err) {
 		console.log(err);
 	}
 });
@@ -19,7 +36,36 @@ router.get('/', async (req, res) => {
 router.get('/user/logout', (req, res) => {
 	req.logout();
 	res.redirect('/');
- });
+});
+
+// -----------------------------------------------------------------------------
+// Login A User
+// -----------------------------------------------------------------------------
+router.post('/login', async (req, res, next) => {
+	try {
+		await passport.authenticate('local', {
+			successRedirect: '/profile',
+			failureRedirect: '/',
+		})(req, res, next);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+// -----------------------------------------------------------------------------
+// Create (Add) A User
+// -----------------------------------------------------------------------------
+router.post('/user', async (req, res) => {
+	try {
+		//hashing password should be a hook on your model | Justin B. to Update 
+		// req.body.password = await bcrypt.hash(req.body.password, 10);
+		const userData = await User.create(req.body);
+		res.status(200).json(userData);
+	} catch (err) {
+		console.log(`Error: ${err}`);
+		res.status(500).json(err);
+	}
+});
 
 
 module.exports = router;

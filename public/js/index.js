@@ -187,15 +187,15 @@ var image8 = document.getElementById("item8");
 var image9 = document.getElementById("item9");
 var image10 = document.getElementById("item10");
 var image11 = document.getElementById("item11");
-var image12 = document.getElementById("item12");
-var image13 = document.getElementById("item13");
-var image14 = document.getElementById("item14");
-var image15 = document.getElementById("item15");
-var image16 = document.getElementById("item16");
-var image17 = document.getElementById("item17");
-var image18 = document.getElementById("item18");
-var image19 = document.getElementById("item19");
-var image20 = document.getElementById("item20");
+// var image12 = document.getElementById("item12");
+// var image13 = document.getElementById("item13");
+// var image14 = document.getElementById("item14");
+// var image15 = document.getElementById("item15");
+// var image16 = document.getElementById("item16");
+// var image17 = document.getElementById("item17");
+// var image18 = document.getElementById("item18");
+// var image19 = document.getElementById("item19");
+// var image20 = document.getElementById("item20");
 
 
 homePageItems = [];
@@ -235,16 +235,7 @@ image7.setAttribute('src', homePageItems[0][6].image);
 image8.setAttribute('src', homePageItems[0][7].image);
 image9.setAttribute('src', homePageItems[0][8].image);
 image10.setAttribute('src', homePageItems[0][9].image);
-image11.setAttribute('src', homePageItems[0][10].image);
-image12.setAttribute('src', homePageItems[0][11].image);
-image13.setAttribute('src', homePageItems[0][12].image);
-image14.setAttribute('src', homePageItems[0][13].image);
-image15.setAttribute('src', homePageItems[0][14].image);
-image16.setAttribute('src', homePageItems[0][15].image);
-image17.setAttribute('src', homePageItems[0][16].image);
-image18.setAttribute('src', homePageItems[0][17].image);
-image19.setAttribute('src', homePageItems[0][18].image);
-image20.setAttribute('src', homePageItems[0][19].image);
+
 }
 
 
