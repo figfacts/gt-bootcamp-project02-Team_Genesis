@@ -67,15 +67,15 @@ const itemSubmitted = async function(event) {
 	const res = await fetch('/api/item', {
 		method: 'POST',
 		body: JSON.stringify({
-			user_id: 4,
+			// user_id: 4,
 			subCategory_id: 114,
             autographed: autographedEl.checked,
 			description: descriptionEl.value,
 			playerName: playerNameEl.value,
-            playerSoundex: "HARDCODED Test",
+            // playerSoundex: "HARDCODED Test",
             team_id: 714,
             price: priceEl.value,
-			dateListed: isoDate,
+			// dateListed: isoDate,
             image: imgPreview.src
 		}),
 		headers: {

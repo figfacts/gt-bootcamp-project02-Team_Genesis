@@ -328,3 +328,14 @@ h1{
   display: flex ;
   flex-wrap: wrap;
 }
+
+#latestitemsh1 {
+color: rgb(0, 0, 0);
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#latestitemsheader {
+  background-image: url('https://image.freepik.com/free-photo/watercolor-light-gray-gradient-background-texture-aquarelle-white-gray-ombre_145343-964.jpg');
+  background-size: cover;
+  margin: 0px;
+}
