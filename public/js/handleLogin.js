@@ -4,7 +4,7 @@ const handleLogin = async function(event) {
 	const emailEl = document.getElementById('email');
 	const passwordEl = document.getElementById('password');
 
-	const res = await fetch('/api/user/login', {
+	const res = await fetch('/login', {
 		method: 'POST',
 		// redirect: 'follow',
 		
