@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const { User, Item } = require('../config/models');
+const { User, Item, SubCategory, Team } = require('../config/models');
 const passport = require('passport');
+const { sequelize } = require('../config/models/Item');
 
 // -----------------------------------------------------------------------------
 // Get Homepage
@@ -15,7 +16,18 @@ router.get('/', async (req, res) => {
 
 router.get('/profile', async (req, res) => {
 	try {
-		const userItems = await Item.findAll({ where: { user_id: req.user.dataValues.id }, raw: true });
+		// const userItems = await Item.findAll({ where: { user_id: req.user.dataValues.id }, raw: true });
+		const userItems = await Item.findAll({
+			where: { user_id: req.user.dataValues.id },
+			raw: true,
+			order: [ sequelize.col('dateListed'), 
+					 sequelize.col('subCategory.description'), 
+					 sequelize.col('team.name')],
+			include: [{ model: User }, 
+			  { model: SubCategory },
+			  { model: Team }
+			],
+		  });
 		res.render('profile', { style: 'profile.css', userItems, 'isAuthenticated': req.isAuthenticated() });
 	} catch (err) {
 		console.log(err);
