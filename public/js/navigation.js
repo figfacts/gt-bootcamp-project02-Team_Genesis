@@ -8,7 +8,7 @@ const homePage = document.getElementById('title')
 //HANDLE LOGOUT BUTTON
 //--------------------------------------------------------------------------
 logOutBtn.onclick = async function() {
-	const res = await fetch('hbs/user/logout');
+	const res = await fetch('user/logout');
 	if (res.redirected) window.location.href = res.url;
 }
 
