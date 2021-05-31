@@ -187,15 +187,7 @@ var image8 = document.getElementById("item8");
 var image9 = document.getElementById("item9");
 var image10 = document.getElementById("item10");
 var image11 = document.getElementById("item11");
-// var image12 = document.getElementById("item12");
-// var image13 = document.getElementById("item13");
-// var image14 = document.getElementById("item14");
-// var image15 = document.getElementById("item15");
-// var image16 = document.getElementById("item16");
-// var image17 = document.getElementById("item17");
-// var image18 = document.getElementById("item18");
-// var image19 = document.getElementById("item19");
-// var image20 = document.getElementById("item20");
+
 
 
 homePageItems = [];
