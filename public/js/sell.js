@@ -38,45 +38,45 @@ fileUpload.addEventListener('change', function(event) {
 const itemSubmitted = async function(event) {
 	event.preventDefault();
 	
-	const userIdEl = document.getElementById('userId');
+	// const userIdEl = document.getElementById('userId');
 	const subCategoryIdEl = document.getElementById('subCategoryId');
 	const autographedEl = document.getElementById("itemAutographed");
     const descriptionEl = document.getElementById("itemDescription");
-    const playerNameEl = document.getElementById("itemName");
-    const playerSoundexEl = document.getElementById("playerSoundex");
+    const playerNameEl = document.getElementById("playerName");
+    // const playerSoundexEl = document.getElementById("playerSoundex");
     const teamIdEl= document.getElementById("teamId");
     const priceEl= document.getElementById("itemPrice");
     const imgPreview = document.getElementById('img-preview');
 	
+//This was used for the isoDate for dateListed (down below); however, we don't need to pass it anymore as it is defined in the api/item-routes.js
+	// date = new Date();
+	// year = date.getFullYear();
+	// month = date.getMonth()+1;
+	// dt = date.getDate();
 
-	date = new Date();
-	year = date.getFullYear();
-	month = date.getMonth()+1;
-	dt = date.getDate();
+	// if (dt < 10) {
+	// dt = '0' + dt;
+	// }
 
-	if (dt < 10) {
-	dt = '0' + dt;
-	}
+	// if (month < 10) {
+	// month = '0' + month;
+	// }
 
-	if (month < 10) {
-	month = '0' + month;
-	}
-
-	const isoDate = year + '-' + month + '-' + dt;
+	// const isoDate = year + '-' + month + '-' + dt;
 
 	const res = await fetch('/api/item', {
 		method: 'POST',
 		body: JSON.stringify({
-			user_id: 4,
-			subCategory_id: 114,
-            autographed: autographedEl.checked,
-			description: descriptionEl.value,
-			playerName: playerNameEl.value,
-            playerSoundex: "HARDCODED Test",
-            team_id: 714,
-            price: priceEl.value,
-			dateListed: isoDate,
-            image: imgPreview.src
+                user_id: req.user.dataValues.id,
+                subCategory_id: 14,//subCategoryIdEl.checked, //will get from Omari's dropdown
+                autographed: autographedEl.checked,
+                description: descriptionEl.value,
+                playerName: playerNameEl.value,
+                // playerSoundex: "HARDCODED Test", don't need playerSoundex as it takes in from playerName
+                team_id: 514, //teamIdEl.checked, //will get from Omari's dropdown
+                price: priceEl.value,
+                // dateListed: isoDate, //don't need dateListed(see line 51)
+                image: imgPreview.src
 		}),
 		headers: {
 			'Content-Type': 'application/json'
