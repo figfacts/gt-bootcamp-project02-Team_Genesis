@@ -21,7 +21,7 @@ const handleSignUp = async function(event) {
 
 	const isoDate = year + '-' + month + '-' + dt;
 
-	const res = await fetch('/api/user', {
+	const res = await fetch('/user', {
 		method: 'POST',
 		body: JSON.stringify({
 			firstName: firstNameEl.value,
