@@ -38,7 +38,7 @@ fileUpload.addEventListener('change', function(event) {
 const itemSubmitted = async function(event) {
 	event.preventDefault();
 	
-	// const userIdEl = document.getElementById('userId');
+	const userIdEl = document.getElementById('userId');
 	const subCategoryIdEl = document.getElementById('subCategoryId');
 	const autographedEl = document.getElementById("itemAutographed");
     const descriptionEl = document.getElementById("itemDescription");
@@ -67,7 +67,7 @@ const itemSubmitted = async function(event) {
 	const res = await fetch('/api/item', {
 		method: 'POST',
 		body: JSON.stringify({
-                user_id: req.user.dataValues.id,
+                user_id: userIdEl.value,
                 subCategory_id: 14,//subCategoryIdEl.checked, //will get from Omari's dropdown
                 autographed: autographedEl.checked,
                 description: descriptionEl.value,
