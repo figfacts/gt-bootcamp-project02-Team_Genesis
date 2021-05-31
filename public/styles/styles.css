@@ -294,3 +294,37 @@ h1{
 	cursor: pointer;
 	background: #3949AB;
 }
+
+
+#itemimage {
+  max-width: 300px;
+  margin: 10px;
+  border-color: black;
+  border-style: solid;
+  border-width: 10px;
+  border-radius: 5px;
+  margin-bottom:0px ;
+  
+}
+
+.profilep {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+
+}
+
+#itemtext {
+  background-image: url('https://cdn.hovia.com/app/uploads/grey-ombre-product.jpg');
+  max-width: 300px;
+  margin: 10px;
+  padding: 5px;
+  margin-top: 0px;
+  border-color: black;
+  border-style: solid;
+
+}
+
+.customcontainer {
+  display: flex ;
+  flex-wrap: wrap;
+}
