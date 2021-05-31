@@ -75,9 +75,9 @@ router.get("/byuserid/:userid", async (req, res) => {
   try {
     const itemData = await Item.findAll({
       where: { user_id: req.params.userid },
-      order: [ sequelize.col('dateListed desc'), 
-               sequelize.col('subCategory.description'), 
-               sequelize.col('team.name')],
+      order: [ [sequelize.col('dateListed'), 'DESC'],
+                sequelize.col('subCategory.description'), 
+                sequelize.col('team.name')],
       include: [{ model: User }, 
         { model: SubCategory },
         { model: Team }
@@ -110,7 +110,9 @@ router.get("/bysubcategoryid/:subcategoryid", async (req, res) => {
   try {
     const itemData = await Item.findAll({
       where: { subCategory_id: req.params.subcategoryid },
-      order: [sequelize.col('team.name')],
+      order: [ [sequelize.col('dateListed'), 'DESC'],
+                sequelize.col('subCategory.description'), 
+                sequelize.col('team.name')],
       include: [{ model: User }, 
                 { model: SubCategory },
                 { model: Team }
@@ -143,7 +145,9 @@ router.get("/byteamid/:teamid", async (req, res) => {
   try {
     const itemData = await Item.findAll({
       where: { team_id: req.params.teamid },
-      order: [sequelize.col('subCategory.description')],
+      order: [ [sequelize.col('dateListed'), 'DESC'],
+                sequelize.col('subCategory.description'), 
+                sequelize.col('team.name')],
       include: [{ model: User }, 
                 { model: SubCategory },
                 { model: Team }
@@ -176,8 +180,9 @@ router.get("/byplayername/:playername", async (req, res) => {
   try {
     const itemData = await Item.findAll({
       where: { playerSoundex: sequelize.fn('soundex', req.params.playername)},
-      order: [sequelize.col('subCategory.description'), 
-              sequelize.col('team.name')],
+      order: [ [sequelize.col('dateListed'), 'DESC'],
+                sequelize.col('subCategory.description'), 
+                sequelize.col('team.name')],
       include: [{ model: User }, 
                 { model: SubCategory },
                 { model: Team }
@@ -216,6 +221,7 @@ router.get("/byleagueinitials/:leagueinitials", async (req, res) => {
        WHERE
          league_initials = "${req.params.leagueinitials}" 
        ORDER BY
+         dateListed DESC,
          description,
          team_name`, 
       {
@@ -241,22 +247,16 @@ router.get("/byleagueinitials/:leagueinitials", async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 router.get("/byautographed/:autograph", async (req, res) => {
   try {
-    const itemData = await sequelize.query(
-      `SELECT
-         * 
-       FROM
-         iteminfo 
-       WHERE
-         autographed = "${req.params.autograph}" 
-       ORDER BY
-         description,
-         team_name`, 
-      {
-        model: Item,
-        include: [{ model: User }],
-        mapToModel: true,
-        type: QueryTypes.SELECT
-      });
+    const itemData = await Item.findAll({
+      where: { autographed: req.params.autographed },
+      order: [ [sequelize.col('dateListed'), 'DESC'],
+                sequelize.col('subCategory.description'), 
+                sequelize.col('team.name')],
+      include: [{ model: User }, 
+                { model: SubCategory },
+                { model: Team }
+               ],
+    });
     if (!itemData || itemData.length == 0) {
       res.status(404).json({ message: "No items found!" });
       return;
@@ -267,7 +267,6 @@ router.get("/byautographed/:autograph", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 
 // User requested by autogrpahed, but didn't provide boolean - prompt for boolean
 router.get('/byautographed/', async (req, res) => {
@@ -290,7 +289,8 @@ router.get("/bycity/:cityname", async (req, res) => {
          iteminfo 
        WHERE 
          team_city = "${req.params.cityname}" 
-       ORDER BY 
+       ORDER BY
+         dateListed DESC, 
          description, 
          team_name`, 
       {
@@ -325,14 +325,13 @@ router.get('/latestitems/:count', async (req, res) => {
   try {
     const URLs = await sequelize.query(
       `SELECT
-         id,
-         image,
-         playerName,
-         description
+         *
        FROM
-         item
+         itemInfo
        ORDER BY
-         id DESC
+         dateListed DESC, 
+         description, 
+         team_name
        LIMIT ${req.params.count}`, 
        { type: QueryTypes.SELECT });
 
@@ -344,15 +343,10 @@ router.get('/latestitems/:count', async (req, res) => {
 
 
 // -----------------------------------------------------------------------------
-// Update A Item By its id (primary key)
+// Update An Item By its id (primary key)
 // -----------------------------------------------------------------------------
 router.put("/byid/:id", async (req, res) => {
   try {
-    // const itemData = await Item.update(req.body, {
-    //   where: {
-    //     id: req.params.id,
-    //   },
-    // });
     let autographed = '0';
     if (req.body.autograph = 'true') autographed = '1';
     const itemData = await sequelize.query(
@@ -366,8 +360,7 @@ router.put("/byid/:id", async (req, res) => {
         playerSoundex = SOUNDEX("${req.body.playerName}"),
         team_id = ${req.body.team_id},
         price = ${req.body.price},
-        dateListed = CURRENT_DATE,
-        image = "${req.body.image}"
+        dateListed = CURRENT_DATE
       WHERE 
         id = ${req.params.id}`, 
       {
@@ -388,19 +381,17 @@ router.put("/byid/:id", async (req, res) => {
   }
 });
 
-//Create a new ITEM
+// -----------------------------------------------------------------------------
+// Create An Item 
+// -----------------------------------------------------------------------------
 router.post("/", async (req, res) => {
   try {
-    // const itemData = await Item.create(
-    //   req.body
-    // );
-    // res.status(200).json(itemData);
     let autographed = '0';
     if (req.body.autograph = 'true') autographed = '1';
     const itemData = await sequelize.query(
       `INSERT INTO 
         item (user_id, subCategory_id, description, autographed, playerName, playerSoundex, team_id, price, dateListed, image)
-        values (${req.body.user_id}, ${req.body.subCategory_id}, "${req.body.description}", "${autographed}",
+        values (${req.user.dataValues.id}, ${req.body.subCategory_id}, "${req.body.description}", "${autographed}",
                 "${req.body.playerName}", SOUNDEX("${req.body.playerName}"), ${req.body.team_id}, ${req.body.price}, 
                 CURRENT_DATE, "${req.body.image}")`, 
       {
@@ -436,61 +427,6 @@ router.delete("/byid/:id", async (req, res) => {
   }
 });
 
-// -----------------------------------------------------------------------------
-// Update A User By its id (primary key)
-// -----------------------------------------------------------------------------
-router.put("/byid/:id", async (req, res) => {
-  try {
-    const itemData = await Item.update(
-      {
-        description: req.body.description,
-        autographed: req.body.autographed,
-        price: req.body.price,
-      },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
-    if (!itemData) {
-      res
-        .status(404)
-        .json({ message: `Item ${req.params.id} does not exist.` });
-      return;
-    }
-
-    res.status(200).json(itemData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//-----------------------------------------------------------------------
-// router.get('/carouselurls', async (req, res) => {
-  
-//   try {
-//     const URLs = await sequelize.query("select id, image from item order by id desc limit 5", { type: QueryTypes.SELECT });
-
-//     res.status(200).json(URLs);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-
-// });
-
-
-// router.get('/homepageitems', async (req, res) => {
-  
-//   try {
-//     const URLs = await sequelize.query("select id, image, playerName, description from item order by id desc limit 20", { type: QueryTypes.SELECT });
-
-//     res.status(200).json(URLs);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-
-// });
 
 // -----------------------------------------------------------------------------
 // Module Exports
