@@ -75,8 +75,9 @@ router.get("/byuserid/:userid", async (req, res) => {
   try {
     const itemData = await Item.findAll({
       where: { user_id: req.params.userid },
-      order: [sequelize.col('subCategory.description'), 
-              sequelize.col('team.name')],
+      order: [ sequelize.col('dateListed desc'), 
+               sequelize.col('subCategory.description'), 
+               sequelize.col('team.name')],
       include: [{ model: User }, 
         { model: SubCategory },
         { model: Team }
