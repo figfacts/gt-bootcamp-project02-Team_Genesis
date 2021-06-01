@@ -32,16 +32,15 @@ let PORT = process.env.PORT || 3000;
 // -----------------------------------------------------------------------------
 // Middleware
 // -----------------------------------------------------------------------------
+sequelizeStore = new SequelizeStore({db: sequelize});
  app.use(
 	session({
 	  secret: process.env.SESSION_SECRET,
 	  cookie: {},
-	  resave: true,
+	  resave: false,
 	  proxy: true,
 	  saveUninitialized: true,
-	  store: new SequelizeStore({
-		  db: sequelize
-	  })
+	  store: sequelizeStore
 	})
  );
 
@@ -51,7 +50,7 @@ app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
 
-store.sync();
+sequelizeStore.sync();
 
 // Handlebars
 const hbs = exphbs.create({});
