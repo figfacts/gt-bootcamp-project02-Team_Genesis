@@ -1,3 +1,4 @@
+{{> navigation }}
 <div id="main">
 	{{!-- <div id="picture-box" class="container">
 		<img
@@ -13,8 +14,8 @@
 		<br>
 
 		<div class="form-floating mb-3">
-			<input type="text" class="form-control" id="itemName" placeholder="name@example.com">
-			<label for="floatingInput">Item Name</label>
+			<input type="text" class="form-control" id="playerName" placeholder="name@example.com">
+			<label for="floatingInput">Player Name</label>
 		</div>
 		<div class="form-floating mb-3">
 			<input type="text" class="form-control" id="itemDescription" placeholder="name@example.com">
@@ -44,6 +45,7 @@
 		<br>
 		<br>
 		<div>
+			<input type="hidden" id="userId" name="userId" value="{{userId}}">
 			<input id="sellSubmitBtn" class="btn btn-primary" type="submit" value="Submit">
 		</div>
 	</div>

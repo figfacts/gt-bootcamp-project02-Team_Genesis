@@ -1,20 +1,23 @@
-<div id="main" class="container flex">
-
+{{> navigation }}
+<div id="main" class="container flex customcontainer">
 	{{#userItems}}
-	<div>
 		<div id="itempic">
-			<img src="{{this.image}}" alt="">
+			<div class="row">
+				<div class="col-md">
+				<img id="itemimage" src="{{this.image}}" alt="">
+				<div id="itemtext"> 
+				<p class="profilep"> Player Name: {{this.playerName}}</p>	
+				<p class="profilep"> Description: {{this.description}}</p>
+				<p class="profilep">Price: ${{this.price}}</p>
+				</div>
+				
+
+				</div>
+				
 		</div>
-		<div>
-			<p> Item Name: {{this.playerName}}</p>
+
 		</div>
-		<div>
-			<p> Description: {{this.description}}</p>
-		</div>
-		<div>
-			<p>Price: ${{this.price}}</p>
-		</div>
-	</div>
+			
 	{{/userItems}}
 
 
