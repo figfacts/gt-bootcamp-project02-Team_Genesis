@@ -6,8 +6,6 @@
 // Author:   Team Genesis
 // Date:     May 22, 2021
 // -----------------------------------------------------------------------------
-
-
 // -----------------------------------------------------------------------------
 // Dependencies
 // -----------------------------------------------------------------------------
@@ -22,66 +20,51 @@ const passport = require('passport');              // Manage User Login
 require('./config/passport')(passport);
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const {cloudinary} = require('./utils/cloudinary'); //Utility for image uploading for items listed
-
 var db = require("./config/models");
-
 let app = express();
 let PORT = process.env.PORT || 3000;
-
-
 // -----------------------------------------------------------------------------
 // Middleware
 // -----------------------------------------------------------------------------
+sequelizeStore = new SequelizeStore({db: sequelize});
  app.use(
-	session({
-	  secret: process.env.SESSION_SECRET,
-	  cookie: {},
-	  resave: false,
-	  proxy: true,
-	  saveUninitialized: true,
-	  store: new SequelizeStore({
-		  db: sequelize
-	  })
-	})
+   session({
+     secret: process.env.SESSION_SECRET,
+     cookie: {},
+     resave: false,
+     proxy: true,
+     saveUninitialized: true,
+     store: sequelizeStore
+   })
  );
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
+sequelizeStore.sync();
 // Handlebars
 const hbs = exphbs.create({});
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
-
 // Routes
 // app.use(require('./routes/index.js'));
 app.use(require('./controllers/index.js'));
-
-
 var syncOptions = { force: false };
 // var syncOptions = { force: true };
-
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
 // if (process.env.NODE_ENV === "test") {
 //   syncOptions.force = true;
 // }
-
 // Starting the server, syncing our models ------------------------------------/
 sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
     console.log(
-      `==> 🌎  Listening on port ${PORT}. Visit http://localhost:${PORT} in your browser.`,
+      `==> :earth_americas:  Listening on port ${PORT}. Visit http://localhost:${PORT} in your browser.`,
     );
   });
 });
-
-
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
