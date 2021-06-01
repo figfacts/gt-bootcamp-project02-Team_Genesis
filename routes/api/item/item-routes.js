@@ -12,7 +12,7 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
-const { body } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 const {
   getAllItems,
   getItemById,
