@@ -82,6 +82,7 @@ const itemSubmitted = async function(event) {
 			'Content-Type': 'application/json'
 		}
 	});
+    if (res.redirected) window.location.href = res.url;
 }
 
 document.getElementById('sellSubmitBtn').addEventListener('click', itemSubmitted);
