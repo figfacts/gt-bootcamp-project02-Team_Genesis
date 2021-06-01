@@ -22,7 +22,7 @@ const getAllCategories = async () => {
     try {
         const categoryData = await Category.findAll({
             order: sequelize.col('category.name'),
-          });
+        });
         return categoryData;
     } catch (err) {
         console.log(`Error: ${err}`);
@@ -34,9 +34,9 @@ const getAllCategories = async () => {
 // -----------------------------------------------------------------------------
 // Get A Category By its id (primary key)
 // -----------------------------------------------------------------------------
-const getCategoryById = async (req, res) => {
+const getCategoryById = async (id) => {
     try {
-        const categoryData = await Category.findByPk(req.params.id, {
+        const categoryData = await Category.findByPk(id, {
         });
         return categoryData;
     } catch (err) {
@@ -49,10 +49,10 @@ const getCategoryById = async (req, res) => {
 // -----------------------------------------------------------------------------
 // Get A Category By its name
 // -----------------------------------------------------------------------------
-const getCategoryByName = async (req, res) => {
+const getCategoryByName = async (name) => {
     try {
         const categoryData = await Category.findOne({
-          where: { name: req.params.name }
+            where: { name: name }
         });
         return categoryData;
     } catch (err) {
@@ -82,17 +82,17 @@ const createCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
     try {
         let categoryData = await Category.update(req.body, {
-                  where: {
-                    id: req.params.id,
-                  }
-                });
-                categoryData = await getCategoryById(req, res);
-                if (!categoryData) {
-                  res.status(404).json({ message: `Category ${req.params.id} does not exist.` });
-                  return;
-                }
-            
-                res.status(200).json(categoryData);
+            where: {
+                id: req.params.id,
+            }
+        });
+        categoryData = await getCategoryById(req, res);
+        if (!categoryData) {
+            res.status(404).json({ message: `Category ${req.params.id} does not exist.` });
+            return;
+        }
+
+        res.status(200).json(categoryData);
     } catch (err) {
         console.log(`Error: ${err}`);
         res.status(500).json(err);
@@ -115,9 +115,11 @@ const deleteCategory = async (id) => {
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
-module.exports = { getAllCategories,
-                   getCategoryById, 
-                   getCategoryByName, 
-                   createCategory, 
-                   deleteCategory, 
-                   updateCategory };
+module.exports = {
+    getAllCategories,
+    getCategoryById,
+    getCategoryByName,
+    createCategory,
+    deleteCategory,
+    updateCategory
+};

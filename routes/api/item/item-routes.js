@@ -13,19 +13,20 @@
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
 const { body } = require("express-validator");
-const { getAllItems,
-        getItemById, 
-        getItemsByUserId,
-        getItemsBySubCategoryId,
-        getItemsByTeamId,
-        getItemsByPlayerName,
-        getItemsByLeagueInitials,
-        getItemsByAutographed,
-        getItemsByCityName,
-        getLatestItems,
-        createItem, 
-        deleteItem, 
-        updateItem } = require('../../../controllers/item-controller');
+const {
+  getAllItems,
+  getItemById,
+  getItemsByUserId,
+  getItemsBySubCategoryId,
+  getItemsByTeamId,
+  getItemsByPlayerName,
+  getItemsByLeagueInitials,
+  getItemsByAutographed,
+  getItemsByCityName,
+  getLatestItems,
+  createItem,
+  deleteItem,
+  updateItem } = require('../../../controllers/item-controller');
 
 
 
@@ -46,7 +47,7 @@ router.get("/", async (req, res) => {
 // -----------------------------------------------------------------------------
 // Get A Item By its id (primary key)
 // -----------------------------------------------------------------------------
-router.get('/byid/:id', async(req, res) => {
+router.get('/byid/:id', async (req, res) => {
   try {
     const itemData = await getItemById(req.params.id);
     if (!itemData) res.status(404).json({ message: `The requested item ${req.params.id} does not exist.` });
@@ -56,7 +57,7 @@ router.get('/byid/:id', async(req, res) => {
   }
 });
 
-// User requested byid, but didn't provide an id - prompt for id
+// User requested by id, but didn't provide an id - prompt for id
 router.get('/byid/', async (req, res) => {
   res.status(400).json({
     message: "Please provide id."
@@ -82,7 +83,7 @@ router.get("/byuserid/:userid", async (req, res) => {
   }
 });
 
-// User requested byuserid, but didn't provide a userid - prompt for userid
+// User requested by userid, but didn't provide a userid - prompt for userid
 router.get('/byuserid/', async (req, res) => {
   res.status(400).json({
     message: "Please provide user id."
@@ -108,7 +109,7 @@ router.get("/bysubcategoryid/:subcategoryid", async (req, res) => {
   }
 });
 
-// User requested bysubcategoryid, but didn't provide an id - prompt for id
+// User requested by subcategoryid, but didn't provide an id - prompt for id
 router.get('/bysubcategory/', async (req, res) => {
   res.status(400).json({
     message: "Please provide subCategory id."
@@ -134,7 +135,7 @@ router.get("/byteamid/:teamid", async (req, res) => {
   }
 });
 
-// User requested byteamid, but didn't provide an id - prompt for id
+// User requested by teamid, but didn't provide an id - prompt for id
 router.get('/byteamid/', async (req, res) => {
   res.status(400).json({
     message: "Please provide team id."
@@ -330,9 +331,9 @@ router.delete("/byid/:id", async (req, res) => {
     const itemData = await getItemById(req, res);
 
     if (itemData) {
-     res.status(404).json({ message: `League was not deleted.` });
+      res.status(404).json({ message: `League was not deleted.` });
       return;
-   }
+    }
 
     res.status(200).json(itemData);
   } catch (err) {

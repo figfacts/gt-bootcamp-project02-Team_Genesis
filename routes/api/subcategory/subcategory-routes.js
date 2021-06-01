@@ -12,20 +12,23 @@
 // Dependencies
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
-const { QueryTypes } = require("sequelize");
-const { SubCategory, Category } = require('../../../config/models');
-const { sequelize } = require('../../../config/models/SubCategory');
-
+const { body, validationResult } = require("express-validator");
+const { 
+  getAllSubCategories,
+  getSubCategoryById,
+  getSubCategoryByDescription,
+  getSubCategoryByCategoryId,
+  getSubCategoryByCategoryName,
+  createSubCategory,
+  deleteSubCategory,
+  updateSubCategory } = require('../../../controllers/subCategory-controller');
 
 //-------------------------------------------------------------------------------------------------------
-// GET all teams
+// GET all subcategories
 //-------------------------------------------------------------------------------------------------------
 router.get('/', async (req, res) => {
   try {
-    const subCategoryData = await SubCategory.findAll({
-      order: [sequelize.col('subcategory.description')],
-      include: [{ model: Category }],
-    });
+    const subCategoryData = await getAllSubCategories();
     if (!subCategoryData || subCategoryData.length === 0) res.status(404).json({ message: "No subCategories exist." });
     res.status(200).json(subCategoryData);
   } catch (err) {
@@ -40,10 +43,8 @@ router.get('/', async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 router.get("/byid/:id", async (req, res) => {
   try {
-    const subCategoryData = await SubCategory.findByPk(req.params.id, {
-      include: [{ model: Category }],
-    });
-    if (!subCategoryData || subCategoryData.length === 0) res.status(404).json({ message: `The requested team ${req.params.id} does not exist.` });
+    const subCategoryData = await getSubCategoryById(req.params.id);
+    if (!subCategoryData || subCategoryData.length === 0) res.status(404).json({ message: `The requested subCategory ${req.params.id} does not exist.` });
     res.status(200).json(subCategoryData);
   } catch (err) {
     console.log(`Error: ${err}`);
@@ -62,12 +63,10 @@ router.get('/byid/', async (req, res) => {
 
 //-------------------------------------------------------------------------------------------------------
 // GET SubCategories by description
-//-------------------------------------------------------------------------------------------------------router.get('/byid/', async (req, res) => {
+//-------------------------------------------------------------------------------------------------------
 router.get('/bydescription/:description', async (req, res) => {
   try {
-    const subCategoryData = await SubCategory.findOne({
-      where: { description: req.params.description }
-    });
+    const subCategoryData = await getSubCategoryByDescription(req.params.description);
     if (!subCategoryData || subCategoryData.length === 0) {
       res.status(404).json({ message: "No subCategories found!" });
       return;
@@ -79,17 +78,21 @@ router.get('/bydescription/:description', async (req, res) => {
   }
 });
 
+// User requested description, but didn't provide a description - prompt for description
+router.get('/bydescription/', async (req, res) => {
+  res.status(400).json({
+    message: "Please provide description."
+  })
+}
+);
+
 
 //-------------------------------------------------------------------------------------------------------
 // GET SubCategory by category id
 //-------------------------------------------------------------------------------------------------------
 router.get("/bycategoryid/:categoryid", async (req, res) => {
   try {
-    const subCategoryData = await SubCategory.findAll({
-      where: {category_id: req.params.categoryid},
-      order: [sequelize.col('subcategory.description')],
-      include: [{ model: Category }],
-    });
+    const subCategoryData = await getSubCategoryByCategoryId(req.params.categoryid);
     if (!subCategoryData || subCategoryData.length === 0) {
       res.status(404).json({ message: "No subCategories found!" });
       return;
@@ -115,24 +118,9 @@ router.get('/bycategoryid/', async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 router.get("/bycategoryname/:categoryname", async (req, res) => {
   try {
-    const subCategoryData = await sequelize.query(
-      `SELECT * 
-      FROM subcategoryinfo 
-      WHERE category_name = "${req.params.categoryname}" 
-      ORDER BY description`, 
-      {
-        model: SubCategory,
-        include: [{ model: Category }],
-        mapToModel: true,
-        type: QueryTypes.SELECT
-      });
-    // const subCategoryData = await SubCategory.findAll({
-    //   where: { ['category.name']: req.params.categoryname },
-    //   order: [sequelize.col('subcategory.description')],
-    //   include: [{ model: Category }],
-    // });
+    const subCategoryData = await getSubCategoryByCategoryName(req.params.categoryname);
     if (!subCategoryData || subCategoryData.length == 0) {
-      res.status(404).json({ message: "No subCategory found!" });
+      res.status(404).json({ message: "No subCategories found!" });
       return;
     }
     res.status(200).json(subCategoryData);
@@ -164,17 +152,24 @@ router.get("*", function(req, res) {
 // -----------------------------------------------------------------------------
 // Create (Add) A Team
 // -----------------------------------------------------------------------------
-router.post('/', async (req, res) => {
-  try {
-    const subCategoryData = await SubCategory.create({
-      name: req.body.name,
-    });
-    res.status(200).json(subCategoryData);
-  } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(400).json(err);
-  }
-});
+router.post('/', [
+  body("description")
+    .isLength({ min: 3 })
+    .withMessage("The description must have minimum length of 3")
+    .trim(),
+],
+  (req, res, next) => {
+    const error = validationResult(req).formatWith(({ msg }) => msg);
+
+    const hasError = !error.isEmpty();
+
+    if (hasError) {
+      res.status(422).json({ error: error.array() });
+    } else {
+      next();
+    }
+  },
+  createSubCategory);
 
 
 //-----------------------------------------------------------------------------
@@ -182,21 +177,18 @@ router.post('/', async (req, res) => {
 // -----------------------------------------------------------------------------
 router.delete('/byid/:id', async (req, res) => {
   try {
-    const subCategoryData = await SubCategory.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
+    await deleteSubCategory(req.params.id);
+    const subCategoryData = await getSubCategoryById(req.params.id);
 
-    if (!subCategoryData) {
-      res.status(404).json({ message: 'No subcategory found with this id' });
+    if (subCategoryData) {
+     res.status(404).json({ message: `SubCategory was not deleted.` });
       return;
-    }
+   }
 
-    res.status(200).json(subCategoryData);
+    res.status(200).json({ message: `SubCategory was deleted.`});
   } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
+   console.log(`Error: ${err}`);
+   res.status(500).json(err);
   }
 });
 
@@ -204,23 +196,24 @@ router.delete('/byid/:id', async (req, res) => {
 //-----------------------------------------------------------------------------
 // Update A SubCategory
 // -----------------------------------------------------------------------------
-router.put('/byid/:id', async (req, res) => {
-  try {
-    const subCategoryData = await SubCategory.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!subCategoryData[0]) {
-      res.status(404).json({ message: 'No subcategory found' });
-      return;
+router.put('/:id', [
+  body("description")
+    .isLength({ min: 3 })
+    .withMessage("The description must have minimum length of 3")
+    .trim(),
+],
+  (req, res, next) => {
+    const error = validationResult(req).formatWith(({ msg }) => msg);
+
+    const hasError = !error.isEmpty();
+
+    if (hasError) {
+      res.status(422).json({ error: error.array() });
+    } else {
+      next();
     }
-    res.status(200).json(subCategoryData);
-  } catch (err) {
-    console.log(`Error: ${err}`);
-    res.status(500).json(err);
-  }
-});
+  },
+  updateSubCategory);
 
 
 // -----------------------------------------------------------------------------

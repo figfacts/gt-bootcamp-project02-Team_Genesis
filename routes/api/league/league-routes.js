@@ -13,14 +13,15 @@
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
 const { body, validationResult } = require("express-validator");
-const { getAllLeagues,
-        getLeagueById, 
-        getLeagueByInitials, 
-        createLeague,
-        deleteLeague, 
-        updateLeague } = require('../../../controllers/league-controller');
+const {
+  getAllLeagues,
+  getLeagueById,
+  getLeagueByInitials,
+  createLeague,
+  deleteLeague,
+  updateLeague } = require('../../../controllers/league-controller');
 
-        
+
 // -----------------------------------------------------------------------------
 // Get All Leagues
 // -----------------------------------------------------------------------------
@@ -64,8 +65,8 @@ router.get('/byid/', async (req, res) => {
 // -----------------------------------------------------------------------------
 router.get('/byinitials/:initials', async (req, res) => {
   try {
-    const leagueData = await getLeagueByInitials(initials);
-    if (!leagueData || leagueData.length === 0) res.status(404).json({ message: `The requested league ${req.params.id} does not exist.` });
+    const leagueData = await getLeagueByInitials(req.params.initials);
+    if (!leagueData || leagueData.length === 0) res.status(404).json({ message: `The requested league ${req.params.initials} does not exist.` });
     res.status(200).json(leagueData);
   } catch (err) {
     console.log(`Error: ${err}`);
@@ -166,14 +167,14 @@ router.delete('/:id', async (req, res) => {
     const leagueData = await getLeagueById(req.params.id);
 
     if (leagueData) {
-     res.status(404).json({ message: `League was not deleted.` });
+      res.status(404).json({ message: `League was not deleted.` });
       return;
-   }
+    }
 
-    res.status(200).json({ message: `League was deleted.`});
+    res.status(200).json({ message: `League was deleted.` });
   } catch (err) {
-   console.log(`Error: ${err}`);
-   res.status(500).json(err);
+    console.log(`Error: ${err}`);
+    res.status(500).json(err);
   }
 });
 

@@ -12,14 +12,15 @@
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
 const { body, validationResult } = require("express-validator");
-const { getAllTeams,
-  getTeamById, 
+const {
+  getAllTeams,
+  getTeamById,
   getTeamsByCity,
   getTeamsByName,
   getTeamsByLeagueId,
   getTeamsByLeagueInitials,
   createTeam,
-  deleteTeam, 
+  deleteTeam,
   updateTeam } = require('../../../controllers/team-controller');
 
 //-------------------------------------------------------------------------------------------------------
@@ -42,7 +43,7 @@ router.get("/", async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 router.get("/byid/:id", async (req, res) => {
   try {
-    const teamData = await getTeamById(req, res);
+    const teamData = await getTeamById(req.params.id);
     if (!teamData || teamData.length === 0) res.status(404).json({ message: `The requested team ${req.params.id} does not exist.` });
     res.status(200).json(leagueData);
   } catch (err) {
@@ -65,7 +66,7 @@ router.get('/byid/', async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 router.get("/bycity/:city", async (req, res) => {
   try {
-    const teamData = await getTeamsByCity(req, res);
+    const teamData = await getTeamsByCity(req.params.city);
     if (!teamData || teamData.length === 0) {
       res.status(404).json({ message: "No teams found!" });
       return;
@@ -91,7 +92,7 @@ router.get('/bycity/', async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 router.get("/byname/:name", async (req, res) => {
   try {
-    const teamData = await getTeamsByName(req, res);
+    const teamData = await getTeamsByName(req.params.name);
     if (!teamData || teamData.length === 0) {
       res.status(404).json({ message: "No teams found!" });
       return;
@@ -103,7 +104,7 @@ router.get("/byname/:name", async (req, res) => {
   }
 });
 
-// User requested by city, but didn't provide a city - prompt for city
+// User requested by name, but didn't provide a name - prompt for name
 router.get('/bycity/', async (req, res) => {
   res.status(400).json({
     message: "Please provide city."
@@ -117,7 +118,7 @@ router.get('/bycity/', async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 router.get("/byleagueid/:leagueid", async (req, res) => {
   try {
-    const teamData = await getTeamsByLeagueId(req, res);
+    const teamData = await getTeamsByLeagueId(req.params.leagueid);
     if (!teamData || teamData.length === 0) {
       res.status(404).json({ message: "No teams found!" });
       return;
@@ -143,7 +144,7 @@ router.get('/byleagueid/', async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 router.get("/byleagueinitials/:leagueinitials", async (req, res) => {
   try {
-    const teamData = await getTeamsByLeagueInitials(req, res);
+    const teamData = await getTeamsByLeagueInitials(req.params.leagueinitials);
     if (!teamData || teamData.length == 0) {
       res.status(404).json({ message: "No teams found!" });
       return;
@@ -216,14 +217,14 @@ router.delete('/:id', async (req, res) => {
     const teamData = await getTeamById(req, res);
 
     if (teamData) {
-     res.status(404).json({ message: `Team was not deleted.` });
+      res.status(404).json({ message: `Team was not deleted.` });
       return;
-   }
+    }
 
-    res.status(200).json({ message: `Team was deleted.`});
+    res.status(200).json({ message: `Team was deleted.` });
   } catch (err) {
-   console.log(`Error: ${err}`);
-   res.status(500).json(err);
+    console.log(`Error: ${err}`);
+    res.status(500).json(err);
   }
 });
 

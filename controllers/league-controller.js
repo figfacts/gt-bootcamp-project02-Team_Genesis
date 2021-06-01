@@ -21,7 +21,7 @@ const getAllLeagues = async () => {
     try {
         const leagueData = await League.findAll({
             order: sequelize.col('league.initials'),
-          });
+        });
         return leagueData;
     } catch (err) {
         console.log(`Error: ${err}`);
@@ -51,7 +51,7 @@ const getLeagueById = async (leagueId) => {
 const getLeagueByInitials = async (initials) => {
     try {
         const leagueData = await League.findOne({
-          where: { initials: initials }
+            where: { initials: initials }
         });
         return leagueData;
     } catch (err) {
@@ -82,17 +82,17 @@ const updateLeague = async (req, res) => {
     try {
         const leagueId = req.params.id;
         let leagueData = await League.update(req.body, {
-                  where: {
-                    id: leagueId,
-                  }
-                });
-                leagueData = await getLeagueById(leagueId);
-                if (!leagueData) {
-                  res.status(404).json({ message: `League ${leagueId} does not exist.` });
-                  return;
-                }
-            
-                res.status(200).json(leagueData);
+            where: {
+                id: leagueId,
+            }
+        });
+        leagueData = await getLeagueById(leagueId);
+        if (!leagueData) {
+            res.status(404).json({ message: `League ${leagueId} does not exist.` });
+            return;
+        }
+
+        res.status(200).json(leagueData);
     } catch (err) {
         console.log(`Error: ${err}`);
         res.status(500).json(err);
@@ -115,9 +115,11 @@ const deleteLeague = async (id) => {
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
-module.exports = { getAllLeagues,
-                   getLeagueById, 
-                   getLeagueByInitials, 
-                   createLeague, 
-                   deleteLeague, 
-                   updateLeague };
+module.exports = {
+    getAllLeagues,
+    getLeagueById,
+    getLeagueByInitials,
+    createLeague,
+    deleteLeague,
+    updateLeague
+};

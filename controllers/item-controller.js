@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 // Dependencies
 // -----------------------------------------------------------------------------
-const { Item, User, SubCategory, Team  } = require('../config/models');
+const { Item, User, SubCategory, Team } = require('../config/models');
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require('../config/models/Item');
 
@@ -22,18 +22,18 @@ const { sequelize } = require('../config/models/Item');
 const getAllItems = async () => {
   try {
     const itemData = await Item.findAll({
-      order: [ [sequelize.col('dateListed'), 'DESC'],
-                sequelize.col('subCategory.description'), 
-                sequelize.col('team.name')],
-      include: [{ model: User }, 
-                { model: SubCategory },
-                { model: Team }
-              ],
+      order: [[sequelize.col('dateListed'), 'DESC'],
+      sequelize.col('subCategory.description'),
+      sequelize.col('team.name')],
+      include: [{ model: User },
+      { model: SubCategory },
+      { model: Team }
+      ],
     });
     return itemData;
   } catch (err) {
-      console.log(`Error: ${err}`);
-      return null;
+    console.log(`Error: ${err}`);
+    return null;
   }
 };
 
@@ -43,15 +43,15 @@ const getAllItems = async () => {
 const getItemById = async (itemId) => {
   try {
     const itemData = await Item.findByPk(itemId, {
-      include: [{ model: User }, 
-                { model: SubCategory },
-                { model: Team }
-              ],
+      include: [{ model: User },
+      { model: SubCategory },
+      { model: Team }
+      ],
     });
     return itemData;
   } catch (err) {
-      console.log(`Error: ${err}`);
-      return null;
+    console.log(`Error: ${err}`);
+    return null;
   }
 };
 
@@ -63,18 +63,18 @@ const getItemsByUserId = async (userId) => {
   try {
     const itemData = await Item.findAll({
       where: { user_id: userId },
-      order: [ [sequelize.col('dateListed'), 'DESC'],
-                sequelize.col('subCategory.description'), 
-                sequelize.col('team.name')],
-      include: [{ model: User }, 
-        { model: SubCategory },
-        { model: Team }
+      order: [[sequelize.col('dateListed'), 'DESC'],
+      sequelize.col('subCategory.description'),
+      sequelize.col('team.name')],
+      include: [{ model: User },
+      { model: SubCategory },
+      { model: Team }
       ],
     });
     return itemData;
   } catch (err) {
-      console.log(`Error: ${err}`);
-      return null;
+    console.log(`Error: ${err}`);
+    return null;
   }
 };
 
@@ -86,18 +86,18 @@ const getItemsBySubCategoryId = async (subCategoryId) => {
   try {
     const itemData = await Item.findAll({
       where: { subCategory_id: subCategoryId },
-      order: [ [sequelize.col('dateListed'), 'DESC'],
-                sequelize.col('subCategory.description'), 
-                sequelize.col('team.name')],
-      include: [{ model: User }, 
-                { model: SubCategory },
-                { model: Team }
-               ],
+      order: [[sequelize.col('dateListed'), 'DESC'],
+      sequelize.col('subCategory.description'),
+      sequelize.col('team.name')],
+      include: [{ model: User },
+      { model: SubCategory },
+      { model: Team }
+      ],
     });
     return itemData;
   } catch (err) {
-      console.log(`Error: ${err}`);
-      return null;
+    console.log(`Error: ${err}`);
+    return null;
   }
 };
 
@@ -109,18 +109,18 @@ const getItemsByTeamId = async (teamId) => {
   try {
     const itemData = await Item.findAll({
       where: { team_id: teamId },
-      order: [ [sequelize.col('dateListed'), 'DESC'],
-                sequelize.col('subCategory.description'), 
-                sequelize.col('team.name')],
-      include: [{ model: User }, 
-                { model: SubCategory },
-                { model: Team }
-               ],
+      order: [[sequelize.col('dateListed'), 'DESC'],
+      sequelize.col('subCategory.description'),
+      sequelize.col('team.name')],
+      include: [{ model: User },
+      { model: SubCategory },
+      { model: Team }
+      ],
     });
     return itemData;
   } catch (err) {
-      console.log(`Error: ${err}`);
-      return null;
+    console.log(`Error: ${err}`);
+    return null;
   }
 };
 
@@ -132,19 +132,19 @@ const getItemsByPlayerName = async (playerName) => {
 
   try {
     const itemData = await Item.findAll({
-      where: { playerSoundex: sequelize.fn('soundex', playerName)},
-      order: [ [sequelize.col('dateListed'), 'DESC'],
-                sequelize.col('subCategory.description'), 
-                sequelize.col('team.name')],
-      include: [{ model: User }, 
-                { model: SubCategory },
-                { model: Team }
-               ],
+      where: { playerSoundex: sequelize.fn('soundex', playerName) },
+      order: [[sequelize.col('dateListed'), 'DESC'],
+      sequelize.col('subCategory.description'),
+      sequelize.col('team.name')],
+      include: [{ model: User },
+      { model: SubCategory },
+      { model: Team }
+      ],
     });
     return itemData;
   } catch (err) {
-      console.log(`Error: ${err}`);
-      return null;
+    console.log(`Error: ${err}`);
+    return null;
   }
 };
 
@@ -164,21 +164,21 @@ const getItemsByLeagueInitials = async (leagueInitials) => {
        ORDER BY
          dateListed DESC,
          description,
-         team_name`, 
+         team_name`,
       {
         model: Item,
         include: [{ model: User },
-                  { model: SubCategory },
-                  { model: Team }],
+        { model: SubCategory },
+        { model: Team }],
         mapToModel: true,
         type: QueryTypes.SELECT
       });
-      return itemData;
-    } catch (err) {
-        console.log(`Error: ${err}`);
-        return null;
-    }
-  };
+    return itemData;
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    return null;
+  }
+};
 
 
 //-------------------------------------------------------------------------------------------------------
@@ -187,21 +187,21 @@ const getItemsByLeagueInitials = async (leagueInitials) => {
 const getItemsByAutographed = async (autograph) => {
   try {
     let autographed = false;
-    if (autograph == 'true'  || autograph == '1') autographed = true;
+    if (autograph == 'true' || autograph == '1') autographed = true;
     const itemData = await Item.findAll({
       where: { autographed: autographed },
-      order: [ [sequelize.col('dateListed'), 'DESC'],
-                sequelize.col('subCategory.description'), 
-                sequelize.col('team.name')],
-      include: [{ model: User }, 
-                { model: SubCategory },
-                { model: Team }
-               ],
+      order: [[sequelize.col('dateListed'), 'DESC'],
+      sequelize.col('subCategory.description'),
+      sequelize.col('team.name')],
+      include: [{ model: User },
+      { model: SubCategory },
+      { model: Team }
+      ],
     });
     return itemData;
   } catch (err) {
-      console.log(`Error: ${err}`);
-      return null;
+    console.log(`Error: ${err}`);
+    return null;
   }
 };
 
@@ -221,19 +221,19 @@ const getItemsByCityName = async (cityName) => {
        ORDER BY
          dateListed DESC, 
          description, 
-         team_name`, 
+         team_name`,
       {
         model: Item,
         include: [{ model: User }],
         mapToModel: true,
         type: QueryTypes.SELECT
       });
-      return itemData;
-    } catch (err) {
-        console.log(`Error: ${err}`);
-        return null;
-    }
-  };
+    return itemData;
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    return null;
+  }
+};
 
 
 //-------------------------------------------------------------------------------------------------------
@@ -250,12 +250,12 @@ const getLatestItems = async (count) => {
          dateListed DESC, 
          description, 
          team_name
-       LIMIT ${count}`, 
-       { type: QueryTypes.SELECT });
+       LIMIT ${count}`,
+      { type: QueryTypes.SELECT });
     return itemData;
   } catch (err) {
-      console.log(`Error: ${err}`);
-      return null;
+    console.log(`Error: ${err}`);
+    return null;
   }
 };
 
@@ -281,21 +281,21 @@ const updateItem = async (req, res) => {
         price = ${req.body.price},
         dateListed = CURRENT_DATE
       WHERE 
-        id = ${itemId}`, 
+        id = ${itemId}`,
       {
         type: QueryTypes.UPDATE
       });
-      itemData = await getItemById(itemId);
-      if (!leagueData) {
-        res.status(404).json({ message: `Item ${itemId} does not exist.` });
-        return;
-      }
-  
-      res.status(200).json(leagueData);
-} catch (err) {
-console.log(`Error: ${err}`);
-res.status(500).json(err);
-}
+    itemData = await getItemById(itemId);
+    if (!leagueData) {
+      res.status(404).json({ message: `Item ${itemId} does not exist.` });
+      return;
+    }
+
+    res.status(200).json(leagueData);
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    res.status(500).json(err);
+  }
 };
 
 
@@ -311,7 +311,7 @@ const createItem = async (req, res) => {
         item (user_id, subCategory_id, description, autographed, playerName, playerSoundex, team_id, price, dateListed, image)
         values (${req.user.dataValues.id}, ${req.body.subCategory_id}, "${req.body.description}", "${autographed}",
                 "${req.body.playerName}", SOUNDEX("${req.body.playerName}"), ${req.body.team_id}, ${req.body.price}, 
-                CURRENT_DATE, "${req.body.image}")`, 
+                CURRENT_DATE, "${req.body.image}")`,
       {
         type: QueryTypes.INSERT
       });
@@ -319,7 +319,7 @@ const createItem = async (req, res) => {
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(500).json(err);
-}
+  }
 };
 
 
@@ -327,10 +327,10 @@ const createItem = async (req, res) => {
 // Delete A Item By its id (primary key)
 // -----------------------------------------------------------------------------
 const deleteItem = async (id) => {
-    const itemData = await Item.destroy({
-      where: {
-          id: id,
-      },
+  const itemData = await Item.destroy({
+    where: {
+      id: id,
+    },
   });
 };
 
@@ -338,16 +338,18 @@ const deleteItem = async (id) => {
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
-module.exports = { getAllItems,
-                   getItemById, 
-                   getItemsByUserId,
-                   getItemsBySubCategoryId,
-                   getItemsByTeamId,
-                   getItemsByPlayerName,
-                   getItemsByLeagueInitials,
-                   getItemsByAutographed,
-                   getItemsByCityName,
-                   getLatestItems,
-                   createItem, 
-                   deleteItem, 
-                   updateItem };
+module.exports = {
+  getAllItems,
+  getItemById,
+  getItemsByUserId,
+  getItemsBySubCategoryId,
+  getItemsByTeamId,
+  getItemsByPlayerName,
+  getItemsByLeagueInitials,
+  getItemsByAutographed,
+  getItemsByCityName,
+  getLatestItems,
+  createItem,
+  deleteItem,
+  updateItem
+};
