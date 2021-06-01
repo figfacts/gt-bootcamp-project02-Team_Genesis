@@ -16,7 +16,7 @@ const router = require('express').Router();
 
 const categoryRoutes = require('./category/category-routes');
 const leagueRoutes = require('./league/league-routes');
-const subCategoryRoutes = require('./subcategory/subCategory-routes');
+const subCategoryRoutes = require('./subcategory/subcategory-routes');
 const teamRoutes = require('./team/team-routes');
 const userRoutes = require('./user/user-routes');
 const userInterestsRoutes = require('./userInterests/userInterests-routes');
@@ -27,7 +27,7 @@ const itemRoutes = require('./item/item-routes');
 // -----------------------------------------------------------------------------
 router.use('/category', categoryRoutes);
 router.use('/league', leagueRoutes);
-router.use('/subCategory', subCategoryRoutes);
+router.use('/subcategory', subCategoryRoutes);
 router.use('/team', teamRoutes);
 router.use('/user', userRoutes);
 router.use('/userInterests', userInterestsRoutes);
