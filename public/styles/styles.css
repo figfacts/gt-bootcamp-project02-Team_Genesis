@@ -4,6 +4,8 @@
   background-image: url('../images/CSS-style/backgroundimage.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 .customheader {
   background-image: url('../images/CSS-style/header-image.jpg');
@@ -274,6 +276,10 @@ h1{
 .footfont {
   color: white;
 }
+
+.footer-copyright {
+  color: white;
+} 
 
 .item:hover {
   box-shadow: 1px 1px 40px 10px rgb(255, 255, 255);
