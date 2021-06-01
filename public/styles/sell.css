@@ -1,4 +1,4 @@
-/* BACKGROUND IMG CSS */
+/* BACKGROUND IMG CSS
 
 
 #main{
@@ -38,7 +38,7 @@ img{
 
 /* SELLER INFO CSS */
 
-#sellTitle{
+/* #sellTitle{
     text-align: center;
     font-family: monospace;
     font-weight: bolder;
@@ -60,12 +60,12 @@ img{
 #sellSubmitBtn{
     width: 160px;
     margin-left: 100px;
-}
+} */ 
 
 
 /* image upload button css */
 
-body, html {
+/* body, html {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,6 +82,8 @@ body, html {
   
   .file-upload-container {
       width: 100%;
+      width: 160px;
+      margin-left: 100px;
       height: 50px;
       overflow: hidden;
       background: #3F51B5;
@@ -98,4 +100,4 @@ body, html {
       cursor: pointer;
       background: #3949AB;
   }
-  
+   */
