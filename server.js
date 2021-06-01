@@ -36,7 +36,8 @@ let PORT = process.env.PORT || 3000;
 	session({
 	  secret: process.env.SESSION_SECRET,
 	  resave: true,
-	  saveUninitialized: true
+	  saveUninitialized: true,
+	  proxy: true
 	})
  );
 
