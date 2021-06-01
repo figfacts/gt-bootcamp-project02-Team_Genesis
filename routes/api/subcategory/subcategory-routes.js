@@ -21,7 +21,7 @@ const {
   getSubCategoryByCategoryName,
   createSubCategory,
   deleteSubCategory,
-  updateSubCategory } = require('../../../controllers/subCategory-controller');
+  updateSubCategory } = require('../../../controllers/subcategory-controller');
 
 //-------------------------------------------------------------------------------------------------------
 // GET all subcategories
