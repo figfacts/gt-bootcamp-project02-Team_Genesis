@@ -193,6 +193,8 @@ h1{
 
 /* CSS FOR "RECOMMENDED FOR YOU" IMAGES DIVS  */
 
+#photo12,
+#photo11,
 #photo10,
 #photo9,
 #photo8,
@@ -209,7 +211,8 @@ h1{
   height: 250px;
   margin-top: 20px;
 }
-
+#item12,
+#item11,
 #item10,
 #item9,
 #item8,

@@ -196,16 +196,17 @@ var image8 = document.getElementById("item8");
 var image9 = document.getElementById("item9");
 var image10 = document.getElementById("item10");
 var image11 = document.getElementById("item11");
+var image12 = document.getElementById("item12");
 
 
 
 homePageItems = [];
 
 //--------------------------------------------------------------------------
-//Get last 20 items posted from our api url
+//Get last 12 items posted from our api url
 //--------------------------------------------------------------------------
 // const homePageItemsUrl = '/api/item/homepageitems'
-const homePageItemsUrl = '/api/item/latestitems/20'
+const homePageItemsUrl = '/api/item/latestitems/12'
 
 fetch(homePageItemsUrl)
 .then(function (response) {
@@ -222,7 +223,7 @@ fetch(homePageItemsUrl)
 });
 
 //--------------------------------------------------------------------------
-//set the homepage images to the last 20 items posted
+//set the homepage images to the last 12 items posted
 //--------------------------------------------------------------------------
 function getHomePageItems() {
 
@@ -236,6 +237,8 @@ image7.setAttribute('src', homePageItems[0][6].image);
 image8.setAttribute('src', homePageItems[0][7].image);
 image9.setAttribute('src', homePageItems[0][8].image);
 image10.setAttribute('src', homePageItems[0][9].image);
+image11.setAttribute('src', homePageItems[0][10].image);
+image12.setAttribute('src', homePageItems[0][11].image);
 
 }
 
