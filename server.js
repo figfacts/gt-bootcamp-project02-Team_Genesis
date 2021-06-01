@@ -36,7 +36,7 @@ let PORT = process.env.PORT || 3000;
 	session({
 	  secret: process.env.SESSION_SECRET,
 	  cookie: {},
-	  resave: false,
+	  resave: true,
 	  proxy: true,
 	  saveUninitialized: true,
 	  store: new SequelizeStore({
@@ -51,7 +51,7 @@ app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+store.sync();
 
 // Handlebars
 const hbs = exphbs.create({});
