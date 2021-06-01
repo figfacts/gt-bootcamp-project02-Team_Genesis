@@ -17,7 +17,7 @@ require('dotenv').config();
 let sequelize;
 if (process.env.CLEARDB_DATABASE_URL) {
     console.log(`Connected to ClearDB Database`);
-    sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL, { logging: process.env.LOGGING });
+    sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL, { logging: false });
 }
 else {
     console.log(`Connected to Local Database`); 
