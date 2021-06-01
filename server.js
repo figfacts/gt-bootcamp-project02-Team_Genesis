@@ -55,8 +55,9 @@ app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
 // Routes
-app.use(require('./controllers/index.js'));
 // app.use(require('./routes/index.js'));
+app.use(require('./controllers/index.js'));
+
 
 var syncOptions = { force: false };
 // var syncOptions = { force: true };

@@ -388,16 +388,19 @@ router.post("/", async (req, res) => {
   try {
     let autographed = '0';
     if (req.body.autograph = 'true') autographed = '1';
+    let sqlStatement = `INSERT INTO 
+            item (user_id, subCategory_id, description, autographed, playerName, playerSoundex, team_id, price, dateListed, image)
+            values (${req.user.dataValues.id}, ${req.body.subCategory_id}, "${req.body.description}", "${autographed}",
+            "${req.body.playerName}", SOUNDEX("${req.body.playerName}"), ${req.body.team_id}, ${req.body.price}, 
+            CURRENT_DATE, "${req.body.image}")`;
+    sqlStatement = sqlStatement.replace("/n"," ");
     const itemData = await sequelize.query(
-      `INSERT INTO 
-        item (user_id, subCategory_id, description, autographed, playerName, playerSoundex, team_id, price, dateListed, image)
-        values (${req.user.dataValues.id}, ${req.body.subCategory_id}, "${req.body.description}", "${autographed}",
-                "${req.body.playerName}", SOUNDEX("${req.body.playerName}"), ${req.body.team_id}, ${req.body.price}, 
-                CURRENT_DATE, "${req.body.image}")`, 
+      sqlStatement, 
       {
         type: QueryTypes.INSERT
       });
-    res.status(200).json({ message: 'Item added' });
+    // res.status(200).json({ message: 'Item added' });
+    res.redirect('/profile');
   } catch (err) {
     res.status(400).json(err);
   }
