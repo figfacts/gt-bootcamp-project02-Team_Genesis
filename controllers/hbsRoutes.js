@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User, Item, SubCategory, Team } = require('../config/models');
 const passport = require('passport');
 const { sequelize } = require('../config/models/Item');
+const { ensureAuthenticated } = require('../config/auth');
 
 // -----------------------------------------------------------------------------
 // Get Homepage
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/profile', async (req, res) => {
+router.get('/profile', ensureAuthenticated, async (req, res) => {
 	try {
 		// const userItems = await Item.findAll({ where: { user_id: req.user.dataValues.id }, raw: true });
 		const userItems = await Item.findAll({
@@ -34,7 +35,7 @@ router.get('/profile', async (req, res) => {
 	}
 });
 
-router.get('/addItem', async (req, res) => {
+router.get('/addItem', ensureAuthenticated, async (req, res) => {
 	try {
 		res.render('addItem', { style: 'sell.css', 'isAuthenticated': req.isAuthenticated(), userId: req.user.dataValues.id });
 	} catch (err) {
