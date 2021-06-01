@@ -18,9 +18,9 @@ const express = require("express");                // Routing
 const exphbs = require("express-handlebars");      // Server side html rendering
 const session = require('express-session');        // Session state
 const validator = require('express-validator');    // Validate input data
-
 const passport = require('passport');              // Manage User Login
 require('./config/passport')(passport);
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const {cloudinary} = require('./utils/cloudinary'); //Utility for image uploading for items listed
 
 var db = require("./config/models");
@@ -35,9 +35,13 @@ let PORT = process.env.PORT || 3000;
  app.use(
 	session({
 	  secret: process.env.SESSION_SECRET,
-	  resave: true,
+	  cookie: {},
+	  resave: false,
+	  proxy: true,
 	  saveUninitialized: true,
-	  proxy: true
+	  store: new SequelizeStore({
+		  db: sequelize
+	  })
 	})
  );
 
