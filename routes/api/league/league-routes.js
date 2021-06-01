@@ -13,8 +13,6 @@
 // -----------------------------------------------------------------------------
 const router = require('express').Router();
 const { body, validationResult } = require("express-validator");
-const { League } = require('../../../config/models');
-// const { sequelize } = require('../../../config/models/League');
 const { getAllLeagues,
         getLeagueById, 
         getLeagueByInitials, 
@@ -43,7 +41,7 @@ router.get('/', async (req, res) => {
 // -----------------------------------------------------------------------------
 router.get('/byId/:id', async (req, res) => {
   try {
-    const leagueData = await getLeagueById(req, res);
+    const leagueData = await getLeagueById(req.params.id);
     if (!leagueData || leagueData.length === 0) res.status(404).json({ message: `The requested league ${req.params.id} does not exist.` });
     res.status(200).json(leagueData);
   } catch (err) {
@@ -66,7 +64,7 @@ router.get('/byid/', async (req, res) => {
 // -----------------------------------------------------------------------------
 router.get('/byinitials/:initials', async (req, res) => {
   try {
-    const leagueData = await getLeagueByInitials(req, res);
+    const leagueData = await getLeagueByInitials(initials);
     if (!leagueData || leagueData.length === 0) res.status(404).json({ message: `The requested league ${req.params.id} does not exist.` });
     res.status(200).json(leagueData);
   } catch (err) {
@@ -165,7 +163,7 @@ router.put('/:id', [
 router.delete('/:id', async (req, res) => {
   try {
     await deleteLeague(req.params.id);
-    const leagueData = await getLeagueById(req, res);
+    const leagueData = await getLeagueById(req.params.id);
 
     if (leagueData) {
      res.status(404).json({ message: `League was not deleted.` });

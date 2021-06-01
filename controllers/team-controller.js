@@ -35,9 +35,9 @@ const getAllTeams = async () => {
 // -----------------------------------------------------------------------------
 // Get A Team By its id (primary key)
 // -----------------------------------------------------------------------------
-const getTeamById = async (req, res) => {
+const getTeamById = async (teamId) => {
     try {
-        const teamData = await Team.findByPk(req.params.id, {
+        const teamData = await Team.findByPk(teamId, {
         });
         return teamData;
     } catch (err) {
@@ -50,10 +50,10 @@ const getTeamById = async (req, res) => {
 // -----------------------------------------------------------------------------
 // Get Teams By City
 // -----------------------------------------------------------------------------
-const getTeamsByCity = async (req, res) => {
+const getTeamsByCity = async (cityName) => {
     try {
         const teamData = await Team.findAll({
-            where: { city: req.params.city },
+            where: { city: cityName },
             order: [sequelize.col('team.city'), sequelize.col('team.name')],
             include: [{ model: League }],
           });
@@ -68,10 +68,10 @@ const getTeamsByCity = async (req, res) => {
 // -----------------------------------------------------------------------------
 // Get Teams By Name
 // -----------------------------------------------------------------------------
-const getTeamsByName = async (req, res) => {
+const getTeamsByName = async (name) => {
     try {
         const teamData = await Team.findAll({
-            where: { name: req.params.name },
+            where: { name: name },
             order: [sequelize.col('team.name')],
             include: [{ model: League }],
           });

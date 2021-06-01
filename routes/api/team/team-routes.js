@@ -12,8 +12,6 @@
 // -----------------------------------------------------------------------------
 const router = require("express").Router();
 const { body, validationResult } = require("express-validator");
-const { Team, League } = require("../../../config/models");
-// const { sequelize } = require('../../../config/models/Team');
 const { getAllTeams,
   getTeamById, 
   getTeamsByCity,
