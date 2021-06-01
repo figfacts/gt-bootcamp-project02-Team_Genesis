@@ -23,7 +23,7 @@ const getAllTeams = async () => {
     try {
         const teamData = await Team.findAll({
             order: sequelize.col('team.name'),
-          });
+        });
         return teamData;
     } catch (err) {
         console.log(`Error: ${err}`);
@@ -35,9 +35,9 @@ const getAllTeams = async () => {
 // -----------------------------------------------------------------------------
 // Get A Team By its id (primary key)
 // -----------------------------------------------------------------------------
-const getTeamById = async (req, res) => {
+const getTeamById = async (teamId) => {
     try {
-        const teamData = await Team.findByPk(req.params.id, {
+        const teamData = await Team.findByPk(teamId, {
         });
         return teamData;
     } catch (err) {
@@ -50,13 +50,13 @@ const getTeamById = async (req, res) => {
 // -----------------------------------------------------------------------------
 // Get Teams By City
 // -----------------------------------------------------------------------------
-const getTeamsByCity = async (req, res) => {
+const getTeamsByCity = async (cityName) => {
     try {
         const teamData = await Team.findAll({
-            where: { city: req.params.city },
+            where: { city: cityName },
             order: [sequelize.col('team.city'), sequelize.col('team.name')],
             include: [{ model: League }],
-          });
+        });
         return teamData;
     } catch (err) {
         console.log(`Error: ${err}`);
@@ -68,13 +68,13 @@ const getTeamsByCity = async (req, res) => {
 // -----------------------------------------------------------------------------
 // Get Teams By Name
 // -----------------------------------------------------------------------------
-const getTeamsByName = async (req, res) => {
+const getTeamsByName = async (name) => {
     try {
         const teamData = await Team.findAll({
-            where: { name: req.params.name },
+            where: { name: name },
             order: [sequelize.col('team.name')],
             include: [{ model: League }],
-          });
+        });
         return teamData;
     } catch (err) {
         console.log(`Error: ${err}`);
@@ -86,13 +86,13 @@ const getTeamsByName = async (req, res) => {
 // -----------------------------------------------------------------------------
 // Get Teams by League ID
 // -----------------------------------------------------------------------------
-const getTeamsByLeagueId = async (req, res) => {
+const getTeamsByLeagueId = async (leagueId) => {
     try {
         const teamData = await Team.findAll({
-            where: { league_id: req.params.leagueid },
+            where: { league_id: leagueId },
             order: [sequelize.col('team.city'), sequelize.col('team.name')],
             include: [{ model: League }],
-          });
+        });
         return teamData;
     } catch (err) {
         console.log(`Error: ${err}`);
@@ -104,24 +104,24 @@ const getTeamsByLeagueId = async (req, res) => {
 // -----------------------------------------------------------------------------
 // Get Teams by League Initials
 // -----------------------------------------------------------------------------
-const getTeamsByLeagueInitials = async (req, res) => {
+const getTeamsByLeagueInitials = async (leagueInitials) => {
     try {
-      const teamData = await sequelize.query(
+        const teamData = await sequelize.query(
         `SELECT 
            * 
          FROM 
            teaminfo 
          WHERE 
-           league_initials = "${req.params.leagueinitials}" 
+           league_initials = "${leagueInitials}" 
         ORDER BY 
           city, 
           name`,
-        {
-          // model: Team,
-          // mapToModel: true,
-          // include: [{ model: League }],
-          type: QueryTypes.SELECT
-        });
+            {
+                model: Team,
+                mapToModel: true,
+                include: [{ model: League }],
+                type: QueryTypes.SELECT
+            });
         return teamData;
     } catch (err) {
         console.log(`Error: ${err}`);
@@ -150,17 +150,17 @@ const createTeam = async (req, res) => {
 const updateTeam = async (req, res) => {
     try {
         let teamData = await Team.update(req.body, {
-                  where: {
-                    id: req.params.id,
-                  }
-                });
-                teamData = await getTeamById(req, res);
-                if (!teamData) {
-                  res.status(404).json({ message: `Team ${req.params.id} does not exist.` });
-                  return;
-                }
-            
-                res.status(200).json(teamData);
+            where: {
+                id: req.params.id,
+            }
+        });
+        teamData = await getTeamById(req, res);
+        if (!teamData) {
+            res.status(404).json({ message: `Team ${req.params.id} does not exist.` });
+            return;
+        }
+
+        res.status(200).json(teamData);
     } catch (err) {
         console.log(`Error: ${err}`);
         res.status(500).json(err);
@@ -183,12 +183,14 @@ const deleteTeam = async (id) => {
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
-module.exports = { getAllTeams,
-                   getTeamById,
-                   getTeamsByCity, 
-                   getTeamsByName,
-                   getTeamsByLeagueId,
-                   getTeamsByLeagueInitials,
-                   createTeam, 
-                   deleteTeam, 
-                   updateTeam };
+module.exports = {
+    getAllTeams,
+    getTeamById,
+    getTeamsByCity,
+    getTeamsByName,
+    getTeamsByLeagueId,
+    getTeamsByLeagueInitials,
+    createTeam,
+    deleteTeam,
+    updateTeam
+};

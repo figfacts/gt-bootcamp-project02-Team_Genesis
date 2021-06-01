@@ -21,7 +21,7 @@ const getAllLeagues = async () => {
     try {
         const leagueData = await League.findAll({
             order: sequelize.col('league.initials'),
-          });
+        });
         return leagueData;
     } catch (err) {
         console.log(`Error: ${err}`);
@@ -33,9 +33,9 @@ const getAllLeagues = async () => {
 // -----------------------------------------------------------------------------
 // Get A League By its id (primary key)
 // -----------------------------------------------------------------------------
-const getLeagueById = async (req, res) => {
+const getLeagueById = async (leagueId) => {
     try {
-        const leagueData = await League.findByPk(req.params.id, {
+        const leagueData = await League.findByPk(leagueId, {
         });
         return leagueData;
     } catch (err) {
@@ -48,10 +48,10 @@ const getLeagueById = async (req, res) => {
 // -----------------------------------------------------------------------------
 // Get A League By its initials
 // -----------------------------------------------------------------------------
-const getLeagueByInitials = async (req, res) => {
+const getLeagueByInitials = async (initials) => {
     try {
         const leagueData = await League.findOne({
-          where: { initials: req.params.initials }
+            where: { initials: initials }
         });
         return leagueData;
     } catch (err) {
@@ -80,18 +80,19 @@ const createLeague = async (req, res) => {
 // -----------------------------------------------------------------------------
 const updateLeague = async (req, res) => {
     try {
+        const leagueId = req.params.id;
         let leagueData = await League.update(req.body, {
-                  where: {
-                    id: req.params.id,
-                  }
-                });
-                leagueData = await getLeagueById(req, res);
-                if (!leagueData) {
-                  res.status(404).json({ message: `League ${req.params.id} does not exist.` });
-                  return;
-                }
-            
-                res.status(200).json(leagueData);
+            where: {
+                id: leagueId,
+            }
+        });
+        leagueData = await getLeagueById(leagueId);
+        if (!leagueData) {
+            res.status(404).json({ message: `League ${leagueId} does not exist.` });
+            return;
+        }
+
+        res.status(200).json(leagueData);
     } catch (err) {
         console.log(`Error: ${err}`);
         res.status(500).json(err);
@@ -114,9 +115,11 @@ const deleteLeague = async (id) => {
 // -----------------------------------------------------------------------------
 // Module Exports
 // -----------------------------------------------------------------------------
-module.exports = { getAllLeagues,
-                   getLeagueById, 
-                   getLeagueByInitials, 
-                   createLeague, 
-                   deleteLeague, 
-                   updateLeague };
+module.exports = {
+    getAllLeagues,
+    getLeagueById,
+    getLeagueByInitials,
+    createLeague,
+    deleteLeague,
+    updateLeague
+};

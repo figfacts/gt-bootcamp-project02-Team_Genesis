@@ -15,7 +15,8 @@ const router = require('express').Router();
 const { body, validationResult } = require("express-validator");
 const { Category } = require('../../../config/models');
 // const { sequelize } = require('../../../config/models/Category');
-const { getAllCategories,
+const { 
+  getAllCategories,
   getCategoryById, 
   getCategoryByName, 
   createCategory,
@@ -43,7 +44,7 @@ router.get('/', async (req, res) => {
 // ----------------------------------------------------------------------------- 
 router.get('/byid/:id', async (req, res) => {
   try {
-    const categoryData = await getCategoryById(req, res);
+    const categoryData = await getCategoryById(req.params.id);
     if (!categoryData || categoryData.length === 0) res.status(404).json({ message: `The requested category ${req.params.id} does not exist.` });
     res.status(200).json(categoryData);
   } catch (err) {
@@ -66,8 +67,8 @@ router.get('/byid/', async (req, res) => {
 // ----------------------------------------------------------------------------- 
 router.get('/byname/:name', async (req, res) => {
   try {
-    const categoryData = await getCategoryByName(req, res);
-    if (!categoryData || categoryData.length === 0) res.status(404).json({ message: `The requested category ${req.params.id} does not exist.` });
+    const categoryData = await getCategoryByName(req.params.name);
+    if (!categoryData || categoryData.length === 0) res.status(404).json({ message: `The requested category ${req.params.name} does not exist.` });
     res.status(200).json(categoryData);
   } catch (err) {
     console.log(`Error: ${err}`);
