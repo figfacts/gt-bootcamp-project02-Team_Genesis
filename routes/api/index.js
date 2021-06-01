@@ -27,7 +27,7 @@ const itemRoutes = require('./item/item-routes');
 // -----------------------------------------------------------------------------
 router.use('/category', categoryRoutes);
 router.use('/league', leagueRoutes);
-router.use('/subCategory', subCategoryRoutes);
+router.use('/subcategory', subCategoryRoutes);
 router.use('/team', teamRoutes);
 router.use('/user', userRoutes);
 router.use('/userInterests', userInterestsRoutes);
