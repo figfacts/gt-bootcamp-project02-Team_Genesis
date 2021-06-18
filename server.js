@@ -18,6 +18,7 @@ const session = require('express-session');        // Session state
 const validator = require('express-validator');    // Validate input data
 const passport = require('passport');              // Manage User Login
 require('./config/passport')(passport);
+var compression = require('compression');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const {cloudinary} = require('./utils/cloudinary'); //Utility for image uploading for items listed
 var db = require("./config/models");
@@ -43,6 +44,9 @@ app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
 sequelizeStore.sync();
+// compress all responses
+app.use(compression())
+
 // Handlebars
 const hbs = exphbs.create({});
 app.engine("handlebars", hbs.engine);
